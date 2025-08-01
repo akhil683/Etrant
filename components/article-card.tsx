@@ -44,7 +44,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
   };
 
   return (
-    <div className="h-full mx-auto flex flex-col max-w-4xl bg-black text-white relative">
+    <div className="h-full mx-auto flex flex-col max-w-7xl bg-black text-white relative">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         {!imageError ? (

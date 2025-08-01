@@ -26,18 +26,9 @@ export function UserMenu() {
   if (!session) {
     return (
       <div className="flex items-center space-x-2">
-        <Link href="/auth/signin">
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-white hover:bg-white/10"
-          >
-            Sign In
-          </Button>
-        </Link>
-        <Link href="/auth/signup">
+        <Link href="/auth">
           <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
-            Sign Up
+            Sign In
           </Button>
         </Link>
       </div>
