@@ -5,74 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Loader2, Trophy } from "lucide-react";
 import { UserMenu } from "./auth/user-menu";
 import { McqCard } from "./question-card";
-
-interface McqQuestion {
-  id: string;
-  question: string;
-  options: {
-    id: string;
-    text: string;
-    isCorrect: boolean;
-  }[];
-  difficulty: "easy" | "medium" | "hard";
-  topic: string;
-  explanation: string;
-}
-const dummy: McqQuestion[] = [
-  {
-    id: "1",
-    question: "how are you",
-    options: [
-      {
-        id: "1",
-        text: "Yoo",
-        isCorrect: true,
-      },
-      {
-        id: "1",
-        text: "Yoo",
-        isCorrect: false,
-      },
-      {
-        id: "1",
-        text: "Yoo",
-        isCorrect: false,
-      },
-      {
-        id: "1",
-        text: "Yoo",
-        isCorrect: false,
-      },
-    ],
-    difficulty: "hard",
-    topic: "yoo",
-    explanation: "ping poing",
-  },
-  {
-    id: "1",
-    question: "I am fine",
-    options: [
-      {
-        id: "1",
-        text: "Yoo",
-        isCorrect: true,
-      },
-      {
-        id: "1",
-        text: "Yoo",
-        isCorrect: false,
-      },
-      {
-        id: "1",
-        text: "Yoo",
-        isCorrect: false,
-      },
-    ],
-    difficulty: "hard",
-    topic: "yoo",
-    explanation: "ping poing",
-  },
-];
+import { QuestionData } from "@/lib/repositories/question-repository";
 
 interface InfiniteReelProps {
   interests: string[];
@@ -85,12 +18,12 @@ export function QuestionReel({
   onBack,
   onShowLeaderboard,
 }: InfiniteReelProps) {
-  const [questions, setQuestions] = useState<McqQuestion[]>([]);
+  const [questions, setQuestions] = useState<QuestionData[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const [retryCount, setRetryCount] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [viewedQuestions, setViewedQuestions] = useState<McqQuestion[]>([]);
+  const [viewedQuestions, setViewedQuestions] = useState<QuestionData[]>([]);
   const [userPoints, setUserPoints] = useState(0);
   const maxRetries = 3;
   const containerRef = useRef<HTMLDivElement>(null);
@@ -126,7 +59,9 @@ export function QuestionReel({
               // Track viewed articles for quiz
               if (
                 questions[index] &&
-                !viewedQuestions.find((a) => a.id === questions[index].id)
+                !viewedQuestions.find(
+                  (a) => a.question === questions[index].question,
+                )
               ) {
                 setViewedQuestions((prev) => [...prev, questions[index]]);
               }
@@ -150,18 +85,20 @@ export function QuestionReel({
 
     setLoading(true);
     try {
-      const response = await fetch("/api/wikipedia", {
+      const response = await fetch("/api/questions", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ interests, count: 5 }),
+        body: JSON.stringify({ interests: "UPSC" }),
       });
 
       if (response.ok) {
         const newArticles = await response.json();
-        if (newArticles && newArticles.length > 0) {
-          setQuestions((prev) => [...prev, ...newArticles]);
+        console.log("yo", newArticles);
+
+        if (newArticles && newArticles.data.length > 0) {
+          setQuestions((prev) => [...prev, ...newArticles.data]);
           setRetryCount(0);
         } else {
           console.warn("No articles returned from API");
@@ -173,7 +110,6 @@ export function QuestionReel({
           }
         }
       } else {
-        setQuestions(dummy);
         console.error(
           "API response not ok:",
           response.status,
@@ -284,7 +220,7 @@ export function QuestionReel({
       >
         {questions.map((question, index) => (
           <div
-            key={`${question.id}-${index}`}
+            key={`${question.question}-${index}`}
             data-index={index}
             ref={index === questions.length - 1 ? lastArticleElementRef : null}
             className="h-full snap-start snap-always flex-shrink-0"

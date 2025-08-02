@@ -6,38 +6,29 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle } from "lucide-react";
-import confetti from "canvas-confetti";
+import { QuestionData } from "@/lib/repositories/question-repository";
+// import confetti from "canvas-confetti";
 
-interface McqQuestion {
-  id: string;
-  question: string;
-  options: {
-    id: string;
-    text: string;
-    isCorrect: boolean;
-  }[];
-  difficulty: "easy" | "medium" | "hard";
-  topic: string;
-  explanation: string;
-}
-
-export function McqCard({ currentQuestion }: { currentQuestion: McqQuestion }) {
+export function McqCard({
+  currentQuestion,
+}: {
+  currentQuestion: QuestionData;
+}) {
   const [isAnswered, setIsAnswered] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState("");
 
-  // Confetti effects
   const triggerCorrectConfetti = () => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ["#10B981", "#34D399", "#6EE7B7", "#A7F3D0"],
-    });
+    // confetti({
+    //   particleCount: 100,
+    //   spread: 70,
+    //   origin: { y: 0.6 },
+    //   colors: ["#10B981", "#34D399", "#6EE7B7", "#A7F3D0"],
+    // });
   };
 
   const handleAnswerSelect = async (optionId: string) => {
     const selectedOption = currentQuestion.options.find(
-      (opt) => opt.id === optionId,
+      (opt) => opt.name === optionId,
     );
     const isCorrect = selectedOption?.isCorrect || false;
     setIsAnswered(true);
@@ -76,7 +67,7 @@ export function McqCard({ currentQuestion }: { currentQuestion: McqQuestion }) {
               variant="outline"
               className="bg-white/20 text-white border-white/30 text-xs"
             >
-              {currentQuestion.topic}
+              {currentQuestion.tags[0]}
             </Badge>
           </div>
 
@@ -87,7 +78,7 @@ export function McqCard({ currentQuestion }: { currentQuestion: McqQuestion }) {
           {isAnswered && (
             <div className="flex items-center space-x-2 text-sm opacity-90">
               {selectedAnswer ===
-              currentQuestion.options.find((opt) => opt.isCorrect)?.id ? (
+              currentQuestion.options.find((opt) => opt.isCorrect)?.name ? (
                 <>
                   <CheckCircle className="w-4 h-4" />
                   <span>Correct!</span>
@@ -105,26 +96,26 @@ export function McqCard({ currentQuestion }: { currentQuestion: McqQuestion }) {
         {/* Answer Options */}
         <div className="p-6 space-y-3">
           {currentQuestion.options.map((option, index) => {
-            const isSelected = selectedAnswer === option.id;
+            const isSelected = selectedAnswer === option.name;
             const isCorrect = option.isCorrect;
             const showResult = isAnswered;
 
             let buttonClass =
-              "w-full p-4 text-left bg-gray-900 hover:bg-gray-800 rounded-xl transition-all duration-300 transform";
+              "w-full text-left rounded-xl transition-all duration-300 transform rounded-full";
 
             if (showResult) {
               if (isCorrect) {
                 buttonClass +=
-                  " bg-green-50 border-green-400 text-green-800 shadow-green-100";
+                  " bg-green-500 border-green-400 text-green-800 shadow-green-100";
               } else if (isSelected && !isCorrect) {
                 buttonClass +=
-                  " bg-red-50 border-red-400 text-red-800 shadow-red-100";
+                  " bg-red-500 border-red-400 text-red-800 shadow-red-100";
               } else {
                 buttonClass += " bg-gray-50 border-gray-200 text-gray-600";
               }
             } else if (isSelected) {
               buttonClass +=
-                " bg-purple-50 border-purple-400 text-purple-800 shadow-purple-100";
+                " bg-purple-500 border-purple-400 text-purple-800 shadow-purple-100";
             } else {
               buttonClass +=
                 " bg-white border-gray-200 text-gray-700 hover:border-purple-300 hover:bg-purple-50";
@@ -132,26 +123,26 @@ export function McqCard({ currentQuestion }: { currentQuestion: McqQuestion }) {
 
             return (
               <button
-                key={option.id}
-                onClick={() => !isAnswered && handleAnswerSelect(option.id)}
+                key={option.name}
+                onClick={() => !isAnswered && handleAnswerSelect(option.name)}
                 disabled={isAnswered}
                 className={buttonClass}
               >
-                <div className="flex items-center justify-between">
+                <div className="flex p-4 bg-black/70 items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center text-sm font-bold text-purple-700">
+                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center text-sm font-bold text-gray-800">
                       {String.fromCharCode(65 + index)}
                     </div>
                     <span className="font-medium text-white">
-                      {option.text}
+                      {option.name}
                     </span>
                   </div>
 
                   {showResult && isCorrect && (
-                    <CheckCircle className="w-5 h-5 text-green-600 animate-pulse" />
+                    <CheckCircle className="w-5 h-5 text-green-200 animate-pulse" />
                   )}
                   {showResult && isSelected && !isCorrect && (
-                    <XCircle className="w-5 h-5 text-red-600 animate-pulse" />
+                    <XCircle className="w-5 h-5 text-red-200 animate-pulse" />
                   )}
                 </div>
               </button>
