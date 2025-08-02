@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Check } from "lucide-react";
 import { InterestCategory } from "@/types";
 
-const INTERESTS: {
+export const INTERESTS: {
   id: InterestCategory;
   label: string;
   emoji: string;

@@ -61,6 +61,16 @@ export interface QuizResult {
   selectedOption: string;
 }
 
+export interface IUser {
+  id: string;
+  email: string;
+  emailVerified: Date | null;
+  image: string;
+  interest: string;
+  points: number;
+  streak: number;
+}
+
 export type ViewType = "interests" | "reel" | "leaderboard";
 export type InterestCategory =
   | "jee"

@@ -6,8 +6,11 @@ import { Leaderboard } from "@/components/leaderboard";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
 import { useAppState } from "@/hooks/use-app-state";
 import type { InterestCategory } from "@/types";
+import { storeInterests } from "@/actions/setInterest";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
+  const { data } = useSession();
   const {
     currentView,
     selectedInterests,
@@ -15,9 +18,10 @@ export default function Home() {
     setSelectedInterests,
     resetState,
   } = useAppState();
-
-  const handleInterestsSelected = (interests: string[]) => {
+  console.log(data);
+  const handleInterestsSelected = async (interests: InterestCategory[]) => {
     setSelectedInterests(interests);
+    storeInterests(interests, data?.user?.email as string);
     setCurrentView("reel");
   };
 

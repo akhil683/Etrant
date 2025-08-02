@@ -6,18 +6,13 @@ import { ArrowLeft, Loader2, Trophy } from "lucide-react";
 import { UserMenu } from "./auth/user-menu";
 import { McqCard } from "./question-card";
 import { QuestionData } from "@/lib/repositories/question-repository";
+import Link from "next/link";
 
 interface InfiniteReelProps {
-  interests: string[];
-  onBack: () => void;
-  onShowLeaderboard: () => void;
+  interests: string;
 }
 
-export function QuestionReel({
-  interests,
-  onBack,
-  onShowLeaderboard,
-}: InfiniteReelProps) {
+export function QuestionReel({ interests }: InfiniteReelProps) {
   const [questions, setQuestions] = useState<QuestionData[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -82,7 +77,7 @@ export function QuestionReel({
 
   const loadMoreArticles = async () => {
     if (loading) return;
-
+    console.log(interests);
     setLoading(true);
     try {
       const response = await fetch("/api/questions", {
@@ -90,7 +85,7 @@ export function QuestionReel({
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ interests: "UPSC" }),
+        body: JSON.stringify({ interests }),
       });
 
       if (response.ok) {
@@ -178,15 +173,16 @@ export function QuestionReel({
       {/* Header */}
       <div className="sticky top-0 z-10 bg-black/20 backdrop-blur-sm border-b border-gray-900">
         <div className="flex items-center justify-between p-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onBack}
-            className="text-white hover:bg-gray-400"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
+          <Link href={"/"}>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-white hover:bg-gray-400"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+          </Link>
           <h1 className="text-lg font-semibold">Wikipedia Reel</h1>
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2 bg-yellow-600/20 px-3 py-1 rounded-full">
@@ -195,14 +191,15 @@ export function QuestionReel({
                 {userPoints}
               </span>
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onShowLeaderboard}
-              className="text-white hover:bg-gray-800"
-            >
-              <Trophy className="w-4 h-4" />
-            </Button>
+            <Link href={"/leaderboard"}>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white hover:bg-gray-800"
+              >
+                <Trophy className="w-4 h-4" />
+              </Button>
+            </Link>
             <UserMenu />
           </div>
         </div>

@@ -1,10 +1,10 @@
 import { AIQuestions } from "@/lib/repositories/question-repository";
+import { InterestCategory } from "@/types";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {
   try {
     const { interests: category } = await request.json();
-
     if (!category || typeof category !== "string") {
       return NextResponse.json(
         {
@@ -15,7 +15,9 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const questions = await AIQuestions.getAIQuestions(category);
+    const questions = await AIQuestions.getAIQuestions(
+      category as InterestCategory,
+    );
 
     return NextResponse.json({
       success: true,

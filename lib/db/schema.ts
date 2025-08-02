@@ -24,6 +24,7 @@ export const users = pgTable("user", {
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
   streak: integer("streak").default(0),
+  interest: text("interest"),
   points: integer("points").default(0),
 });
 

@@ -1,25 +1,18 @@
-"use client";
+import { getUserData } from "@/actions/getInterest";
 import { QuestionReel } from "@/components/question-reel";
-import { useAppState } from "@/hooks/use-app-state";
+import { IUser } from "@/types";
+import { redirect } from "next/navigation";
 
-export default function AiQuestionPage() {
-  const { selectedInterests, setCurrentView, resetState } = useAppState();
+export default async function AiQuestionPage() {
+  const userData: IUser | null = await getUserData();
 
-  const handleBackToInterests = () => {
-    resetState();
-  };
-
-  const handleShowLeaderboard = () => {
-    setCurrentView("leaderboard");
-  };
-
+  if (!userData) {
+    redirect("/");
+  }
+  console.log(userData);
   return (
     <div>
-      <QuestionReel
-        interests={selectedInterests}
-        onBack={handleBackToInterests}
-        onShowLeaderboard={handleShowLeaderboard}
-      />
+      <QuestionReel interests={userData?.interest as string} />
     </div>
   );
 }
