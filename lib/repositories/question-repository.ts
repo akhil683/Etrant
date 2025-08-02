@@ -40,7 +40,7 @@ const ai = new GoogleGenAI({
 });
 
 export const AI_PROMPT_TEMPLATE = `
-Generate 10 questions based on the given category and requirements.
+Generate 20 questions based on the given category and requirements.
 IMPORTANT: You must respond with an Array of EXACTLY this JSON structure, no additional text or formatting:
 [
   {
@@ -68,7 +68,7 @@ name: "option3",
 isCorrect: true/false,
 },
 ],
-"previousYearQuestion": "{exam_name}-{year}, if not then empty string",
+"previousYearQuestion": "exam_name-year, if not then empty string",
     "correctAnswer": 0,
     "explanation": "Optional explanation",
     "metadata": {

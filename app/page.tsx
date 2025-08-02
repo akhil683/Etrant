@@ -16,7 +16,7 @@ export default function Home() {
     resetState,
   } = useAppState();
 
-  const handleInterestsSelected = (interests: InterestCategory[]) => {
+  const handleInterestsSelected = (interests: string[]) => {
     setSelectedInterests(interests);
     setCurrentView("reel");
   };

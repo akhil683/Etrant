@@ -63,18 +63,18 @@ export interface QuizResult {
 
 export type ViewType = "interests" | "reel" | "leaderboard";
 export type InterestCategory =
-  | "science"
-  | "technology"
-  | "history"
-  | "art"
-  | "sports"
-  | "music"
-  | "nature"
-  | "space"
-  | "food"
-  | "travel"
-  | "literature"
-  | "philosophy";
+  | "jee"
+  | "neet"
+  | "upsc"
+  | "gate"
+  | "cat"
+  | "ssc"
+  | "railway"
+  | "banking"
+  | "clat"
+  | "nda"
+  | "aiims"
+  | "net";
 
 export interface Question {
   id: string;

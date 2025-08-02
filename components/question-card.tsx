@@ -7,7 +7,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle } from "lucide-react";
 import { QuestionData } from "@/lib/repositories/question-repository";
-// import confetti from "canvas-confetti";
+import confetti from "canvas-confetti";
 
 export function McqCard({
   currentQuestion,
@@ -18,12 +18,12 @@ export function McqCard({
   const [selectedAnswer, setSelectedAnswer] = useState("");
 
   const triggerCorrectConfetti = () => {
-    // confetti({
-    //   particleCount: 100,
-    //   spread: 70,
-    //   origin: { y: 0.6 },
-    //   colors: ["#10B981", "#34D399", "#6EE7B7", "#A7F3D0"],
-    // });
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ["#10B981", "#34D399", "#6EE7B7", "#A7F3D0"],
+    });
   };
 
   const handleAnswerSelect = async (optionId: string) => {
@@ -63,12 +63,23 @@ export function McqCard({
             >
               {currentQuestion.difficulty.toUpperCase()}
             </Badge>
-            <Badge
-              variant="outline"
-              className="bg-white/20 text-white border-white/30 text-xs"
-            >
-              {currentQuestion.tags[0]}
-            </Badge>
+            <div className="flex justify-center gap-2">
+              <Badge
+                variant="outline"
+                className="bg-white/20 text-white border-white/30 text-xs"
+              >
+                {currentQuestion.tags[0]}
+              </Badge>
+
+              {currentQuestion.previousYearQuestion !== "" && (
+                <Badge
+                  variant="outline"
+                  className="bg-white/20 text-white border-white/30 text-xs"
+                >
+                  {currentQuestion.previousYearQuestion}
+                </Badge>
+              )}
+            </div>
           </div>
 
           <h2 className="text-2xl font-semibold leading-relaxed">
