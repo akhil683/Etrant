@@ -43,7 +43,6 @@ export class WikipediaRepository
         }
 
         const data = await response.json();
-        console.log("article", data);
         return this.mapToArticle(data, category);
       } catch (error) {
         this.logger.warn("Wikipedia API failed, using fallback", {

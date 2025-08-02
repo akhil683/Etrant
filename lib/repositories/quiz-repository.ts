@@ -1,45 +1,51 @@
-import type { Article, Quiz } from "@/types"
-import { BaseRepository } from "./base-repository"
-import { QuizGenerationError } from "@/lib/errors/custom-errors"
-import { generateText } from "ai"
-import { openai } from "@ai-sdk/openai"
+import type { Article, Quiz } from "@/types";
+import { BaseRepository } from "./base-repository";
+import { QuizGenerationError } from "@/lib/errors/custom-errors";
+import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
 
 export interface IQuizRepository {
-  generateQuiz(articles: Article[]): Promise<Quiz>
+  generateQuiz(articles: Article[]): Promise<Quiz>;
 }
 
 export class QuizRepository extends BaseRepository implements IQuizRepository {
-  private static instance: QuizRepository
+  private static instance: QuizRepository;
 
   public static getInstance(): QuizRepository {
     if (!QuizRepository.instance) {
-      QuizRepository.instance = new QuizRepository()
+      QuizRepository.instance = new QuizRepository();
     }
-    return QuizRepository.instance
+    return QuizRepository.instance;
   }
 
   async generateQuiz(articles: Article[]): Promise<Quiz> {
     return this.handleRequest(async () => {
       if (!articles || articles.length === 0) {
-        throw new QuizGenerationError("No articles provided for quiz generation")
+        throw new QuizGenerationError(
+          "No articles provided for quiz generation",
+        );
       }
 
-      const randomArticle = articles[Math.floor(Math.random() * articles.length)]
+      const randomArticle =
+        articles[Math.floor(Math.random() * articles.length)];
 
       try {
         const { text } = await generateText({
           model: openai("gpt-4o-mini"),
           prompt: this.buildQuizPrompt(randomArticle),
-          maxTokens: 400,
-        })
+          // maxTokens: 400,
+        });
 
-        const quizData = JSON.parse(text)
-        return this.validateAndMapQuiz(quizData, randomArticle)
+        const quizData = JSON.parse(text);
+        return this.validateAndMapQuiz(quizData, randomArticle);
       } catch (error) {
-        this.logger.warn("AI quiz generation failed, using fallback", { article: randomArticle.title, error })
-        return this.generateFallbackQuiz(randomArticle)
+        this.logger.warn("AI quiz generation failed, using fallback", {
+          article: randomArticle.title,
+          error,
+        });
+        return this.generateFallbackQuiz(randomArticle);
       }
-    }, "Failed to generate quiz")
+    }, "Failed to generate quiz");
   }
 
   private buildQuizPrompt(article: Article): string {
@@ -69,12 +75,16 @@ Make sure:
 - The question is specific and answerable from the summary
 - Only one option is correct
 - Wrong options are plausible but clearly incorrect
-- The question tests understanding, not just memorization`
+- The question tests understanding, not just memorization`;
   }
 
   private validateAndMapQuiz(quizData: any, article: Article): Quiz {
-    if (!quizData.question || !quizData.options || !Array.isArray(quizData.options)) {
-      throw new QuizGenerationError("Invalid quiz structure from AI")
+    if (
+      !quizData.question ||
+      !quizData.options ||
+      !Array.isArray(quizData.options)
+    ) {
+      throw new QuizGenerationError("Invalid quiz structure from AI");
     }
 
     return {
@@ -88,12 +98,14 @@ Make sure:
       points: quizData.points || 10,
       timeLimit: 15,
       difficulty: "medium",
-    }
+    };
   }
 
   private generateFallbackQuiz(article: Article): Quiz {
-    const topics = ["History", "Science", "Art", "Technology", "Nature"]
-    const wrongOptions = topics.filter((topic) => topic !== article.topic).slice(0, 3)
+    const topics = ["History", "Science", "Art", "Technology", "Nature"];
+    const wrongOptions = topics
+      .filter((topic) => topic !== article.topic)
+      .slice(0, 3);
 
     return {
       id: `fallback-quiz-${Date.now()}`,
@@ -113,6 +125,6 @@ Make sure:
       points: 10,
       timeLimit: 15,
       difficulty: "easy" as const,
-    }
+    };
   }
 }
