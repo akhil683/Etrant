@@ -186,7 +186,7 @@ Rules:
 - EstimatedTime is in minutes
 - Complexity is 1-10 scale (1=very simple, 10=expert level)
 - No markdown formatting, just pure JSON array
-- Return exactly 10 questions
+- Return exactly 20 questions
 - There should only be one correct option
 `;
 }

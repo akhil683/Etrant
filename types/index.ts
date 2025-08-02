@@ -84,6 +84,7 @@ export type InterestCategory =
   | "clat"
   | "nda"
   | "aiims"
+  | "afcat"
   | "net";
 
 export interface Question {
