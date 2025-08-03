@@ -81,26 +81,26 @@ export function ArticleCard({ article }: ArticleCardProps) {
           </p>
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setLiked(!liked)}
-                className={`p-2 ${liked ? "text-red-500" : "text-white"} hover:bg-white/10`}
-              >
-                <Heart className={`w-6 h-6 ${liked ? "fill-current" : ""}`} />
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={handleShare}
-                className="p-2 text-white hover:bg-white/10"
-              >
-                <Share2 className="w-6 h-6" />
-              </Button>
-            </div>
+          <div className="flex items-center justify-end">
+            {/* <div className="flex items-center space-x-4"> */}
+            {/*   <Button */}
+            {/*     variant="ghost" */}
+            {/*     size="sm" */}
+            {/*     onClick={() => setLiked(!liked)} */}
+            {/*     className={`p-2 ${liked ? "text-red-500" : "text-white"} hover:bg-white/10`} */}
+            {/*   > */}
+            {/*     <Heart className={`w-6 h-6 ${liked ? "fill-current" : ""}`} /> */}
+            {/*   </Button> */}
+            {/**/}
+            {/*   <Button */}
+            {/*     variant="ghost" */}
+            {/*     size="sm" */}
+            {/*     onClick={handleShare} */}
+            {/*     className="p-2 text-white hover:bg-white/10" */}
+            {/*   > */}
+            {/*     <Share2 className="w-6 h-6" /> */}
+            {/*   </Button> */}
+            {/* </div> */}
 
             <Button
               onClick={handleReadMore}

@@ -135,7 +135,7 @@ export function McqCard({
             return (
               <div className="rounded-full overflow-hidden">
                 <button
-                  key={option.name}
+                  key={`${option.name}-${index}`}
                   onClick={() => !isAnswered && handleAnswerSelect(option.name)}
                   disabled={isAnswered}
                   className={buttonClass}

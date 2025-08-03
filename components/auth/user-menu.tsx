@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import {
@@ -13,14 +13,36 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Trophy, LogOut, Settings, BookDown } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function UserMenu() {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const [interest, setInterest] = useState("");
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await fetch("api/user");
+      const userData = await res.json();
+      if (userData) {
+        setInterest(userData.interest);
+      }
+    };
+    fetchUser();
+  }, []);
 
   const handleSignOut = async () => {
     setLoading(true);
     await signOut({ callbackUrl: "/" });
+  };
+
+  const aiQuestionHandler = () => {
+    if (interest) {
+      router.push("/ai-questions");
+    } else {
+      router.push("/interest");
+    }
   };
 
   if (!session) {
@@ -71,41 +93,43 @@ export function UserMenu() {
           <DropdownMenuSeparator className="bg-gray-700" />
           <div className="p-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-400">Points:</span>
-              <span className="font-semibold text-yellow-400">
-                {/* {session.user?.points} */}0
-              </span>
-            </div>
-            <div className="flex items-center justify-between text-sm">
               <span className="text-gray-400">Streak:</span>
               <span className="font-semibold text-orange-400">
                 {/* {session.user?.streak} */}0
               </span>
             </div>
+
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-400">Interest:</span>
+              <span className="font-semibold text-orange-400">
+                {interest.toUpperCase()}
+              </span>
+            </div>
           </div>
           <DropdownMenuSeparator className="bg-gray-700" />
-          <DropdownMenuItem asChild className="hover:bg-gray-700">
+          <DropdownMenuItem className="hover:bg-gray-700">
             <Link href="/leaderboard" className="flex items-center">
               <Trophy className="mr-2 h-4 w-4" />
               <span>Leaderboard</span>
             </Link>
           </DropdownMenuItem>
 
-          <DropdownMenuItem className="hover:bg-gray-700">
-            <Link href={"/interest"} className="flex items-center">
-              <BookDown className="mr-2 h-4 w-4" />
-              <span>AI Questions</span>
-            </Link>
+          <DropdownMenuItem
+            onClick={aiQuestionHandler}
+            className="hover:bg-gray-700 cursor-pointer"
+          >
+            <BookDown className="mr-2 h-4 w-4" />
+            <span>AI Questions</span>
           </DropdownMenuItem>
-          <DropdownMenuItem className="hover:bg-gray-700">
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
-          </DropdownMenuItem>
+          {/* <DropdownMenuItem className="hover:bg-gray-700"> */}
+          {/*   <Settings className="mr-2 h-4 w-4" /> */}
+          {/*   <span>Settings</span> */}
+          {/* </DropdownMenuItem> */}
           <DropdownMenuSeparator className="bg-gray-700" />
           <DropdownMenuItem
             onClick={handleSignOut}
             disabled={loading}
-            className="hover:bg-gray-700"
+            className="hover:bg-gray-700 cursor-pointer"
           >
             <LogOut className="mr-2 h-4 w-4" />
             <span>{loading ? "Signing out..." : "Sign out"}</span>

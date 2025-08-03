@@ -1,12 +1,22 @@
 "use client";
 import { Trophy } from "lucide-react";
-import { Button } from "./ui/button";
 import { UserMenu } from "./auth/user-menu";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
 export default function Header() {
+  const [interest, setInterest] = useState("");
   const [userPoints, setUserPoints] = useState(0);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await fetch("api/user");
+      const userData = await res.json();
+      if (userData) {
+        setInterest(userData.interest);
+      }
+    };
+    fetchUser();
+  }, []);
   // useEffect(() => {
   //   localStorage.setItem("userPoints", userPoints.toString());
   // }, [userPoints]);
