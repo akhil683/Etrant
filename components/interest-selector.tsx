@@ -131,10 +131,10 @@ export function InterestSelector() {
     <div className="min-h-screen flex items-center justify-center p-4">
       <div className="max-w-2xl w-full">
         <div className="text-center mb-8">
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className="md:text-4xl text-2xl font-bold text-white mb-4">
             What interests you?
           </h1>
-          <p className="text-gray-300 text-lg">
+          <p className="text-gray-300 md:text-lg">
             Select your interests to get personalized Wikipedia discoveries
           </p>
         </div>
@@ -143,7 +143,7 @@ export function InterestSelector() {
           {INTERESTS.map((interest) => (
             <Card
               key={interest.id}
-              className={`p-4 cursor-pointer transition-all duration-200 hover:scale-105 ${
+              className={`md:p-4 p-2 cursor-pointer transition-all duration-200 hover:scale-105 ${
                 selectedInterests.includes(interest.id)
                   ? "bg-white text-black border-2 border-white"
                   : "bg-white/10 text-white border border-white/20 hover:bg-white/20"
@@ -152,8 +152,10 @@ export function InterestSelector() {
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <span className="text-2xl">{interest.emoji}</span>
-                  <span className="font-medium">{interest.label}</span>
+                  <span className="md:text-2xl text-lg">{interest.emoji}</span>
+                  <span className="font-medium text-base">
+                    {interest.label}
+                  </span>
                 </div>
                 {selectedInterests.includes(interest.id) && (
                   <Check className="w-5 h-5" />

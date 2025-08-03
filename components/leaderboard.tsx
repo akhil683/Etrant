@@ -84,8 +84,9 @@ export function Leaderboard() {
 
     // Find user rank
     const currentUserRank =
-      sortedLeaderboard.findIndex((entry) => entry.name === currentUserName) +
-      1;
+      sortedLeaderboard.findIndex(
+        (entry: any) => entry.name === currentUserName,
+      ) + 1;
     setUserRank(currentUserRank);
 
     setLeaderboard(sortedLeaderboard.slice(0, 20)); // Top 20
