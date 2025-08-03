@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Trophy, LogOut, Settings } from "lucide-react";
+import { Trophy, LogOut, Settings, BookDown } from "lucide-react";
 import Link from "next/link";
 
 export function UserMenu() {
@@ -36,73 +36,82 @@ export function UserMenu() {
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-          <Avatar className="h-8 w-8">
-            <AvatarImage
-              src={session.user?.image || ""}
-              alt={session.user?.name || ""}
-            />
-            <AvatarFallback>
-              {session.user?.name?.charAt(0) || "U"}
-            </AvatarFallback>
-          </Avatar>
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="w-56 bg-gray-800 border-gray-700 text-white"
-        align="end"
-        forceMount
-      >
-        <div className="flex items-center justify-start gap-2 p-2">
-          <div className="flex flex-col space-y-1 leading-none">
-            {session.user?.name && (
-              <p className="font-medium">{session.user?.name}</p>
-            )}
-            {session.user?.email && (
-              <p className="w-[200px] truncate text-sm text-gray-400">
-                {session.user?.email}
-              </p>
-            )}
-          </div>
-        </div>
-        <DropdownMenuSeparator className="bg-gray-700" />
-        {/* <div className="p-2"> */}
-        {/*   <div className="flex items-center justify-between text-sm"> */}
-        {/*     <span className="text-gray-400">Points:</span> */}
-        {/*     <span className="font-semibold text-yellow-400"> */}
-        {/*       {session.user?.points} */}
-        {/*     </span> */}
-        {/*   </div> */}
-        {/*   <div className="flex items-center justify-between text-sm"> */}
-        {/*     <span className="text-gray-400">Streak:</span> */}
-        {/*     <span className="font-semibold text-orange-400"> */}
-        {/*       {session.user?.streak} */}
-        {/*     </span> */}
-        {/*   </div> */}
-        {/* </div> */}
-        <DropdownMenuSeparator className="bg-gray-700" />
-        <DropdownMenuItem asChild className="hover:bg-gray-700">
-          <Link href="/leaderboard" className="flex items-center">
-            <Trophy className="mr-2 h-4 w-4" />
-            <span>Leaderboard</span>
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem className="hover:bg-gray-700">
-          <Settings className="mr-2 h-4 w-4" />
-          <span>Settings</span>
-        </DropdownMenuItem>
-        <DropdownMenuSeparator className="bg-gray-700" />
-        <DropdownMenuItem
-          onClick={handleSignOut}
-          disabled={loading}
-          className="hover:bg-gray-700"
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+            <Avatar className="h-8 w-8">
+              <AvatarImage
+                src={session.user?.image || ""}
+                alt={session.user?.name || ""}
+              />
+              <AvatarFallback>
+                {session.user?.name?.charAt(0) || "U"}
+              </AvatarFallback>
+            </Avatar>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          className="w-56 bg-gray-800 border-gray-700 text-white"
+          align="end"
+          forceMount
         >
-          <LogOut className="mr-2 h-4 w-4" />
-          <span>{loading ? "Signing out..." : "Sign out"}</span>
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <div className="flex items-center justify-start gap-2 p-2">
+            <div className="flex flex-col space-y-1 leading-none">
+              {session.user?.name && (
+                <p className="font-medium">{session.user?.name}</p>
+              )}
+              {session.user?.email && (
+                <p className="w-[200px] truncate text-sm text-gray-400">
+                  {session.user?.email}
+                </p>
+              )}
+            </div>
+          </div>
+          <DropdownMenuSeparator className="bg-gray-700" />
+          <div className="p-2">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-400">Points:</span>
+              <span className="font-semibold text-yellow-400">
+                {/* {session.user?.points} */}0
+              </span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-400">Streak:</span>
+              <span className="font-semibold text-orange-400">
+                {/* {session.user?.streak} */}0
+              </span>
+            </div>
+          </div>
+          <DropdownMenuSeparator className="bg-gray-700" />
+          <DropdownMenuItem asChild className="hover:bg-gray-700">
+            <Link href="/leaderboard" className="flex items-center">
+              <Trophy className="mr-2 h-4 w-4" />
+              <span>Leaderboard</span>
+            </Link>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem className="hover:bg-gray-700">
+            <Link href={"/interest"} className="flex items-center">
+              <BookDown className="mr-2 h-4 w-4" />
+              <span>AI Questions</span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuItem className="hover:bg-gray-700">
+            <Settings className="mr-2 h-4 w-4" />
+            <span>Settings</span>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator className="bg-gray-700" />
+          <DropdownMenuItem
+            onClick={handleSignOut}
+            disabled={loading}
+            className="hover:bg-gray-700"
+          >
+            <LogOut className="mr-2 h-4 w-4" />
+            <span>{loading ? "Signing out..." : "Sign out"}</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 }

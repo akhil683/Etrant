@@ -1,4 +1,4 @@
-import type { InterestCategory } from "@/types"
+import type { InterestCategory } from "@/types";
 
 export const APP_CONFIG = {
   QUIZ_TRIGGER_INTERVAL: 5,
@@ -7,12 +7,22 @@ export const APP_CONFIG = {
   ARTICLES_PER_LOAD: 5,
   MAX_RETRIES: 3,
   LEADERBOARD_SIZE: 20,
-} as const
+} as const;
 
 export const INTEREST_CATEGORIES: Record<InterestCategory, string[]> = {
   science: ["physics", "chemistry", "biology", "mathematics", "astronomy"],
-  technology: ["computer science", "artificial intelligence", "robotics", "internet"],
-  history: ["ancient history", "world war", "civilization", "historical figures"],
+  technology: [
+    "computer science",
+    "artificial intelligence",
+    "robotics",
+    "internet",
+  ],
+  history: [
+    "ancient history",
+    "world war",
+    "civilization",
+    "historical figures",
+  ],
   art: ["painting", "sculpture", "architecture", "artists"],
   sports: ["football", "basketball", "olympics", "athletes"],
   music: ["classical music", "rock music", "musicians", "instruments"],
@@ -22,7 +32,7 @@ export const INTEREST_CATEGORIES: Record<InterestCategory, string[]> = {
   travel: ["countries", "cities", "landmarks", "tourism"],
   literature: ["novels", "poetry", "authors", "books"],
   philosophy: ["philosophers", "ethics", "logic", "metaphysics"],
-} as const
+} as const;
 
 export const FALLBACK_ARTICLES = [
   {
@@ -49,4 +59,4 @@ export const FALLBACK_ARTICLES = [
     url: "https://en.wikipedia.org/wiki/Artificial_intelligence",
     pageId: "1386",
   },
-] as const
+] as const;

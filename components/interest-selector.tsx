@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { InterestCategory } from "@/types";
 import { storeInterests } from "@/actions/setInterest";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export const INTERESTS: {
   id: InterestCategory;
@@ -109,10 +110,22 @@ export const INTERESTS: {
 
 export function InterestSelector() {
   const { data } = useSession();
+  const [loading, setLoading] = useState(false);
   const [selectedInterests, setSelectedInterests] = useState<
     InterestCategory[]
   >([]);
+  const router = useRouter();
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const res = await fetch("/api/user");
+      const userData = await res.json();
+      if (userData) {
+        setSelectedInterests([userData.interest]);
+      }
+    };
+    fetchUser();
+  }, []);
   const toggleInterest = (interestId: InterestCategory) => {
     setSelectedInterests((prev) =>
       prev.includes(interestId)
@@ -122,20 +135,23 @@ export function InterestSelector() {
   };
 
   const handleContinue = () => {
+    setLoading(true);
     if (selectedInterests.length > 0) {
       storeInterests(selectedInterests, data?.user?.email as string);
+      router.push("/ai-questions");
     }
+    setLoading(false);
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="max-w-2xl w-full">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-black">
+      <div className="max-w-4xl w-full">
         <div className="text-center mb-8">
           <h1 className="md:text-4xl text-2xl font-bold text-white mb-4">
             What interests you?
           </h1>
           <p className="text-gray-300 md:text-lg">
-            Select your interests to get personalized Wikipedia discoveries
+            Select your interests to get personalized question discoveries
           </p>
         </div>
 
@@ -152,10 +168,8 @@ export function InterestSelector() {
             >
               <div className="flex items-center justify-between">
                 <div className="flex items-center space-x-3">
-                  <span className="md:text-2xl text-lg">{interest.emoji}</span>
-                  <span className="font-medium text-base">
-                    {interest.label}
-                  </span>
+                  <span className="md:text-xl text-lg">{interest.emoji}</span>
+                  <span className="font-medium text-sm">{interest.label}</span>
                 </div>
                 {selectedInterests.includes(interest.id) && (
                   <Check className="w-5 h-5" />
@@ -168,9 +182,10 @@ export function InterestSelector() {
         <div className="text-center">
           <Button
             onClick={handleContinue}
-            disabled={selectedInterests.length === 0}
+            disabled={selectedInterests.length === 0 || loading}
             className="bg-white text-black hover:bg-gray-200 px-8 py-3 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
           >
+            {loading && <Loader2 className="h-4 w-4 animate-spin" />}
             Continue ({selectedInterests.length} selected)
           </Button>
         </div>
