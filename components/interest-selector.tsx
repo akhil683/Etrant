@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Check } from "lucide-react";
 import { InterestCategory } from "@/types";
+import { storeInterests } from "@/actions/setInterest";
+import { useSession } from "next-auth/react";
 
 export const INTERESTS: {
   id: InterestCategory;
@@ -96,15 +98,17 @@ export const INTERESTS: {
     brief:
       "UGC-NET determines eligibility for Assistant Professorship and Junior Research Fellowship. It has two papers: General Teaching & Research Aptitude and Subject-specific paper chosen by the candidate. It covers Humanities, Sciences, Commerce, and other fields. It’s essential for those pursuing academic and research careers.",
   },
+  {
+    id: "afcat",
+    label: "AFCAT",
+    emoji: "✈️",
+    brief:
+      "AFCAT (Air Force Common Admission Test) is conducted by the Indian Air Force to recruit officers for Flying, Ground Duty (Technical), and Ground Duty (Non-Technical) branches. It tests General Awareness, Verbal Ability, Numerical Ability, Reasoning, and Military Aptitude. It’s crucial for aspirants seeking a career as an officer in the Indian Air Force.",
+  },
 ];
 
-interface InterestSelectorProps {
-  onInterestsSelected: (interests: InterestCategory[]) => void;
-}
-
-export function InterestSelector({
-  onInterestsSelected,
-}: InterestSelectorProps) {
+export function InterestSelector() {
+  const { data } = useSession();
   const [selectedInterests, setSelectedInterests] = useState<
     InterestCategory[]
   >([]);
@@ -119,7 +123,7 @@ export function InterestSelector({
 
   const handleContinue = () => {
     if (selectedInterests.length > 0) {
-      onInterestsSelected(selectedInterests);
+      storeInterests(selectedInterests, data?.user?.email as string);
     }
   };
 

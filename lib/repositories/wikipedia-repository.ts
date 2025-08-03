@@ -1,14 +1,11 @@
-import type { Article, InterestCategory } from "@/types";
+import type { Article } from "@/types";
 import { BaseRepository } from "./base-repository";
 import { WikipediaAPIError } from "@/lib/errors/custom-errors";
-import { INTEREST_CATEGORIES, FALLBACK_ARTICLES } from "@/lib/config/constants";
+import { FALLBACK_ARTICLES } from "@/lib/config/constants";
 
 export interface IWikipediaRepository {
-  getRandomArticle(category: string): Promise<Article>;
-  getArticlesByInterests(
-    interests: InterestCategory[],
-    count: number,
-  ): Promise<Article[]>;
+  getRandomArticle(): Promise<Article>;
+  getArticlesByInterests(): Promise<Article[]>;
 }
 
 export class WikipediaRepository
@@ -24,7 +21,7 @@ export class WikipediaRepository
     return WikipediaRepository.instance;
   }
 
-  async getRandomArticle(category: string): Promise<Article> {
+  async getRandomArticle(): Promise<Article> {
     return this.handleRequest(async () => {
       try {
         const response = await fetch(
@@ -43,81 +40,69 @@ export class WikipediaRepository
         }
 
         const data = await response.json();
-        return this.mapToArticle(data, category);
+        return this.mapToArticle(data);
       } catch (error) {
         this.logger.warn("Wikipedia API failed, using fallback", {
-          category,
           error,
         });
-        return this.getFallbackArticle(category);
+        return this.getFallbackArticle();
       }
     }, "Failed to fetch Wikipedia article");
   }
 
-  async getArticlesByInterests(
-    interests: InterestCategory[],
-    count: number,
-  ): Promise<Article[]> {
+  async getArticlesByInterests(): Promise<Article[]> {
     const articles: Article[] = [];
 
-    for (let i = 0; i < count; i++) {
-      const randomInterest =
-        interests[Math.floor(Math.random() * interests.length)];
-      const categories = INTEREST_CATEGORIES[randomInterest] || ["general"];
-      const randomCategory =
-        categories[Math.floor(Math.random() * categories.length)];
-
+    for (let i = 0; i < 20; i++) {
       try {
-        const article = await this.getRandomArticle(randomCategory);
+        const article = await this.getRandomArticle();
         articles.push({
           ...article,
-          topic:
-            randomInterest.charAt(0).toUpperCase() + randomInterest.slice(1),
+          topic: "General",
         });
       } catch (error) {
         this.logger.error("Error fetching article", {
-          interest: randomInterest,
           error,
         });
         continue;
       }
     }
 
-    return articles.length > 0 ? articles : this.getFallbackArticles(count);
+    return articles.length > 0 ? articles : this.getFallbackArticles();
   }
 
-  private mapToArticle(data: any, category: string): Article {
+  private mapToArticle(data: any): Article {
     return {
       id: `${data.pageid || Date.now()}-${Math.random()}`,
       title: data.title || "Unknown Article",
       summary: data.extract || data.description || "No description available.",
       thumbnail:
         data.originalimage?.source ||
-        `/placeholder.svg?height=1200&width=900&query=${encodeURIComponent(data.title || category)}`,
+        `/placeholder.svg?height=1200&width=900&query=${encodeURIComponent(data.title)}`,
       url:
         data.content_urls?.desktop?.page ||
-        `https://en.wikipedia.org/wiki/${encodeURIComponent(data.title || category)}`,
-      topic: category,
+        `https://en.wikipedia.org/wiki/${encodeURIComponent(data.title)}`,
+      topic: "General",
       createdAt: new Date(),
     };
   }
 
-  private getFallbackArticle(category: string): Article {
+  private getFallbackArticle(): Article {
     const fallback =
       FALLBACK_ARTICLES[Math.floor(Math.random() * FALLBACK_ARTICLES.length)];
     return {
       id: `fallback-${Date.now()}-${Math.random()}`,
       title: fallback.title,
       summary: fallback.extract,
-      thumbnail: `/placeholder.svg?height=400&width=300&query=${encodeURIComponent(category + " " + fallback.title)}`,
+      thumbnail: `/placeholder.svg?height=400&width=300&query=${encodeURIComponent("wikireel" + " " + fallback.title)}`,
       url: fallback.url,
-      topic: category,
+      topic: "General",
       createdAt: new Date(),
     };
   }
 
-  private getFallbackArticles(count: number): Article[] {
-    return FALLBACK_ARTICLES.slice(0, count).map((article, i) => ({
+  private getFallbackArticles(): Article[] {
+    return FALLBACK_ARTICLES.slice(0, 10).map((article, i) => ({
       id: `error-fallback-${Date.now()}-${i}`,
       title: article.title,
       summary: article.extract,

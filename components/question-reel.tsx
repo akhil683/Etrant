@@ -1,12 +1,10 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Loader2, Trophy } from "lucide-react";
-import { UserMenu } from "./auth/user-menu";
+import { Loader2 } from "lucide-react";
 import { McqCard } from "./question-card";
 import { QuestionData } from "@/lib/repositories/question-repository";
-import Link from "next/link";
+import Header from "./header";
 
 interface InfiniteReelProps {
   interests: string;
@@ -19,24 +17,10 @@ export function QuestionReel({ interests }: InfiniteReelProps) {
   const [retryCount, setRetryCount] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [viewedQuestions, setViewedQuestions] = useState<QuestionData[]>([]);
-  const [userPoints, setUserPoints] = useState(0);
   const maxRetries = 3;
   const containerRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver>();
   const isScrolling = useRef(false);
-
-  // Load user points from localStorage
-  useEffect(() => {
-    const savedPoints = localStorage.getItem("userPoints");
-    if (savedPoints) {
-      setUserPoints(Number.parseInt(savedPoints));
-    }
-  }, []);
-
-  // Save points to localStorage
-  useEffect(() => {
-    localStorage.setItem("userPoints", userPoints.toString());
-  }, [userPoints]);
 
   const lastArticleElementRef = useCallback(
     (node: HTMLDivElement) => {
@@ -171,40 +155,7 @@ export function QuestionReel({ interests }: InfiniteReelProps) {
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-black/20 backdrop-blur-sm border-b border-gray-900">
-        <div className="flex items-center justify-between p-4">
-          <Link href={"/"}>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white hover:bg-gray-400"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Button>
-          </Link>
-          <h1 className="text-lg font-semibold">Wikipedia Reel</h1>
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 bg-yellow-600/20 px-3 py-1 rounded-full">
-              <Trophy className="w-4 h-4 text-yellow-400" />
-              <span className="text-sm font-medium text-yellow-400">
-                {userPoints}
-              </span>
-            </div>
-            <Link href={"/leaderboard"}>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-white hover:bg-gray-800"
-              >
-                <Trophy className="w-4 h-4" />
-              </Button>
-            </Link>
-            <UserMenu />
-          </div>
-        </div>
-      </div>
-
+      <Header />
       {/* Articles Container */}
       <div
         ref={containerRef}
@@ -227,8 +178,11 @@ export function QuestionReel({ interests }: InfiniteReelProps) {
         ))}
 
         {loading && (
-          <div className="h-full snap-start flex items-center justify-center">
+          <div className="h-full snap-start flex items-center justify-center flex-col gap-4 md:gap-6">
             <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+            <h2 className="text-center text-gray-200 md:text-xl">
+              Generating Question. <br /> Please Wait....
+            </h2>
           </div>
         )}
       </div>

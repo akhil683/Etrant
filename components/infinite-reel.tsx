@@ -6,6 +6,7 @@ import { QuizCard } from "@/components/quiz-card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Loader2, Trophy } from "lucide-react";
 import { UserMenu } from "./auth/user-menu";
+import Header from "./header";
 
 interface Article {
   id: string;
@@ -33,26 +34,12 @@ export function InfiniteReel({
   const [retryCount, setRetryCount] = useState(0);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [viewedArticles, setViewedArticles] = useState<Article[]>([]);
-  const [userPoints, setUserPoints] = useState(0);
   const [showQuiz, setShowQuiz] = useState(false);
   const [quizData, setQuizData] = useState<any>(null);
   const maxRetries = 3;
   const containerRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver>();
   const isScrolling = useRef(false);
-
-  // Load user points from localStorage
-  useEffect(() => {
-    const savedPoints = localStorage.getItem("userPoints");
-    if (savedPoints) {
-      setUserPoints(Number.parseInt(savedPoints));
-    }
-  }, []);
-
-  // Save points to localStorage
-  useEffect(() => {
-    localStorage.setItem("userPoints", userPoints.toString());
-  }, [userPoints]);
 
   const lastArticleElementRef = useCallback(
     (node: HTMLDivElement) => {
@@ -118,9 +105,9 @@ export function InfiniteReel({
   };
 
   const handleQuizComplete = (isCorrect: boolean, points: number) => {
-    if (isCorrect) {
-      setUserPoints((prev) => prev + points);
-    }
+    // if (isCorrect) {
+    //   setUserPoints((prev) => prev + points);
+    // }
     setShowQuiz(false);
     setQuizData(null);
   };
@@ -219,37 +206,7 @@ export function InfiniteReel({
   return (
     <div className="min-h-screen bg-black text-white">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-black/20 backdrop-blur-sm border-b border-gray-900">
-        <div className="flex items-center justify-between p-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onBack}
-            className="text-white hover:bg-gray-400"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-          <h1 className="text-lg font-semibold">Wikipedia Reel</h1>
-          <div className="flex items-center space-x-4">
-            <div className="flex items-center space-x-2 bg-yellow-600/20 px-3 py-1 rounded-full">
-              <Trophy className="w-4 h-4 text-yellow-400" />
-              <span className="text-sm font-medium text-yellow-400">
-                {userPoints}
-              </span>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onShowLeaderboard}
-              className="text-white hover:bg-gray-800"
-            >
-              <Trophy className="w-4 h-4" />
-            </Button>
-            <UserMenu />
-          </div>
-        </div>
-      </div>
+      <Header />
 
       {/* Quiz Overlay */}
       {showQuiz && quizData && (
@@ -261,7 +218,7 @@ export function InfiniteReel({
       {/* Articles Container */}
       <div
         ref={containerRef}
-        className="h-[calc(100vh-73px)] overflow-y-auto snap-y snap-mandatory scroll-smooth"
+        className="md:h-[calc(100vh-73px)] h-[calc(100vh-146px)] overflow-y-auto snap-y snap-mandatory scroll-smooth"
         style={{
           scrollbarWidth: "none",
           msOverflowStyle: "none",
@@ -280,8 +237,11 @@ export function InfiniteReel({
         ))}
 
         {loading && (
-          <div className="h-full snap-start flex items-center justify-center">
+          <div className="h-full snap-start flex items-center justify-center flex-col gap-6">
             <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
+            <h2 className="text-center text-gray-200 text-xl">
+              Generating Articles....
+            </h2>
           </div>
         )}
       </div>

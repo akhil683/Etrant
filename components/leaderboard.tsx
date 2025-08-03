@@ -1,56 +1,62 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, Trophy, Medal, Award, User } from "lucide-react"
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, Trophy, Medal, Award, User } from "lucide-react";
+import Link from "next/link";
 
 interface LeaderboardEntry {
-  id: string
-  name: string
-  points: number
-  rank: number
+  id: string;
+  name: string;
+  points: number;
+  rank: number;
 }
 
-interface LeaderboardProps {
-  onBack: () => void
-}
-
-export function Leaderboard({ onBack }: LeaderboardProps) {
-  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([])
-  const [userPoints, setUserPoints] = useState(0)
-  const [userName, setUserName] = useState("")
-  const [userRank, setUserRank] = useState(0)
+export function Leaderboard() {
+  const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
+  const [userPoints, setUserPoints] = useState(0);
+  const [userName, setUserName] = useState("");
+  const [userRank, setUserRank] = useState(0);
 
   useEffect(() => {
-    loadLeaderboard()
-    loadUserData()
-  }, [])
+    loadLeaderboard();
+    loadUserData();
+  }, []);
 
   const loadUserData = () => {
-    const points = Number.parseInt(localStorage.getItem("userPoints") || "0")
-    const name = localStorage.getItem("userName") || "Anonymous"
-    setUserPoints(points)
-    setUserName(name)
-  }
+    const points = Number.parseInt(localStorage.getItem("userPoints") || "0");
+    const name = localStorage.getItem("userName") || "Anonymous";
+    setUserPoints(points);
+    setUserName(name);
+  };
 
   const loadLeaderboard = () => {
     // Get existing leaderboard from localStorage
-    const existingLeaderboard = JSON.parse(localStorage.getItem("leaderboard") || "[]")
-    const currentUserPoints = Number.parseInt(localStorage.getItem("userPoints") || "0")
-    const currentUserName = localStorage.getItem("userName") || "Anonymous"
+    const existingLeaderboard = JSON.parse(
+      localStorage.getItem("leaderboard") || "[]",
+    );
+    const currentUserPoints = Number.parseInt(
+      localStorage.getItem("userPoints") || "0",
+    );
+    const currentUserName = localStorage.getItem("userName") || "Anonymous";
 
     // Add current user if not exists or update their score
-    const userIndex = existingLeaderboard.findIndex((entry: LeaderboardEntry) => entry.name === currentUserName)
+    const userIndex = existingLeaderboard.findIndex(
+      (entry: LeaderboardEntry) => entry.name === currentUserName,
+    );
 
     if (userIndex >= 0) {
-      existingLeaderboard[userIndex].points = Math.max(existingLeaderboard[userIndex].points, currentUserPoints)
+      existingLeaderboard[userIndex].points = Math.max(
+        existingLeaderboard[userIndex].points,
+        currentUserPoints,
+      );
     } else if (currentUserPoints > 0) {
       existingLeaderboard.push({
         id: Date.now().toString(),
         name: currentUserName,
         points: currentUserPoints,
-      })
+      });
     }
 
     // Add some sample users if leaderboard is empty
@@ -64,8 +70,8 @@ export function Leaderboard({ onBack }: LeaderboardProps) {
         { id: "6", name: "BrainBox", points: 480 },
         { id: "7", name: "SmartCookie", points: 420 },
         { id: "8", name: "WisdomWolf", points: 380 },
-      ]
-      existingLeaderboard.push(...sampleUsers)
+      ];
+      existingLeaderboard.push(...sampleUsers);
     }
 
     // Sort by points and add ranks
@@ -74,48 +80,60 @@ export function Leaderboard({ onBack }: LeaderboardProps) {
       .map((entry: LeaderboardEntry, index: number) => ({
         ...entry,
         rank: index + 1,
-      }))
+      }));
 
     // Find user rank
-    const currentUserRank = sortedLeaderboard.findIndex((entry) => entry.name === currentUserName) + 1
-    setUserRank(currentUserRank)
+    const currentUserRank =
+      sortedLeaderboard.findIndex((entry) => entry.name === currentUserName) +
+      1;
+    setUserRank(currentUserRank);
 
-    setLeaderboard(sortedLeaderboard.slice(0, 20)) // Top 20
+    setLeaderboard(sortedLeaderboard.slice(0, 20)); // Top 20
 
     // Save updated leaderboard
-    localStorage.setItem("leaderboard", JSON.stringify(sortedLeaderboard))
-  }
+    localStorage.setItem("leaderboard", JSON.stringify(sortedLeaderboard));
+  };
 
   const getRankIcon = (rank: number) => {
     switch (rank) {
       case 1:
-        return <Trophy className="w-6 h-6 text-yellow-400" />
+        return <Trophy className="w-6 h-6 text-yellow-400" />;
       case 2:
-        return <Medal className="w-6 h-6 text-gray-400" />
+        return <Medal className="w-6 h-6 text-gray-400" />;
       case 3:
-        return <Award className="w-6 h-6 text-amber-600" />
+        return <Award className="w-6 h-6 text-amber-600" />;
       default:
-        return <span className="w-6 h-6 flex items-center justify-center text-sm font-bold text-gray-400">#{rank}</span>
+        return (
+          <span className="w-6 h-6 flex items-center justify-center text-sm font-bold text-gray-400">
+            #{rank}
+          </span>
+        );
     }
-  }
+  };
 
   const handleNameChange = (newName: string) => {
     if (newName.trim()) {
-      localStorage.setItem("userName", newName.trim())
-      setUserName(newName.trim())
-      loadLeaderboard() // Refresh leaderboard with new name
+      localStorage.setItem("userName", newName.trim());
+      setUserName(newName.trim());
+      loadLeaderboard(); // Refresh leaderboard with new name
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white">
       {/* Header */}
       <div className="sticky top-0 z-10 bg-black/20 backdrop-blur-sm border-b border-white/10">
         <div className="flex items-center justify-between p-4">
-          <Button variant="ghost" size="sm" onClick={onBack} className="text-white hover:bg-white/10">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
+          <Link href={"/"}>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-white hover:bg-white/10"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+          </Link>
           <h1 className="text-xl font-bold">Leaderboard</h1>
           <div className="w-16" />
         </div>
@@ -140,12 +158,16 @@ export function Leaderboard({ onBack }: LeaderboardProps) {
                   className="bg-transparent border-b border-white/30 text-lg font-semibold focus:outline-none focus:border-white/60"
                   placeholder="Enter your name"
                 />
-                <p className="text-sm text-gray-300 mt-1">Rank: #{userRank > 0 ? userRank : "Unranked"}</p>
+                <p className="text-sm text-gray-300 mt-1">
+                  Rank: #{userRank > 0 ? userRank : "Unranked"}
+                </p>
               </div>
               <div className="text-right">
                 <div className="flex items-center space-x-2">
                   <Trophy className="w-5 h-5 text-yellow-400" />
-                  <span className="text-2xl font-bold text-yellow-400">{userPoints}</span>
+                  <span className="text-2xl font-bold text-yellow-400">
+                    {userPoints}
+                  </span>
                 </div>
                 <p className="text-sm text-gray-300">points</p>
               </div>
@@ -176,7 +198,9 @@ export function Leaderboard({ onBack }: LeaderboardProps) {
                     {getRankIcon(entry.rank)}
                     <div>
                       <p className="font-semibold">{entry.name}</p>
-                      {entry.name === userName && <p className="text-xs text-blue-300">You</p>}
+                      {entry.name === userName && (
+                        <p className="text-xs text-blue-300">You</p>
+                      )}
                     </div>
                   </div>
                   <div className="text-right">
@@ -201,5 +225,5 @@ export function Leaderboard({ onBack }: LeaderboardProps) {
         </div>
       </div>
     </div>
-  )
+  );
 }
