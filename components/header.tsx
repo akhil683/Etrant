@@ -19,9 +19,9 @@ export default function Header() {
   //   }
   // }, []);
   return (
-    <div className="sticky top-0 z-10 backdrop-blur-sm border-b border-gray-900">
+    <div className="sticky top-0 z-10 backdrop-blur-sm border-b border-gray-900 bg-black">
       <div className="flex items-center justify-between p-4">
-        <h1 className="md:text-lg font-semibold">
+        <h1 className="md:text-lg font-semibold text-white">
           <Link href={"/"}>Wiki Reel</Link>
         </h1>
         <div className="flex items-center space-x-4">

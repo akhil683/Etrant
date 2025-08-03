@@ -206,6 +206,9 @@ Each object in the array must have the following exact structure and adhere to t
 4.  Does every object precisely match the specified schema and data types?
 5.  In every object, is there exactly one correct option and does the 'correctAnswer' index match it?
 6.  Is the generated JSON syntax 100% valid?
+7. The correct options should be differennt for each question. Don't always put the correct answer in one option (e.g. option1 or option2 should not be always correct)
+8. Most of the questions level should be hard.
+9. Some of the question should be previous year questions of the ${interestObj.label} exam.
 
 Proceed with generation.
 `;
@@ -225,7 +228,8 @@ export class QuestionRepository implements IWikipediaRepository {
     try {
       console.log("category poing poing", category);
       const response = await ai.models.generateContent({
-        model: "gemini-2.0-flash-exp",
+        model: "gemini-1.5-flash-latest",
+        // model: "gemini-2.0-flash-exp",
         contents: [
           {
             parts: [
