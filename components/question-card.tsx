@@ -74,7 +74,7 @@ export function McqCard({
               {currentQuestion.previousYearQuestion !== "" && (
                 <Badge
                   variant="outline"
-                  className="bg-white/20 text-white border-white/30 text-xs"
+                  className="bg-red-800/20 text-white border-white/30 text-xs"
                 >
                   {currentQuestion.previousYearQuestion}
                 </Badge>
@@ -82,7 +82,7 @@ export function McqCard({
             </div>
           </div>
 
-          <h2 className="text-2xl font-semibold leading-relaxed">
+          <h2 className="md:text-2xl text-xl font-semibold leading-relaxed">
             {currentQuestion.question}
           </h2>
 
@@ -133,30 +133,32 @@ export function McqCard({
             }
 
             return (
-              <button
-                key={option.name}
-                onClick={() => !isAnswered && handleAnswerSelect(option.name)}
-                disabled={isAnswered}
-                className={buttonClass}
-              >
-                <div className="flex p-4 bg-black/70 items-center justify-between">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-8 h-8 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center text-sm font-bold text-gray-800">
-                      {String.fromCharCode(65 + index)}
+              <div className="rounded-full overflow-hidden">
+                <button
+                  key={option.name}
+                  onClick={() => !isAnswered && handleAnswerSelect(option.name)}
+                  disabled={isAnswered}
+                  className={buttonClass}
+                >
+                  <div className="flex p-4 bg-black/80 items-center justify-between md:text-lg">
+                    <div className="flex items-center space-x-3">
+                      <div className="min-w-6 min-h-6 md:min-w-8 md:min-h-8 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center text-sm font-bold text-gray-800">
+                        {String.fromCharCode(65 + index)}
+                      </div>
+                      <span className="font-medium text-white">
+                        {option.name}
+                      </span>
                     </div>
-                    <span className="font-medium text-white">
-                      {option.name}
-                    </span>
-                  </div>
 
-                  {showResult && isCorrect && (
-                    <CheckCircle className="w-5 h-5 text-green-200 animate-pulse" />
-                  )}
-                  {showResult && isSelected && !isCorrect && (
-                    <XCircle className="w-5 h-5 text-red-200 animate-pulse" />
-                  )}
-                </div>
-              </button>
+                    {showResult && isCorrect && (
+                      <CheckCircle className="w-5 h-5 text-green-200 animate-pulse" />
+                    )}
+                    {showResult && isSelected && !isCorrect && (
+                      <XCircle className="w-5 h-5 text-red-200 animate-pulse" />
+                    )}
+                  </div>
+                </button>
+              </div>
             );
           })}
         </div>

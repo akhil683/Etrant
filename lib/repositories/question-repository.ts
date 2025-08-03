@@ -91,6 +91,13 @@ export const INTERESTS: {
     brief:
       "UGC-NET determines eligibility for Assistant Professorship and Junior Research Fellowship. It has two papers: General Teaching & Research Aptitude and Subject-specific paper chosen by the candidate. It covers Humanities, Sciences, Commerce, and other fields. It’s essential for those pursuing academic and research careers.",
   },
+  {
+    id: "afcat",
+    label: "AFCAT",
+    emoji: "✈️",
+    brief:
+      "AFCAT (Air Force Common Admission Test) is conducted by the Indian Air Force to recruit officers for Flying, Ground Duty (Technical), and Ground Duty (Non-Technical) branches. It tests General Awareness, Verbal Ability, Numerical Ability, Reasoning, and Military Aptitude. It’s crucial for aspirants seeking a career as an officer in the Indian Air Force.",
+  },
 ];
 interface OptionType {
   name: string;
@@ -137,57 +144,70 @@ function GetPrompt(interest: InterestCategory) {
     throw new Error(`Invalid interest category: ${interest}`);
   }
   return `
-Generate 20 medium or hard questions to practice for the exam - ${interestObj.label}. Below is the description of exam: \n ${interestObj.brief} \n\n
+## SYSTEM INSTRUCTIONS
+You are a specialized JSON generation API. Your sole purpose is to create educational exam questions and return them in a valid, raw JSON format. You MUST adhere strictly to the output specifications. Do not provide any conversational text, introductions, or summaries. Your entire response must be a single, valid JSON array.
 
+---
+## CORE TASK
+Generate 20 practice questions for the exam specified in the INPUT DATA section. The questions should be of 'medium' or 'hard' difficulty.
 
-IMPORTANT: You must respond with an Array of EXACTLY this JSON structure, no additional text or formatting:
-[
-  {
-    "question": "Your question here (10-500 characters)",
-    "difficulty": "easy|medium|hard",
-    "category": "The provided category",
-    "tags": ["3-8 relevant tags"],
-    "context": "Background information (10-300 characters)",
-    "estimatedTime": 1-60,
-    "options": [
+---
+## INPUT DATA
+- **Exam Category Label**: ${interestObj.label}
+- **Exam Description**: ${interestObj.brief}
+
+---
+## OUTPUT SPECIFICATION
+
+### 1. Top-Level Structure
+- The entire output MUST be a single JSON array "[...]".
+- The array MUST contain exactly 20 JSON objects.
+- The response MUST start with "[" and end with "]". There must be NO other text or formatting outside of this JSON array.
+- **CRITICAL:** DO NOT wrap the output in markdown code blocks.
+
+### 2. JSON Object Schema (Per Question)
+Each object in the array must have the following exact structure and adhere to these constraints:
+
 {
-name: "option1", 
-isCorrect: true/false,
-},
-{
-name: "option2", 
-isCorrect: true/false,
-},
-{
-name: "option3", 
-isCorrect: true/false,
-},
-{
-name: "option3", 
-isCorrect: true/false,
-},
-],
-"previousYearQuestion": "exam_name-year, if not then empty string",
-    "correctAnswer": 0,
-    "explanation": "Optional explanation",
-    "metadata": {
-      "source": "ai-generated",
-      "complexity": 1-10,
-      "bloomsLevel": "remember|understand|apply|analyze|evaluate|create",
-      "learningObjective": "Optional learning objective"
+    "question": "string", // The question text. Length: 10 to 500 characters.
+    "difficulty": "string", // Must be one of: 'medium', or 'hard'.
+    "category": "string", // Must be the exact Exam Category Label provided in the INPUT DATA.
+    "tags": ["string"], // An array of 3 to 8 relevant, lowercase, hyphen-separated string tags.
+    "context": "string", // Background information for the question. Length: 10 to 300 characters.
+    "estimatedTime": "number", // An integer from 1 to 60, representing estimated minutes to solve.
+    "options": [ // An array of exactly 4 option objects.
+      {
+        "name": "string", // The text for this option.
+        "isCorrect": "boolean" // true or false.
+      }
+    ],
+    "previousYearQuestion": "string", // Identifier like "exam_name-year". Leave as an empty string "" if not applicable.
+    "correctAnswer": "number", // The 0-based index of the correct option in the "options" array. This MUST match the option with "isCorrect": true.
+    "explanation": "string", // A detailed explanation for why the correct answer is correct and others are not. Optional, but highly recommended.
+    "metadata": { // A nested object for metadata.
+      "source": "string", // Must be "ai-generated".
+      "complexity": "number", // An integer from 5 to 10, representing difficulty on a 1-10 scale ('medium' maps to 5-7, 'hard' to 8-10).
+      "bloomsLevel": "string", // Must be one of: 'apply', 'analyze', 'evaluate', 'create'. Avoid 'remember' and 'understand'.
+      "learningObjective": "string" // A brief learning objective. Optional, can be an empty string "".
     }
-  }
-]
+}
 
-Rules:
-- Always include ALL required fields
-- For multiple-choice: include "options" and "correctAnswer" (index number)
-- Tags should be lowercase, hyphen-separated
-- EstimatedTime is in minutes
-- Complexity is 1-10 scale (1=very simple, 10=expert level)
-- No markdown formatting, just pure JSON array
-- Return exactly 20 questions
-- There should only be one correct option
+### 3. Key Constraints & Validation Rules
+- **Options Array:** The "options" array must contain exactly 4 objects.
+- **Single Correct Answer:** Within the "options" array, exactly ONE object must have '"isCorrect": true'. The other three must have '"isCorrect": false'.
+- **Index Match:** The 'correctAnswer' index must correspond to the option where 'isCorrect' is 'true'.
+- **String Escaping:** Ensure all strings within the JSON are properly escaped (e.g., use '\"' for double quotes inside a string).
+
+---
+## FINAL CHECKLIST (Internal monologue before responding)
+1.  Is my entire response starting with '[' and ending with ']' and nothing else?
+2.  Does the array contain exactly 20 objects?
+3.  Have I avoided all markdown and conversational text?
+4.  Does every object precisely match the specified schema and data types?
+5.  In every object, is there exactly one correct option and does the 'correctAnswer' index match it?
+6.  Is the generated JSON syntax 100% valid?
+
+Proceed with generation.
 `;
 }
 
