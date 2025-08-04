@@ -10,6 +10,9 @@ interface InfiniteReelProps {
   interests: string;
 }
 
+//TODO: global state for question so that question generation
+//will now start if we go to another route.
+
 export function QuestionReel({ interests }: InfiniteReelProps) {
   const [questions, setQuestions] = useState<QuestionData[]>([]);
   const [loading, setLoading] = useState(false);
@@ -181,7 +184,7 @@ export function QuestionReel({ interests }: InfiniteReelProps) {
           <div className="h-full snap-start flex items-center justify-center flex-col gap-4 md:gap-6">
             <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
             <h2 className="text-center text-gray-200 md:text-xl">
-              Generating Question. <br /> Please Wait....
+              Generating 20 Question. <br /> Please Wait....
             </h2>
           </div>
         )}

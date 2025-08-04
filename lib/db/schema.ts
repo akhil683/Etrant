@@ -26,6 +26,7 @@ export const users = pgTable("user", {
   streak: integer("streak").default(0),
   interest: text("interest"),
   points: integer("points").default(0),
+  lastActiveDate: text("lastActiveDate"),
 });
 
 export const accounts = pgTable(

@@ -5,7 +5,6 @@ import { db } from "@/lib/db/db";
 import { users } from "@/lib/db/schema";
 import { IUser } from "@/types";
 import { eq } from "drizzle-orm";
-import { NextResponse } from "next/server";
 
 export const getUserData = async () => {
   const session = await auth();

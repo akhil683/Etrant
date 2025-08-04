@@ -8,12 +8,14 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle } from "lucide-react";
 import { QuestionData } from "@/lib/repositories/question-repository";
 import confetti from "canvas-confetti";
+import { updateStreak, useUser } from "./providers/UserProvider";
 
 export function McqCard({
   currentQuestion,
 }: {
   currentQuestion: QuestionData;
 }) {
+  const { user, updateUserHandler } = useUser();
   const [isAnswered, setIsAnswered] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState("");
 
@@ -33,9 +35,17 @@ export function McqCard({
     const isCorrect = selectedOption?.isCorrect || false;
     setIsAnswered(true);
     setSelectedAnswer(optionId);
-    // Trigger confetti
     if (isCorrect) {
       triggerCorrectConfetti();
+      if (user) {
+        const streakUser = updateStreak(user);
+        updateUserHandler({
+          ...user,
+          points: user?.points + 10,
+          streak: streakUser.streak,
+          lastActiveDate: streakUser.lastActiveDate,
+        });
+      }
     }
   };
 
@@ -135,7 +145,7 @@ export function McqCard({
             return (
               <div className="rounded-full overflow-hidden">
                 <button
-                  key={option.name}
+                  key={`${option.name}-${index}`}
                   onClick={() => !isAnswered && handleAnswerSelect(option.name)}
                   disabled={isAnswered}
                   className={buttonClass}

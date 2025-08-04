@@ -13,6 +13,5 @@ export default async function AiQuestionPage() {
   if (userData?.interest === "") {
     redirect("/interest");
   }
-  console.log(userData);
   return <QuestionReel interests={userData?.interest as string} />;
 }

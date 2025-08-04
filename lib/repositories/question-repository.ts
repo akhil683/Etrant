@@ -149,7 +149,7 @@ You are a specialized JSON generation API. Your sole purpose is to create educat
 
 ---
 ## CORE TASK
-Generate 20 practice questions for the exam specified in the INPUT DATA section. The questions should be of 'medium' or 'hard' difficulty.
+Generate 20 practice questions for the exam specified in the INPUT DATA section. The questions should be really hard in difficulty.
 
 ---
 ## INPUT DATA
@@ -208,7 +208,7 @@ Each object in the array must have the following exact structure and adhere to t
 6.  Is the generated JSON syntax 100% valid?
 7. The correct options should be differennt for each question. Don't always put the correct answer in one option (e.g. option1 or option2 should not be always correct)
 8. Most of the questions level should be hard.
-9. Some of the question should be previous year questions of the ${interestObj.label} exam.
+9. Try to add as much previous year question as possible of the ${interestObj.label} exam.
 
 Proceed with generation.
 `;
