@@ -10,6 +10,9 @@ interface InfiniteReelProps {
   interests: string;
 }
 
+//TODO: global state for question so that question generation
+//will now start if we go to another route.
+
 export function QuestionReel({ interests }: InfiniteReelProps) {
   const [questions, setQuestions] = useState<QuestionData[]>([]);
   const [loading, setLoading] = useState(false);

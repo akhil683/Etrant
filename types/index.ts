@@ -69,6 +69,7 @@ export interface IUser {
   interest: string;
   points: number;
   streak: number;
+  lastActiveDate: string;
 }
 
 export type ViewType = "interests" | "reel" | "leaderboard";

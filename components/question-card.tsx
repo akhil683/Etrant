@@ -8,7 +8,7 @@ import { Badge } from "@/components/ui/badge";
 import { CheckCircle, XCircle } from "lucide-react";
 import { QuestionData } from "@/lib/repositories/question-repository";
 import confetti from "canvas-confetti";
-import { useUser } from "./providers/UserProvider";
+import { updateStreak, useUser } from "./providers/UserProvider";
 
 export function McqCard({
   currentQuestion,
@@ -38,7 +38,13 @@ export function McqCard({
     if (isCorrect) {
       triggerCorrectConfetti();
       if (user) {
-        updateUserHandler({ ...user, points: user?.points + 10 });
+        const streakUser = updateStreak(user);
+        updateUserHandler({
+          ...user,
+          points: user?.points + 10,
+          streak: streakUser.streak,
+          lastActiveDate: streakUser.lastActiveDate,
+        });
       }
     }
   };

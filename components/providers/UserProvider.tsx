@@ -12,6 +12,39 @@ type UserContextType = {
   refreshUser: () => Promise<void>;
 };
 
+export const updateStreak = (user: IUser): IUser => {
+  const formatDate = (date: Date) => date.toISOString().split("T")[0]; // "YYYY-MM-DD"
+  const today = formatDate(new Date());
+  const lastActive = user.lastActiveDate ?? null;
+
+  // If no lastActiveDate (new user) → first activity today
+  if (!lastActive) {
+    return {
+      ...user,
+      streak: 1,
+      lastActiveDate: today,
+    };
+  }
+
+  // If user already active today → do nothing
+  if (lastActive === today) return user;
+
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+  const yesterdayStr = formatDate(yesterday);
+
+  let newStreak = 1;
+  if (lastActive === yesterdayStr) {
+    newStreak = user.streak + 1;
+  }
+
+  return {
+    ...user,
+    streak: newStreak,
+    lastActiveDate: today,
+  };
+};
+
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
@@ -32,7 +65,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
 
   const updateInterestInDB = async (updatedUser: IUser) => {
     try {
-      console.log("updated user", updatedUser);
       await updateUser(updatedUser);
     } catch (err) {
       console.error("Error updating interest:", err);
