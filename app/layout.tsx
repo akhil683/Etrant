@@ -4,7 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
-import Header from "@/components/header";
+import { UserProvider } from "@/components/providers/UserProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,7 +28,9 @@ export default function RootLayout({
         />
       </Head>
       <SessionProvider>
-        <body className={inter.className}>{children}</body>
+        <UserProvider>
+          <body className={inter.className}>{children}</body>
+        </UserProvider>
       </SessionProvider>
     </html>
   );

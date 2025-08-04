@@ -1,4 +1,3 @@
-// /context/InterestContext.tsx
 "use client";
 
 import { getUserData } from "@/actions/getInterest";
@@ -7,55 +6,58 @@ import { IUser } from "@/types";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
 type UserContextType = {
-  user: IUser | null | undefined;
-  setUserState: (user: IUser) => void;
-  refreshInterest: () => Promise<void>;
+  user: IUser | null;
+  userLoading: boolean;
+  updateUserHandler: (updatedUser: IUser) => void;
+  refreshUser: () => Promise<void>;
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
-  const [user, setUserState] = useState<IUser | null>();
+  const [user, setUserState] = useState<IUser | null>(null);
+  const [userLoading, setUserLoading] = useState(true);
 
-  // Fetch from DB on load
-  const fetchInterest = async () => {
+  const fetchUser = async () => {
     try {
+      setUserLoading(true);
       const res = await getUserData();
       setUserState(res);
     } catch (err) {
-      console.error("Error fetching interest:", err);
+      console.error("Error fetching user:", err);
+    } finally {
+      setUserLoading(false);
     }
   };
 
-  // Sync changes to DB
-  const updateInterestInDB = async (updateduser: IUser) => {
+  const updateInterestInDB = async (updatedUser: IUser) => {
     try {
-      const res = await updateUser(updateduser);
+      console.log("updated user", updatedUser);
+      await updateUser(updatedUser);
     } catch (err) {
       console.error("Error updating interest:", err);
     }
   };
 
-  // Update both state & DB
-  const setInterest = (updatedUser: IUser) => {
+  const updateUserHandler = (updatedUser: IUser) => {
     setUserState(updatedUser);
     updateInterestInDB(updatedUser);
   };
 
   useEffect(() => {
-    fetchInterest();
+    fetchUser();
   }, []);
 
   return (
     <UserContext.Provider
-      value={{ user, setUserState, refreshInterest: fetchInterest }}
+      value={{ user, userLoading, updateUserHandler, refreshUser: fetchUser }}
     >
       {children}
     </UserContext.Provider>
   );
 };
 
-export const useInterest = () => {
+export const useUser = () => {
   const context = useContext(UserContext);
   if (!context)
     throw new Error("useInterest must be used within an InterestProvider");

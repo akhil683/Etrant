@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,26 +11,16 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Trophy, LogOut, Settings, BookDown } from "lucide-react";
+import { Trophy, LogOut, BookDown } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useUser } from "../providers/UserProvider";
 
 export function UserMenu() {
   const { data: session } = useSession();
+  const { user, userLoading } = useUser();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-
-  const [interest, setInterest] = useState("");
-  useEffect(() => {
-    const fetchUser = async () => {
-      const res = await fetch("api/user");
-      const userData = await res.json();
-      if (userData) {
-        setInterest(userData.interest);
-      }
-    };
-    fetchUser();
-  }, []);
 
   const handleSignOut = async () => {
     setLoading(true);
@@ -38,7 +28,7 @@ export function UserMenu() {
   };
 
   const aiQuestionHandler = () => {
-    if (interest) {
+    if (user?.interest) {
       router.push("/ai-questions");
     } else {
       router.push("/interest");
@@ -95,14 +85,14 @@ export function UserMenu() {
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-400">Streak:</span>
               <span className="font-semibold text-orange-400">
-                {/* {session.user?.streak} */}0
+                {userLoading ? 0 : user?.streak}
               </span>
             </div>
 
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-400">Interest:</span>
               <span className="font-semibold text-orange-400">
-                {interest.toUpperCase()}
+                {userLoading ? "none" : user?.interest.toUpperCase()}
               </span>
             </div>
           </div>
