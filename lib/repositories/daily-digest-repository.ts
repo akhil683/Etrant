@@ -23,18 +23,18 @@ interface Article {
 export class DailyDigestService {
   private static instance: DailyDigestService;
   private genAI: GoogleGenAI;
-  private newsApiKey: string;
+  // private newsApiKey: string;
 
   private constructor() {
     if (!process.env.GEMINI_API_KEY) {
       throw new Error("GEMINI_API_KEY environment variable is required");
     }
-    if (!process.env.NEWS_API_KEY) {
-      throw new Error("NEWS_API_KEY environment variable is required");
-    }
+    // if (!process.env.NEWS_API_KEY) {
+    //   throw new Error("NEWS_API_KEY environment variable is required");
+    // }
 
     this.genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-    this.newsApiKey = process.env.NEWS_API_KEY;
+    // this.newsApiKey = process.env.NEWS_API_KEY;
   }
 
   /**
