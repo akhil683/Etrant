@@ -1,12 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function DailyDigestPage() {
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await fetch("api/user");
-      const user = await res.json();
+      const res = await fetch("api/daily-digest");
+      const articles = await res.json();
+      console.log("articles", articles);
     };
     fetchUser();
   }, []);

@@ -8,11 +8,7 @@ interface Article {
   summary?: string;
   finalSummary?: string;
   image?: string;
-}
-
-interface RankingResult {
-  title: string;
-  rank: number;
+  pubDate?: string;
 }
 
 /**
@@ -106,16 +102,108 @@ export class DailyDigestService {
    * Uses Indian headlines to ensure content relevance for Indian competitive exams
    */
   private async fetchTopNews(): Promise<Article[]> {
-    const response = await fetch(
-      `https://newsapi.org/v2/top-headlines?country=in&pageSize=20&apiKey=${this.newsApiKey}`,
-    );
+    try {
+      // Google News RSS feed for India with current affairs focus
+      const rssUrl = "https://news.google.com/rss?hl=en-IN&gl=IN&ceid=IN:en";
 
-    if (!response.ok) {
-      throw new Error(`NewsAPI request failed: ${response.statusText}`);
+      const response = await fetch(rssUrl);
+      if (!response.ok) {
+        throw new Error(
+          `Google News RSS request failed: ${response.statusText}`,
+        );
+      }
+
+      const xmlText = await response.text();
+      const articles = this.parseRSSFeed(xmlText);
+      // console.log("service articles", articles);
+
+      // Limit to top 20 articles for processing efficiency
+      return articles.slice(0, 20);
+    } catch (error) {
+      console.error("Failed to fetch from Google News RSS:", error);
+      throw error;
+    }
+  }
+
+  /**
+   * Parses RSS XML feed and extracts article information
+   * Handles Google News RSS format which includes title, link, description, and publication date
+   */
+  private parseRSSFeed(xmlText: string): Article[] {
+    const articles: Article[] = [];
+
+    try {
+      // Simple XML parsing for RSS items
+      const itemRegex = /<item>([\s\S]*?)<\/item>/g;
+      const items = [...xmlText.matchAll(itemRegex)];
+
+      for (const item of items) {
+        const itemContent = item[1];
+
+        // Extract title (remove CDATA wrapper if present)
+        const titleMatch = itemContent.match(
+          /<title><!\[CDATA\[(.*?)\]\]><\/title>|<title>(.*?)<\/title>/,
+        );
+        const title = titleMatch ? titleMatch[1] || titleMatch[2] : "";
+
+        // Extract link
+        const linkMatch = itemContent.match(/<link>(.*?)<\/link>/);
+        const url = linkMatch ? linkMatch[1].trim() : "";
+
+        // Extract description (remove CDATA and HTML tags)
+        const descMatch = itemContent.match(
+          /<description><!\[CDATA\[(.*?)\]\]><\/description>|<description>(.*?)<\/description>/,
+        );
+        const rawDescription = descMatch ? descMatch[1] || descMatch[2] : "";
+        const description = this.cleanDescription(rawDescription);
+
+        // Extract publication date
+        const pubDateMatch = itemContent.match(/<pubDate>(.*?)<\/pubDate>/);
+        const pubDate = pubDateMatch ? pubDateMatch[1] : "";
+
+        // Only add articles with valid title and URL
+        if (title && url) {
+          articles.push({
+            title: this.cleanTitle(title),
+            description: description,
+            url: url,
+            content: description, // Use description as content for processing
+            pubDate: pubDate,
+          });
+        }
+      }
+    } catch (error) {
+      console.error("Error parsing RSS feed:", error);
+      throw new Error("Failed to parse RSS feed");
     }
 
-    const data = await response.json();
-    return data.articles || [];
+    return articles;
+  }
+
+  /**
+   * Cleans up article titles by removing source attribution and extra formatting
+   */
+  private cleanTitle(title: string): string {
+    // Remove source attribution like " - BBC News", " - The Hindu" etc.
+    return title.replace(/\s*-\s*[^-]+$/, "").trim();
+  }
+
+  /**
+   * Cleans up article descriptions by removing HTML tags and unwanted formatting
+   */
+  private cleanDescription(description: string): string {
+    if (!description) return "";
+
+    return description
+      .replace(/<[^>]*>/g, "") // Remove HTML tags
+      .replace(/&nbsp;/g, " ") // Replace &nbsp; with spaces
+      .replace(/&amp;/g, "&") // Replace &amp; with &
+      .replace(/&lt;/g, "<") // Replace &lt; with <
+      .replace(/&gt;/g, ">") // Replace &gt; with >
+      .replace(/&quot;/g, '"') // Replace &quot; with "
+      .replace(/&#39;/g, "'") // Replace &#39; with '
+      .replace(/\s+/g, " ") // Replace multiple spaces with single space
+      .trim();
   }
 
   /**
@@ -126,13 +214,38 @@ export class DailyDigestService {
     articles: Article[],
     examType: string,
   ): Promise<Article[]> {
-    const relevancePrompt = `
-Classify the following news headlines as ${examType}-relevant or not. 
-Consider topics like current affairs, government policies, economics, science & technology, environment, international relations, and other subjects typically covered in competitive exams.
-Return JSON: [{"title": "...", "is_relevant": true/false}].
-Headlines:
-${articles.map((a) => a.title).join("\n")}
-    `;
+    const relevancePrompt = `You are an expert ${examType} current affairs analyst. Evaluate each news description for examination relevance across ALL domains.
+
+RELEVANCE CRITERIA - Include if the news relates to:
+• Governance & Administration: Policy decisions, government schemes, administrative reforms, bureaucracy
+• Economics & Finance: Budget, fiscal policy, banking, markets, trade, business developments
+• Social Issues: Education, health, welfare, demographics, social justice, community affairs  
+• Science & Technology: Research breakthroughs, space, defense tech, digital initiatives, innovation
+• Environment & Geography: Climate change, conservation, natural disasters, geographical developments
+• International Relations: Diplomacy, treaties, global events, bilateral relations, international organizations
+• Legal & Constitutional: Supreme Court judgments, new laws, constitutional amendments, legal reforms
+• Culture & Heritage: Art, literature, historical events, cultural preservation, archaeology
+• Current Events: Sports achievements, awards, appointments, obituaries of notable personalities
+• Infrastructure & Development: Transportation, urban planning, rural development, connectivity projects
+
+EXCLUSION CRITERIA - Exclude if the news is:
+• Pure entertainment/celebrity gossip without broader significance
+• Highly localized incidents with no policy/national implications
+• Commercial advertisements or product launches without policy impact
+• Routine crime reports without systemic importance
+
+INSTRUCTIONS:
+1. Analyze each description thoroughly across ALL domains mentioned above
+2. Consider potential examination questions that could arise from this news
+3. Include diverse topics - avoid bias toward any single domain
+4. Return ONLY valid JSON format as specified
+5. Match titles exactly as provided
+
+Headlines and Descriptions:
+${articles.map((a, index) => `${index + 1}. Title: "${a.title}"\nDescription: "${a.description || a.title}"`).join("\n\n")}
+
+Return ONLY this JSON format:
+[{"title": "exact_title_from_above", "is_relevant": true/false}]`;
 
     const result = await this.genAI.models.generateContent({
       model: "gemini-1.5-flash-latest",
@@ -149,7 +262,7 @@ ${articles.map((a) => a.title).join("\n")}
     });
     let content = [];
     const responseText = result.text;
-
+    console.log("exam relevance", responseText);
     try {
       // Clean the response text to extract JSON
       const cleanedResponse = responseText!
@@ -163,19 +276,6 @@ ${articles.map((a) => a.title).join("\n")}
       if (!Array.isArray(content)) {
         throw new Error("Response is not an array");
       }
-
-      // Validate each question has required fields
-      content.forEach((q, index) => {
-        if (
-          !q.question ||
-          !q.difficulty ||
-          !q.category ||
-          !q.options ||
-          q.correctAnswer === undefined
-        ) {
-          throw new Error(`Question ${index} is missing required fields`);
-        }
-      });
 
       return content;
     } catch (parseError) {
@@ -194,14 +294,40 @@ ${articles.map((a) => a.title).join("\n")}
   ): Promise<Article[]> {
     const summarizedArticles = await Promise.all(
       articles.map(async (article: Article) => {
-        const summaryPrompt = `
-Summarize this news article in 80–120 words for a ${examType} aspirant.
-- Use formal tone (like The Hindu editorial)
-- Highlight key facts, dates, and implications
-- Focus on aspects relevant for competitive examinations
-Article:
-${article.content || article.description || article.title}
-        `;
+        const summaryPrompt = `You are a ${examType} current affairs expert. Create a precise summary for competitive exam preparation.
+
+CONTENT TO SUMMARIZE:
+Title: ${article.title}
+Content: ${article.content || article.description || article.title}
+
+SUMMARY REQUIREMENTS:
+• Word Count: Exactly 80-120 words
+• Tone: Formal, academic (similar to The Hindu editorial style)
+• Structure: Start with the main event, follow with key details, end with implications
+
+ESSENTIAL ELEMENTS TO INCLUDE:
+• WHO: Key personalities, organizations, institutions involved
+• WHAT: The main event, decision, or development
+• WHEN: Specific dates, timelines, deadlines (if mentioned)
+• WHERE: Geographical context, locations affected
+• WHY: Background context, reasons behind the development
+• IMPLICATIONS: Policy impact, future consequences, broader significance
+
+EXAMINATION FOCUS:
+• Connect to relevant exam topics (governance, economy, polity, etc.)
+• Include technical terms and keywords commonly used in ${examType}
+• Highlight constitutional, legal, or policy angles
+• Mention statistics, percentages, or numerical data if present
+• Note any committee names, schemes, or institutional references
+
+FORMATTING GUIDELINES:
+• Use active voice and clear, concise sentences
+• Avoid colloquial language or informal expressions  
+• Include specific names of people, places, organizations exactly as mentioned
+• Use standard abbreviations (GoI, RBI, SC, etc.) where appropriate
+• Maintain factual accuracy without personal opinions
+
+Write ONLY the summary, no additional text or explanations.`;
 
         const result = await this.genAI.models.generateContent({
           model: "gemini-1.5-flash-latest",
@@ -217,6 +343,7 @@ ${article.content || article.description || article.title}
           ],
         });
         const summary = result.text;
+        console.log("summar", summary);
 
         return {
           ...article,
@@ -239,7 +366,7 @@ ${article.content || article.description || article.title}
     const rankingPrompt = `
 Rank the following summaries (title + summary) from most important to least for ${examType} aspirants.
 Consider current affairs importance, policy implications, and examination relevance.
-Return top 5 as JSON: [{"title": "...", "rank": 1}].
+Return top 10 as JSON: [{"title": "...", "rank": 1}].
 ${articles.map((a) => `Title: ${a.title}\nSummary: ${a.summary}`).join("\n\n")}
     `;
 
@@ -391,7 +518,4 @@ ${article.summary}
 }
 
 // Usage examples:
-// const digestService = DailyDigestService.getInstance();
-// const articles = await digestService.generateDailyDigest("UPSC");
-// const articles = await digestService.generateDailyDigest("SSC");
-// const articles = await digestService.generateDailyDigest("Banking Exam");
+export const digestService = DailyDigestService.getInstance();
