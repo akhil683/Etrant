@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Trophy, LogOut, BookDown } from "lucide-react";
+import { Trophy, LogOut, BookDown, AlarmClockCheck } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useUser } from "../providers/UserProvider";
@@ -92,7 +92,11 @@ export function UserMenu() {
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-400">Interest:</span>
               <span className="font-semibold text-orange-400">
-                {userLoading ? "none" : user?.interest.toUpperCase()}
+                {userLoading
+                  ? "none"
+                  : user?.interest === null
+                    ? "none"
+                    : user?.interest?.toUpperCase()}
               </span>
             </div>
           </div>
@@ -108,8 +112,15 @@ export function UserMenu() {
             onClick={aiQuestionHandler}
             className="hover:bg-gray-700 cursor-pointer"
           >
-            <BookDown className="mr-2 h-4 w-4" />
+            <BookDown className=" h-4 w-4" />
             <span>AI Questions</span>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem className="hover:bg-gray-700">
+            <Link href="/daily-digest" className="flex items-center">
+              <AlarmClockCheck className="mr-2 h-4 w-4" />
+              <span>Daily Digest</span>
+            </Link>
           </DropdownMenuItem>
           {/* <DropdownMenuItem className="hover:bg-gray-700"> */}
           {/*   <Settings className="mr-2 h-4 w-4" /> */}
