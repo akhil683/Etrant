@@ -61,6 +61,7 @@ export class DailyDigestService {
       console.log(`Starting ${examType} Daily Digest generation...`);
 
       const articles = await this.fetchTopNews();
+      console.log("aricles", articles);
       if (!articles.length) {
         console.log("No articles found.");
         return [];
@@ -70,6 +71,7 @@ export class DailyDigestService {
         articles,
         examType,
       );
+      console.log("relevant articles", relevantArticles);
       if (!relevantArticles.length) {
         console.log(`No ${examType}-relevant articles found.`);
         return [];
@@ -79,6 +81,7 @@ export class DailyDigestService {
         relevantArticles,
         examType,
       );
+      console.log("summary", summarizedArticles);
       const top5Articles = await this.rankAndSelectTop5(
         summarizedArticles,
         examType,
@@ -87,6 +90,7 @@ export class DailyDigestService {
         top5Articles,
         examType,
       );
+      console.log("rewriteen", rewrittenArticles);
       const articlesWithImages = await this.generateImages(rewrittenArticles);
 
       console.log("Daily digest generated successfully.");
@@ -364,11 +368,26 @@ Write ONLY the summary, no additional text or explanations.`;
     examType: string,
   ): Promise<Article[]> {
     const rankingPrompt = `
-Rank the following summaries (title + summary) from most important to least for ${examType} aspirants.
-Consider current affairs importance, policy implications, and examination relevance.
-Return top 10 as JSON: [{"title": "...", "rank": 1}].
+You are a ranking assistant for Indian competitive exam preparation (UPSC, NDA, SSC, AFCAT, State PSC, Banking, etc.).
+
+Task:
+Rank the following articles (title + summary) from MOST important to LEAST important for ${examType} aspirants. 
+Importance should consider:
+1. Relevance to Indian current affairs (national and international issues affecting India)
+2. Policy, governance, constitutional, economic, or socio-political implications
+3. Likelihood of being asked in Indian competitive exams based on previous trends
+
+Instructions:
+- Return ONLY the TOP 10 articles.
+- Output STRICTLY in valid JSON format (no explanations, no extra text).
+- JSON structure: [{"title": "Article Title", "rank": 1}, {"title": "Article Title", "rank": 2}, ...]
+- "rank" must be a number from 1 (most important) to 10 (least important).
+- Do NOT include any content outside the JSON array.
+- If fewer than 10 articles are available, rank all of them in the same format.
+
+Articles:
 ${articles.map((a) => `Title: ${a.title}\nSummary: ${a.summary}`).join("\n\n")}
-    `;
+`;
 
     const result = await this.genAI.models.generateContent({
       model: "gemini-1.5-flash-latest",
@@ -417,14 +436,24 @@ ${articles.map((a) => `Title: ${a.title}\nSummary: ${a.summary}`).join("\n\n")}
     const rewrittenArticles = await Promise.all(
       articles.map(async (article: Article) => {
         const rewritePrompt = `
-Rewrite this summary for a ${examType} aspirant:
-- Use formal editorial tone
-- Emphasize governance, policy, and exam-relevant aspects
-- Include key terms and concepts important for competitive exams
-Keep it 80–120 words.
-Summary:
+You are an expert content editor for Indian competitive exam preparation (UPSC, SSC, State PSC, Banking, etc.).
+
+Task:
+Rewrite the following summary for a ${examType} aspirant.
+
+Guidelines:
+- Use a formal, editorial tone similar to high-quality current affairs analysis.
+- Explicitly connect the content to Indian governance, public policy, constitutional provisions, economic implications, and exam trends.
+- Highlight names of schemes, Acts, Articles, committees, government programs, and international organizations wherever relevant.
+- Integrate key terms and keywords frequently used in Indian competitive exams.
+- Prioritize information that aids exam-focused retention and analysis.
+- Maintain clarity, precision, and analytical depth.
+- Keep the length strictly between 80–120 words.
+Output must be plain text (no markdown, no headings).
+
+Summary to rewrite:
 ${article.summary}
-        `;
+`;
 
         const result = await this.genAI.models.generateContent({
           model: "gemini-1.5-flash-latest",
@@ -460,9 +489,21 @@ ${article.summary}
     const withImages = await Promise.all(
       articles.map(async (article: Article) => {
         try {
-          const imgPrompt = `Create a detailed description for an infographic or illustration that would represent this news article: "${article.title}". 
-          The description should be suitable for creating a visual representation that helps exam aspirants understand the topic better.
-          Keep it concise but descriptive.`;
+          const imgPrompt = `
+You are an AI assistant creating thumbnail concepts for Indian competitive exam news articles.
+
+Task:
+Generate a highly detailed description for a thumbnail image representing the following news article: "${article.title}".
+
+Guidelines:
+- The image must visually represent the core subject of the article so that a viewer can understand the topic at a glance.
+- Use symbolic and contextually relevant elements (e.g., government buildings, flags, key personalities, maps, logos of institutions, icons for defense/economy/policy).
+- Ensure the image reflects the Indian context if applicable (e.g., Indian Parliament, Supreme Court, national symbols, schemes).
+- Avoid abstract, overly artistic, or irrelevant visuals.
+- Style: Clean, professional, and news-thumbnail-like (suitable for a current affairs portal).
+- Do NOT include text, captions, or watermarks in the image.
+- Output strictly a single descriptive paragraph only. No extra explanations or formatting.
+`;
 
           const result = await this.genAI.models.generateContent({
             model: "gemini-2.0-flash-preview-image-generation",
