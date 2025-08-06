@@ -3,7 +3,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   try {
-    console.log("hello");
     const articles = digestService.generateDailyDigest();
     console.log("articles", articles);
     return NextResponse.json({

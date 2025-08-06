@@ -28,19 +28,12 @@ export interface Article {
 export class DailyDigestService {
   private static instance: DailyDigestService;
   private genAI: GoogleGenAI;
-  // private newsApiKey: string;
 
   private constructor() {
     if (!process.env.GEMINI_API_KEY) {
       throw new Error("GEMINI_API_KEY environment variable is required");
     }
-    // if (!process.env.NEWS_API_KEY) {
-    //   throw new Error("NEWS_API_KEY environment variable is required");
-    // }
-
-    // this.genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
-    this.genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_AI_API_KEY });
-    // this.newsApiKey = process.env.NEWS_API_KEY;
+    this.genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
   }
 
   /**
@@ -64,10 +57,7 @@ export class DailyDigestService {
     examType: string = "competitive exam",
   ): Promise<Article[]> {
     try {
-      console.log(`Starting ${examType} Daily Digest generation...`);
-
       const articles = await this.fetchTopNews();
-      console.log("aricles", articles);
       if (!articles.length) {
         console.log("No articles found.");
         return [];
@@ -125,7 +115,6 @@ export class DailyDigestService {
 
       const xmlText = await response.text();
       const articles = this.parseRSSFeed(xmlText);
-      // console.log("service articles", articles);
 
       // Limit to top 20 articles for processing efficiency
       return articles.slice(0, 20);
@@ -269,32 +258,40 @@ export class DailyDigestService {
     articles: Article[],
     examType: string,
   ): Promise<Article[]> {
-    const summarizedArticles = await Promise.all(
-      articles.map(async (article: Article) => {
-        const result = await this.genAI.models.generateContent({
-          model: "gemini-1.5-flash-latest",
-          // model: "gemini-2.0-flash-exp",
-          contents: [
+    const result = await this.genAI.models.generateContent({
+      model: "gemini-1.5-flash-latest",
+      // model: "gemini-2.0-flash-exp",
+      contents: [
+        {
+          parts: [
             {
-              parts: [
-                {
-                  text: summaryPrompt(article),
-                },
-              ],
+              text: summaryPrompt(articles),
             },
           ],
-        });
-        const summary = result.text;
-        console.log("summar", summary);
+        },
+      ],
+    });
+    const responseText = result.text;
+    let content;
+    try {
+      // Clean the response text to extract JSON
+      const cleanedResponse = responseText!
+        .replace(/```json\n?/g, "")
+        .replace(/```\n?/g, "")
+        .trim();
 
-        return {
-          ...article,
-          summary: summary,
-        };
-      }),
-    );
+      content = JSON.parse(cleanedResponse);
 
-    return summarizedArticles;
+      // Validate that it's an array
+      if (!Array.isArray(content)) {
+        throw new Error("Response is not an array");
+      }
+
+      return content;
+    } catch (parseError) {
+      console.error("Failed to parse AI response:", parseError);
+      throw new Error("Invalid JSON response from AI");
+    }
   }
 
   /**
@@ -349,6 +346,7 @@ export class DailyDigestService {
     articles: Article[],
     examType: string,
   ): Promise<Article[]> {
+    //TODO: Write it to return array in a single request.
     const rewrittenArticles = await Promise.all(
       articles.map(async (article: Article) => {
         const result = await this.genAI.models.generateContent({
@@ -365,6 +363,7 @@ export class DailyDigestService {
           ],
         });
         const finalSummary = result.text;
+        console.log("final summary", finalSummary);
 
         return {
           ...article,
@@ -393,6 +392,7 @@ export class DailyDigestService {
             },
           });
           const imageDescription = result.text;
+          console.log(imageDescription);
 
           //TODO: Write s3 logic using gemini
           return {

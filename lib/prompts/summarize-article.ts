@@ -1,38 +1,29 @@
 import { Article } from "../repositories/daily-digest-repository";
 
-export const summaryPrompt = (article: Article) => {
-  return `You are a competitive exam current affairs expert. Create a precise summary for competitive exam preparation.
+export const summaryPrompt = (articles: Article[]) => {
+  return `
+You are a competitive exam current affairs expert specialized in Indian exams (UPSC, SSC, State PSC, NDA, AFCAT, Banking, etc.).
 
-CONTENT TO SUMMARIZE:
-Title: ${article.title}
-Content: ${article.content || article.description || article.title}
+Task:
+Given the following list of articles (each with title and content), return a JSON array of objects with the exact fields "title" and "summary", in the same order.
 
-SUMMARY REQUIREMENTS:
-• Word Count: Exactly 80-120 words
-• Tone: Formal, academic (similar to The Hindu editorial style)
-• Structure: Start with the main event, follow with key details, end with implications
+Input:
+${JSON.stringify(
+  articles.map((a) => ({
+    title: a.title,
+    content: a.content || a.description || a.title,
+  })),
+)}
 
-ESSENTIAL ELEMENTS TO INCLUDE:
-• WHO: Key personalities, organizations, institutions involved
-• WHAT: The main event, decision, or development
-• WHEN: Specific dates, timelines, deadlines (if mentioned)
-• WHERE: Geographical context, locations affected
-• WHY: Background context, reasons behind the development
-• IMPLICATIONS: Policy impact, future consequences, broader significance
+Output Requirements:
+- Return ONLY valid JSON: an array like [{"title": "...", "summary": "..."}, ...]
+- Summaries must be exactly 80–120 words
+- Tone: Formal, academic (in the style of The Hindu editorial)
+- Structure each summary: start with main event, then key details, end with implications
+- Include: WHO, WHAT, WHEN, WHERE, WHY, and IMPLICATIONS
+- Connect to exam-relevant topics: governance, economy, polity, etc.
+- Use exam‑focused keywords: schemes, Acts, Articles, committees, statistics
+- Use active voice, no personal opinions, factual only
 
-EXAMINATION FOCUS:
-• Connect to relevant exam topics (governance, economy, polity, etc.)
-• Include technical terms and keywords commonly used in competitive exams
-• Highlight constitutional, legal, or policy angles
-• Mention statistics, percentages, or numerical data if present
-• Note any committee names, schemes, or institutional references
-
-FORMATTING GUIDELINES:
-• Use active voice and clear, concise sentences
-• Avoid colloquial language or informal expressions  
-• Include specific names of people, places, organizations exactly as mentioned
-• Use standard abbreviations (GoI, RBI, SC, etc.) where appropriate
-• Maintain factual accuracy without personal opinions
-
-Write ONLY the summary, no additional text or explanations.`;
+Do NOT output anything else—no notes, no commentary, no explanatory text.`;
 };
