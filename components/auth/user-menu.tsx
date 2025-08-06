@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Trophy, LogOut, BookDown } from "lucide-react";
+import { Trophy, LogOut, BookDown, AlarmClockCheck } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useUser } from "../providers/UserProvider";
@@ -69,7 +69,10 @@ export function UserMenu() {
           forceMount
         >
           <div className="flex items-center justify-start gap-2 p-2">
-            <div className="flex flex-col space-y-1 leading-none">
+            <Link
+              href={"/user/profile"}
+              className="flex flex-col space-y-1 leading-none cursor-pointer"
+            >
               {session.user?.name && (
                 <p className="font-medium">{session.user?.name}</p>
               )}
@@ -78,25 +81,29 @@ export function UserMenu() {
                   {session.user?.email}
                 </p>
               )}
-            </div>
+            </Link>
           </div>
           <DropdownMenuSeparator className="bg-gray-700" />
-          <div className="p-2">
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-400">Streak:</span>
-              <span className="font-semibold text-orange-400">
-                {userLoading ? 0 : user?.streak}
-              </span>
-            </div>
-
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-400">Interest:</span>
-              <span className="font-semibold text-orange-400">
-                {userLoading ? "none" : user?.interest.toUpperCase()}
-              </span>
-            </div>
-          </div>
-          <DropdownMenuSeparator className="bg-gray-700" />
+          {/* <div className="p-2"> */}
+          {/*   <div className="flex items-center justify-between text-sm"> */}
+          {/*     <span className="text-gray-400">Streak:</span> */}
+          {/*     <span className="font-semibold text-orange-400"> */}
+          {/*       {userLoading ? 0 : user?.streak} */}
+          {/*     </span> */}
+          {/*   </div> */}
+          {/**/}
+          {/*   <div className="flex items-center justify-between text-sm"> */}
+          {/*     <span className="text-gray-400">Interest:</span> */}
+          {/*     <span className="font-semibold text-orange-400"> */}
+          {/*       {userLoading */}
+          {/*         ? "none" */}
+          {/*         : user?.interest === null */}
+          {/*           ? "none" */}
+          {/*           : user?.interest?.toUpperCase()} */}
+          {/*     </span> */}
+          {/*   </div> */}
+          {/* </div> */}
+          {/* <DropdownMenuSeparator className="bg-gray-700" /> */}
           <DropdownMenuItem className="hover:bg-gray-700">
             <Link href="/leaderboard" className="flex items-center">
               <Trophy className="mr-2 h-4 w-4" />
@@ -108,8 +115,15 @@ export function UserMenu() {
             onClick={aiQuestionHandler}
             className="hover:bg-gray-700 cursor-pointer"
           >
-            <BookDown className="mr-2 h-4 w-4" />
+            <BookDown className=" h-4 w-4" />
             <span>AI Questions</span>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem className="hover:bg-gray-700">
+            <Link href="/daily-digest" className="flex items-center">
+              <AlarmClockCheck className="mr-2 h-4 w-4" />
+              <span>Daily Digest</span>
+            </Link>
           </DropdownMenuItem>
           {/* <DropdownMenuItem className="hover:bg-gray-700"> */}
           {/*   <Settings className="mr-2 h-4 w-4" /> */}

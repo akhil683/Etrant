@@ -5,13 +5,52 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import { UserProvider } from "@/components/providers/UserProvider";
+import { siteConfig } from "@/lib/config/site";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Wikipedia Reel",
-  description:
-    "Discover Wikipedia articles in an infinite scrolling reel format",
+  title: {
+    default: siteConfig.name,
+    template: `%s | ${siteConfig.name}`,
+  },
+  metadataBase: new URL(siteConfig.url),
+  description: siteConfig.description,
+  keywords: siteConfig.keywords,
+  authors: [
+    {
+      name: siteConfig.name,
+      url: new URL(siteConfig.url),
+    },
+  ],
+  creator: siteConfig.name,
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteConfig.url,
+    title: siteConfig.name,
+    description: siteConfig.description,
+    siteName: siteConfig.name,
+    images: [
+      {
+        url: "./favicon.ico",
+        width: 1200,
+        height: 630,
+        alt: siteConfig.name,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: ["./favicon.ico"],
+    creator: "@akkhil_dev",
+  },
+  icons: {
+    icon: "./favicon.ico",
+    shortcut: "./favicon.ico",
+  },
 };
 
 export default function RootLayout({
