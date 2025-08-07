@@ -18,17 +18,19 @@ export default function Navbar() {
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-9 h-9 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
-            <BookOpen className="h-5 w-5 text-white" />
+          <div className="md:w-9 md:h-9 w-7 h-7 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+            <BookOpen className="md:h-5 md:w-5 h-4 w-4 text-white" />
           </div>
-          <span className="text-2xl font-black text-white">Wiki Reel</span>
+          <span className="md:text-2xl text-xl font-black text-white">
+            Wiki Reel
+          </span>
         </Link>
 
         {/* Sign In Button */}
         <div className="flex items-center gap-4">
           <Button
             onClick={() => router.push("/auth")}
-            className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-5 py-2 rounded-lg font-medium shadow-md"
+            className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white md:px-5 md:py-2 px-3 py-1 rounded-lg md:font-medium shadow-md"
           >
             Sign Up
           </Button>

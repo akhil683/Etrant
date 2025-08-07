@@ -17,7 +17,7 @@ interface Article {
 }
 
 export function InfiniteReel() {
-  const { selectedInterests } = useAppState();
+  const { selectedInterests: interests } = useAppState();
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);

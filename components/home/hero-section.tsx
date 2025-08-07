@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 export default function HeroSection() {
   return (
-    <section className="relative min-h-screen bg-gradient-to-br from-gray-900 via-blue-950 to-purple-950 overflow-hidden">
+    <section className="relative min-h-screen bg-black overflow-hidden">
       {" "}
       {/* Adjusted gradient */}
       {/* Animated background elements */}
@@ -45,7 +45,7 @@ export default function HeroSection() {
       >
         <BookOpen size={50} />
       </motion.div>
-      <div className="relative z-10 container mx-auto px-6 py-20">
+      <div className="relative z-10 container mx-auto px-6 md:py-20 py-28">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left content */}
@@ -56,8 +56,8 @@ export default function HeroSection() {
                 transition={{ duration: 0.8 }}
               >
                 <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8 border border-white/20">
-                  <Users className="w-4 h-4 text-emerald-300" />
-                  <span className="text-white/90 text-sm font-medium">
+                  <Users className="md:w-4 md:h-4 w-3 h-3 text-emerald-300" />
+                  <span className="text-white/90 md:text-sm text-xs font-medium">
                     Join 50,000+ Smart Learners
                   </span>
                 </div>
@@ -67,7 +67,7 @@ export default function HeroSection() {
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-6xl lg:text-7xl font-black text-white mb-6 leading-tight"
+                className="text-5xl md:text-6xl lg:text-7xl font-black text-white mb-6 leading-tight"
               >
                 Wiki{" "}
                 <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
@@ -81,10 +81,10 @@ export default function HeroSection() {
                 transition={{ duration: 0.8, delay: 0.4 }}
                 className="mb-8"
               >
-                <p className="text-2xl font-bold text-orange-300 mb-4">
+                <p className="md:text-4xl text-2xl font-bold text-orange-300 mb-4">
                   Scroll. Learn. Test. Repeat.
                 </p>
-                <p className="text-lg text-white/80 leading-relaxed max-w-lg">
+                <p className="md:text-lg text-white/80 leading-relaxed max-w-lg">
                   Transform boring study sessions into addictive learning
                   experiences. Swipe through knowledge like Instagram reels and
                   ace your exams.
@@ -99,7 +99,7 @@ export default function HeroSection() {
               >
                 <Button
                   size="lg"
-                  className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold px-8 py-4 text-lg rounded-full shadow-2xl transform hover:scale-105 transition-all"
+                  className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white md:font-bold px-6 py-2 md:px-8 md:py-4 md:text-lg rounded-full shadow-2xl transform transition-all"
                 >
                   Start Learning Free
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -107,7 +107,7 @@ export default function HeroSection() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-2 border-white/30 text-black hover:text-white hover:bg-white/10 px-8 py-4 text-lg rounded-full backdrop-blur-sm"
+                  className="border-2 border-white/30 text-black hover:text-white hover:bg-white/10 px-6 py-2 md:px-8 md:py-4 md:text-lg rounded-full backdrop-blur-sm"
                 >
                   See How It Works
                 </Button>
@@ -145,7 +145,7 @@ export default function HeroSection() {
                     {/* Website content - Dark theme */}
                     <div className="bg-gray-900 px-4 py-2 h-full overflow-hidden">
                       {/* Website header */}
-                      <div className="flex items-center justify-between mb-4 pb-2 border-b border-gray-700">
+                      <div className="flex items-center justify-between mb-4 pb-2">
                         <div className="flex items-center gap-2">
                           <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
                             <BookOpen className="h-5 w-5 text-white" />
