@@ -1,5 +1,5 @@
 export const siteConfig = {
-  name: "WikiReel",
+  name: "Wiki Reel",
   url: "https://wiki.akkhil.dev",
   ogImage: "../../app/favicon.ico",
   description:

@@ -1,5 +1,5 @@
 "use client";
-import { Trophy } from "lucide-react";
+import { BookOpen, Trophy } from "lucide-react";
 import { UserMenu } from "./auth/user-menu";
 import Link from "next/link";
 import { useUser } from "./providers/UserProvider";
@@ -8,9 +8,14 @@ export default function Header() {
   const { user, userLoading } = useUser();
   return (
     <div className="sticky top-0 z-10 backdrop-blur-sm border-b border-gray-900 bg-black">
-      <div className="flex items-center justify-between p-4">
+      <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
         <h1 className="md:text-lg font-semibold text-white">
-          <Link href={"/"}>Wiki Reel</Link>
+          <Link href="/" className="flex items-center gap-2">
+            <div className="w-9 h-9 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+              <BookOpen className="h-5 w-5 text-white" />
+            </div>
+            <span className="text-2xl font-black text-white">Wiki Reel</span>
+          </Link>
         </h1>
         <div className="flex items-center space-x-4">
           <div className="flex items-center space-x-2 bg-yellow-600/20 px-3 py-1 rounded-full">
