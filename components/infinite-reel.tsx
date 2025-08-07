@@ -3,10 +3,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ArticleCard } from "@/components/article-card";
 import { QuizCard } from "@/components/quiz-card";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft, Loader2, Trophy } from "lucide-react";
-import { UserMenu } from "./auth/user-menu";
+import { Loader2 } from "lucide-react";
 import Header from "./header";
+import { useAppState } from "@/hooks/use-app-state";
 
 interface Article {
   id: string;
@@ -17,17 +16,8 @@ interface Article {
   topic: string;
 }
 
-interface InfiniteReelProps {
-  interests: string[];
-  onBack: () => void;
-  onShowLeaderboard: () => void;
-}
-
-export function InfiniteReel({
-  interests,
-  onBack,
-  onShowLeaderboard,
-}: InfiniteReelProps) {
+export function InfiniteReel() {
+  const { selectedInterests } = useAppState();
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);

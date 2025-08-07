@@ -24,7 +24,7 @@ export default function SignUpPage() {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      <Card className="w-full max-w-md bg-gradient-to-br from-purple-900 to-indigo-900 border-gray-700 text-white">
+      <Card className="w-full max-w-md bg-blue-700 border-gray-700 text-white">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold">Create Account</CardTitle>
           <p className="text-gray-300">Join the Wiki Reel learning community</p>
