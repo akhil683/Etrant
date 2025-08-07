@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 export default function CTABanner() {
   const router = useRouter();
   return (
-    <section className="py-20 bg-gradient-to-r from-gray-900 via-blue-900 to-purple-900 relative overflow-hidden">
+    <section className="py-20 bg-gradient-to-r from-gray-900 via-blue-900/30 to-purple-900/20 relative overflow-hidden">
       {/* Background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-10 left-10 w-32 h-32 bg-orange-400/20 rounded-full blur-2xl"></div>
@@ -25,12 +25,12 @@ export default function CTABanner() {
           >
             <div className="inline-flex items-center gap-2 bg-orange-400/20 backdrop-blur-sm rounded-full px-6 py-3 mb-8 border border-orange-400/30">
               <Star className="w-5 h-5 text-orange-400" />
-              <span className="text-orange-300 font-semibold">
+              <span className="text-orange-300 font-semibold max-md:text-sm">
                 Limited Time: Free Premium Access
               </span>
             </div>
 
-            <h2 className="text-5xl lg:text-6xl font-black text-white mb-6">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-white mb-6">
               Ready to Transform Your
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                 {" "}
@@ -38,7 +38,7 @@ export default function CTABanner() {
               </span>
             </h2>
 
-            <p className="text-xl text-white/80 mb-10 max-w-2xl mx-auto">
+            <p className="md:text-xl text-white/80 mb-10 max-w-2xl mx-auto">
               Join thousands of students who've already revolutionized their
               study habits. Start your free trial today and see the difference
               in just 7 days.
@@ -48,17 +48,17 @@ export default function CTABanner() {
               <Button
                 size="lg"
                 onClick={() => router.push("/auth")}
-                className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold px-10 py-5 text-xl rounded-full shadow-2xl transform hover:scale-105 transition-all"
+                className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold px-10 py-5 md:text-xl rounded-full shadow-2xl transform hover:scale-105 transition-all"
               >
-                <Smartphone className="mr-3 h-6 w-6" />
+                <Smartphone className="md:mr-3 mr-2 md:h-6 md:w-6 h-5 w-5" />
                 Sign Up - It's Free!
-                <ArrowRight className="ml-3 h-6 w-6" />
+                <ArrowRight className="md:ml-3 mr-2 h-6 w-6" />
               </Button>
             </div>
 
-            <div className="mt-8 text-white/60">
-              ✓ No credit card required ✓ 7-day free trial ✓ Cancel anytime
-            </div>
+            {/* <div className="mt-8 text-white/60"> */}
+            {/*   ✓ No credit card required ✓ 7-day free trial ✓ Cancel anytime */}
+            {/* </div> */}
           </motion.div>
         </div>
       </div>

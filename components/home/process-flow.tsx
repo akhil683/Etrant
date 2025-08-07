@@ -45,8 +45,8 @@ export default function ProcessFlow() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl font-black text-white mb-6">
-            Get Started in
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
+            Get Started in <br className="md:hidden" />
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               {" "}
               4 Simple Steps
@@ -67,11 +67,11 @@ export default function ProcessFlow() {
               >
                 <div className="text-center">
                   <div
-                    className={`w-20 h-20 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center mx-auto mb-6 shadow-lg`}
+                    className={`w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center mx-auto mb-6 shadow-lg`}
                   >
-                    <step.icon className="h-10 w-10 text-white" />
+                    <step.icon className="md:h-10 h-8 w-8 md:w-10 text-white" />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-gray-700 text-white rounded-full flex items-center justify-center text-sm font-bold">
+                  <div className="max-md:hidden absolute -top-2 -right-2 w-8 h-8 bg-gray-700 text-white rounded-full flex items-center justify-center text-sm font-bold">
                     {index + 1}
                   </div>
                   <h3 className="text-xl font-bold text-white mb-3">

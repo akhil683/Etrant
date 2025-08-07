@@ -47,13 +47,13 @@ export default function StatsSection() {
               className="text-center"
             >
               <div
-                className={`inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gray-800 mb-4 ${stat.color}`}
+                className={`inline-flex items-center justify-center md:w-16 md:h-16 w-12 h-12 rounded-2xl bg-gray-800 mb-4 ${stat.color}`}
               >
                 {" "}
                 {/* Changed icon background */}
-                <stat.icon size={32} />
+                <stat.icon className="w-6 h-6 md:w-8 md:h-8 " />
               </div>
-              <div className="text-3xl font-black text-white mb-2">
+              <div className="md:text-3xl text-xl font-black text-white mb-2">
                 {stat.value}
               </div>{" "}
               {/* Changed text color */}

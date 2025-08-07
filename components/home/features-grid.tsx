@@ -74,7 +74,7 @@ export default function FeaturesGrid() {
           viewport={{ once: true }}
           className="text-center mb-16"
         >
-          <h2 className="text-5xl font-black text-white mb-6">
+          <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
             {" "}
             {/* Changed text color */}
             Why Students Love
@@ -84,7 +84,7 @@ export default function FeaturesGrid() {
             </span>{" "}
             {/* Adjusted gradient for dark theme */}
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="md:text-xl text-gray-300 max-w-3xl mx-auto">
             {" "}
             {/* Changed text color */}
             We've reimagined learning for the TikTok generation. Every feature
@@ -106,11 +106,11 @@ export default function FeaturesGrid() {
                 {" "}
                 {/* Changed card background and border */}
                 <div
-                  className={`w-16 h-16 rounded-2xl ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
+                  className={`md:w-16 md:h-16 w-12 h-12 rounded-2xl ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
                 >
-                  <feature.icon className="h-8 w-8 text-white" />
+                  <feature.icon className="md:h-8 md:w-8 h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-4">
+                <h3 className="md:text-2xl text-xl font-bold text-white mb-4">
                   {" "}
                   {/* Changed text color */}
                   {feature.title}
