@@ -2,8 +2,8 @@ import { GoogleGenAI, Modality } from "@google/genai";
 import { relevancePrompt } from "../prompts/relevancePrompt";
 import { summaryPrompt } from "../prompts/summarize-article";
 import { rankingPrompt } from "../prompts/rank-articles";
-import { rewritePrompt } from "../prompts/rewritePrompt";
 import { imgPrompt } from "../prompts/generate-image";
+import { v2 as cloudinary } from "cloudinary";
 
 export interface Article {
   title: string;
@@ -11,7 +11,6 @@ export interface Article {
   description?: string;
   url: string;
   summary?: string;
-  finalSummary?: string;
   image?: string;
   pubDate?: string;
 }
@@ -58,15 +57,13 @@ export class DailyDigestService {
   ): Promise<Article[]> {
     try {
       const articles = await this.fetchTopNews();
+      console.log("daily", articles);
       if (!articles.length) {
         console.log("No articles found.");
         return [];
       }
 
-      const relevantArticles = await this.filterForExamRelevance(
-        articles,
-        examType,
-      );
+      const relevantArticles = await this.filterForExamRelevance(articles);
       console.log("relevant articles", relevantArticles);
       if (!relevantArticles.length) {
         console.log(`No ${examType}-relevant articles found.`);
@@ -82,12 +79,7 @@ export class DailyDigestService {
         summarizedArticles,
         examType,
       );
-      const rewrittenArticles = await this.rewriteForExam(
-        top5Articles,
-        examType,
-      );
-      console.log("rewriteen", rewrittenArticles);
-      const articlesWithImages = await this.generateImages(rewrittenArticles);
+      const articlesWithImages = await this.generateImages(top5Articles);
 
       console.log("Daily digest generated successfully.");
       return articlesWithImages;
@@ -117,7 +109,8 @@ export class DailyDigestService {
       const articles = this.parseRSSFeed(xmlText);
 
       // Limit to top 20 articles for processing efficiency
-      return articles.slice(0, 20);
+      // return articles.slice(0, 20);
+      return articles.slice(0, 5);
     } catch (error) {
       console.error("Failed to fetch from Google News RSS:", error);
       throw error;
@@ -211,7 +204,6 @@ export class DailyDigestService {
    */
   private async filterForExamRelevance(
     articles: Article[],
-    examType: string,
   ): Promise<Article[]> {
     const result = await this.genAI.models.generateContent({
       model: "gemini-1.5-flash-latest",
@@ -339,77 +331,71 @@ export class DailyDigestService {
   }
 
   /**
-   * Enhances summaries with exam-specific terminology and focus areas
-   * Emphasizes governance, policy aspects, and key concepts for competitive exams
-   */
-  private async rewriteForExam(
-    articles: Article[],
-    examType: string,
-  ): Promise<Article[]> {
-    //TODO: Write it to return array in a single request.
-    const rewrittenArticles = await Promise.all(
-      articles.map(async (article: Article) => {
-        const result = await this.genAI.models.generateContent({
-          model: "gemini-1.5-flash-latest",
-          // model: "gemini-2.0-flash-exp",
-          contents: [
-            {
-              parts: [
-                {
-                  text: rewritePrompt(article),
-                },
-              ],
-            },
-          ],
-        });
-        const finalSummary = result.text;
-        console.log("final summary", finalSummary);
-
-        return {
-          ...article,
-          finalSummary: finalSummary,
-        };
-      }),
-    );
-
-    return rewrittenArticles;
-  }
-
-  /**
    * Generates descriptive text for visual representations of articles
    * Note: Since Gemini doesn't create actual images, we generate detailed descriptions
    * that can be used to create infographics or visual aids later
    */
+  //TODO: Fix the image generation part
   private async generateImages(articles: Article[]): Promise<Article[]> {
     const withImages = await Promise.all(
       articles.map(async (article: Article) => {
         try {
+          // 1. Generate the image with Gemini
+          console.log(`Generating image for article: ${article.title}`);
           const result = await this.genAI.models.generateContent({
             model: "gemini-2.0-flash-preview-image-generation",
             contents: imgPrompt(article),
             config: {
-              responseModalities: [Modality.IMAGE],
+              responseModalities: [Modality.IMAGE, Modality.TEXT],
             },
           });
-          const imageDescription = result.text;
-          console.log(imageDescription);
+          const imagePart = result.candidates?.[0]?.content?.parts?.find(
+            (part) => part.inlineData,
+          );
 
-          //TODO: Write s3 logic using gemini
+          if (!imagePart) {
+            throw new Error("Gemini API did not return image data.");
+          }
+
+          const imageBase64 = imagePart?.inlineData?.data;
+          console.log("Image generated, now uploading to Cloudinary...");
+          // 2. Upload the image to Cloudinary
+          // Prepend the data URI scheme for Cloudinary to recognize the base64 string
+          // const dataUri = `data:image/png;base64,${imageBase64}`;
+          //
+          // const cloudinaryResponse = await cloudinary.uploader.upload(dataUri, {
+          //   folder: "article-images", // Optional: store in a specific folder
+          //   // Use article title for a more descriptive public_id, ensuring it's URL-safe
+          //   public_id: article.title
+          //     .toLowerCase()
+          //     .replace(/\s+/g, "-")
+          //     .replace(/[^a-z0-9-]/g, ""),
+          // });
+          //
+          // console.log(
+          //   `Image uploaded successfully. URL: ${cloudinaryResponse.secure_url}`,
+          // );
+          //
+          // // 3. Return the article with the new Cloudinary image URL
+          // return {
+          //   ...article,
+          //   image: cloudinaryResponse.secure_url,
+          // };
           return {
             ...article,
-            image: imageDescription,
+            image: imageBase64,
           };
         } catch (error) {
           console.error(
-            `Failed to generate image description for article: ${article.title}`,
+            `Failed to process image for article: "${article.title}"`,
             error,
           );
+          // Return the original article without an image if an error occurs
           return {
             ...article,
             image: undefined,
           };
         }
-        //TODO: S3 logic
       }),
     );
 

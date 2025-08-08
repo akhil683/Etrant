@@ -5,7 +5,7 @@ export const imgPrompt = (article: Article) => {
 You are an AI assistant creating thumbnail concepts for Indian competitive exam news articles.
 
 Task:
-Generate a highly detailed description for a thumbnail image representing the following news article: "${article.title}".
+Generate a highly detailed description for a thumbnail image representing the following news article: "${article.summary}".
 
 Guidelines:
 - The image must visually represent the core subject of the article so that a viewer can understand the topic at a glance.
