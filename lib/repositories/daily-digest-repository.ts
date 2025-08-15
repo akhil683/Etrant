@@ -3,7 +3,6 @@ import { relevancePrompt } from "../prompts/relevancePrompt";
 import { summaryPrompt } from "../prompts/summarize-article";
 import { rankingPrompt } from "../prompts/rank-articles";
 import { imgPrompt } from "../prompts/generate-image";
-import { v2 as cloudinary } from "cloudinary";
 
 export interface Article {
   title: string;
@@ -24,12 +23,13 @@ export interface Article {
  *
  * Flow: Fetch News → Filter Relevance → Summarize → Rank & Select Top 5 → Rewrite → Add Images
  */
+
 export class DailyDigestService {
   private static instance: DailyDigestService;
   private genAI: GoogleGenAI;
 
   private constructor() {
-    if (!process.env.GEMINI_API_KEY) {
+    if (!process.env.GEMINI_API_KEY_MAIN) {
       throw new Error("GEMINI_API_KEY environment variable is required");
     }
     this.genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
