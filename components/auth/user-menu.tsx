@@ -84,26 +84,26 @@ export function UserMenu() {
             </Link>
           </div>
           <DropdownMenuSeparator className="bg-gray-700" />
-          {/* <div className="p-2"> */}
-          {/*   <div className="flex items-center justify-between text-sm"> */}
-          {/*     <span className="text-gray-400">Streak:</span> */}
-          {/*     <span className="font-semibold text-orange-400"> */}
-          {/*       {userLoading ? 0 : user?.streak} */}
-          {/*     </span> */}
-          {/*   </div> */}
-          {/**/}
-          {/*   <div className="flex items-center justify-between text-sm"> */}
-          {/*     <span className="text-gray-400">Interest:</span> */}
-          {/*     <span className="font-semibold text-orange-400"> */}
-          {/*       {userLoading */}
-          {/*         ? "none" */}
-          {/*         : user?.interest === null */}
-          {/*           ? "none" */}
-          {/*           : user?.interest?.toUpperCase()} */}
-          {/*     </span> */}
-          {/*   </div> */}
-          {/* </div> */}
-          {/* <DropdownMenuSeparator className="bg-gray-700" /> */}
+          <div className="p-2">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-400">Streak:</span>
+              <span className="font-semibold text-orange-400">
+                {userLoading ? 0 : user?.streak}
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-gray-400">Interest:</span>
+              <span className="font-semibold text-orange-400">
+                {userLoading
+                  ? "none"
+                  : user?.interest === null
+                    ? "none"
+                    : user?.interest?.toUpperCase()}
+              </span>
+            </div>
+          </div>
+          <DropdownMenuSeparator className="bg-gray-700" />
           <DropdownMenuItem className="hover:bg-gray-700">
             <Link href="/leaderboard" className="flex items-center">
               <Trophy className="mr-2 h-4 w-4" />

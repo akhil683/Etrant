@@ -1,6 +1,6 @@
-// "use client";
-//
-// import { useEffect } from "react";
+"use client";
+
+import { useEffect } from "react";
 
 export default async function DailyDigestPage() {
   // useEffect(() => {
