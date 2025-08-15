@@ -29,7 +29,7 @@ export class DailyDigestService {
   private genAI: GoogleGenAI;
 
   private constructor() {
-    if (!process.env.GEMINI_API_KEY_MAIN) {
+    if (!process.env.GEMINI_API_KEY) {
       throw new Error("GEMINI_API_KEY environment variable is required");
     }
     this.genAI = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
