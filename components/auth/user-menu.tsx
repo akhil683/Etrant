@@ -104,13 +104,14 @@ export function UserMenu() {
             </div>
           </div>
           <DropdownMenuSeparator className="bg-gray-700" />
+
           <DropdownMenuItem className="hover:bg-gray-700">
-            <Link href="/leaderboard" className="flex items-center">
-              <Trophy className="mr-2 h-4 w-4" />
-              <span>Leaderboard</span>
+            <Link href="/articles" className="flex items-center">
+              <AlarmClockCheck className="mr-2 h-4 w-4" />
+              <span>Article Reel</span>
             </Link>
           </DropdownMenuItem>
-
+          <DropdownMenuSeparator className="bg-gray-700" />
           <DropdownMenuItem
             onClick={aiQuestionHandler}
             className="hover:bg-gray-700 cursor-pointer"
@@ -118,17 +119,20 @@ export function UserMenu() {
             <BookDown className=" h-4 w-4" />
             <span>AI Questions</span>
           </DropdownMenuItem>
-
+          <DropdownMenuSeparator className="bg-gray-700" />
           <DropdownMenuItem className="hover:bg-gray-700">
             <Link href="/daily-digest" className="flex items-center">
               <AlarmClockCheck className="mr-2 h-4 w-4" />
               <span>Daily Digest</span>
             </Link>
           </DropdownMenuItem>
-          {/* <DropdownMenuItem className="hover:bg-gray-700"> */}
-          {/*   <Settings className="mr-2 h-4 w-4" /> */}
-          {/*   <span>Settings</span> */}
-          {/* </DropdownMenuItem> */}
+          <DropdownMenuSeparator className="bg-gray-700" />
+          <DropdownMenuItem className="hover:bg-gray-700">
+            <Link href="/leaderboard" className="flex items-center">
+              <Trophy className="mr-2 h-4 w-4" />
+              <span>Leaderboard</span>
+            </Link>
+          </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-gray-700" />
           <DropdownMenuItem
             onClick={handleSignOut}
