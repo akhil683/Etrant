@@ -9,15 +9,11 @@ export default function HeroSection() {
   const router = useRouter();
   return (
     <section className="relative min-h-screen bg-black overflow-hidden">
-      {" "}
-      {/* Adjusted gradient */}
-      {/* Animated background elements */}
       <div className="absolute inset-0">
         <div className="absolute top-20 left-10 w-72 h-72 bg-blue-400/20 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-orange-400/20 rounded-full blur-3xl animate-pulse delay-500"></div>
       </div>
-      {/* Floating icons */}
       <motion.div
         animate={{
           y: [0, -20, 0],
@@ -108,6 +104,7 @@ export default function HeroSection() {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </Button>
                 <Button
+                  onClick={() => router.push("/how-it-works")}
                   size="lg"
                   variant="outline"
                   className="border-2 border-white/30 text-black hover:text-white hover:bg-white/10 px-6 py-2 md:px-8 md:py-4 md:text-lg rounded-full backdrop-blur-sm"
