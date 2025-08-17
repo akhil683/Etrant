@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Users, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 
 export default function HeroSection() {
+  const router = useRouter();
   return (
     <section className="relative min-h-screen bg-black overflow-hidden">
       {" "}
@@ -98,6 +100,7 @@ export default function HeroSection() {
                 className="flex flex-col sm:flex-row gap-4"
               >
                 <Button
+                  onClick={() => router.push("/auth")}
                   size="lg"
                   className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white md:font-bold px-6 py-2 md:px-8 md:py-4 md:text-lg rounded-full shadow-2xl transform transition-all"
                 >
