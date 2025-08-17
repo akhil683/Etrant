@@ -5,6 +5,9 @@ import {
   text,
   primaryKey,
   integer,
+  serial,
+  date,
+  real,
 } from "drizzle-orm/pg-core";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
@@ -12,9 +15,9 @@ import type { AdapterAccountType } from "@auth/core/adapters";
 
 const connectionString = process.env.DATABASE_URL!;
 const pool = neon(connectionString);
-
 export const db = drizzle(pool);
 
+// -------------------- USERS --------------------
 export const users = pgTable("user", {
   id: text("id")
     .primaryKey()
@@ -27,8 +30,85 @@ export const users = pgTable("user", {
   interest: text("interest"),
   points: integer("points").default(0),
   lastActiveDate: text("lastActiveDate"),
+  rank: text("rank"),
+  joinDate: date("joinDate"),
 });
 
+// -------------------- USER STATS --------------------
+export const userStats = pgTable(
+  "user_stats",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    totalReels: integer("totalReels").default(0),
+    totalQuizzes: integer("totalQuizzes").default(0),
+    averageScore: integer("averageScore").default(0), // %
+    studyTime: real("studyTime").default(0), // hours
+    globalRank: integer("globalRank"),
+  },
+  (t) => [primaryKey({ columns: [t.userId] })],
+);
+
+// -------------------- DAILY POINTS --------------------
+export const dailyPoints = pgTable("daily_points", {
+  id: serial("id").primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  day: text("day"), // e.g. Mon
+  date: date("date"),
+  points: integer("points"),
+});
+
+// -------------------- WEEKLY ACTIVITY --------------------
+export const weeklyActivity = pgTable("weekly_activity", {
+  id: serial("id").primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  week: text("week"), // e.g. Week 1
+  reels: integer("reels").default(0),
+  quizzes: integer("quizzes").default(0),
+  hours: real("hours").default(0),
+});
+
+// -------------------- SUBJECT PROGRESS --------------------
+export const subjectProgress = pgTable("subject_progress", {
+  id: serial("id").primaryKey(),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  subject: text("subject"),
+  progress: integer("progress").default(0), // %
+  color: text("color"), // Tailwind class or HEX
+});
+
+// -------------------- BADGES --------------------
+export const badges = pgTable("badges", {
+  id: serial("id").primaryKey(),
+  name: text("name"),
+  description: text("description"),
+  icon: text("icon"), // path to icon image
+  rarity: text("rarity"), // common, rare, epic
+});
+
+// -------------------- USER BADGES --------------------
+export const userBadges = pgTable(
+  "user_badges",
+  {
+    userId: text("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    badgeId: integer("badgeId")
+      .notNull()
+      .references(() => badges.id, { onDelete: "cascade" }),
+    dateUnlocked: date("dateUnlocked"),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.badgeId] })],
+);
+
+// -------------------- AUTH TABLES --------------------
 export const accounts = pgTable(
   "account",
   {
@@ -47,11 +127,7 @@ export const accounts = pgTable(
     session_state: text("session_state"),
   },
   (account) => [
-    {
-      compoundKey: primaryKey({
-        columns: [account.provider, account.providerAccountId],
-      }),
-    },
+    primaryKey({ columns: [account.provider, account.providerAccountId] }),
   ],
 );
 
@@ -71,11 +147,9 @@ export const verificationTokens = pgTable(
     expires: timestamp("expires", { mode: "date" }).notNull(),
   },
   (verificationToken) => [
-    {
-      compositePk: primaryKey({
-        columns: [verificationToken.identifier, verificationToken.token],
-      }),
-    },
+    primaryKey({
+      columns: [verificationToken.identifier, verificationToken.token],
+    }),
   ],
 );
 
@@ -94,10 +168,6 @@ export const authenticators = pgTable(
     transports: text("transports"),
   },
   (authenticator) => [
-    {
-      compositePK: primaryKey({
-        columns: [authenticator.userId, authenticator.credentialID],
-      }),
-    },
+    primaryKey({ columns: [authenticator.userId, authenticator.credentialID] }),
   ],
 );

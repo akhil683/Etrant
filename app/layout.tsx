@@ -17,13 +17,11 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   description: siteConfig.description,
   keywords: siteConfig.keywords,
-  authors: [
-    {
-      name: siteConfig.name,
-      url: new URL(siteConfig.url),
-    },
-  ],
-  creator: siteConfig.name,
+  authors: siteConfig.authors,
+  creator: siteConfig.creator,
+  alternates: {
+    canonical: siteConfig.url,
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -33,7 +31,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: "./favicon.ico",
+        url: `${siteConfig.url}/favicon.ico`,
         width: 1200,
         height: 630,
         alt: siteConfig.name,
@@ -44,13 +42,14 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: ["./favicon.ico"],
+    images: [`${siteConfig.url}/favicon.ico`],
     creator: "@akkhil_dev",
   },
   icons: {
-    icon: "./favicon.ico",
-    shortcut: "./favicon.ico",
+    icon: `${siteConfig.url}/favicon.ico`,
+    shortcut: `${siteConfig.url}/favicon.ico`,
   },
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({
