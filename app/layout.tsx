@@ -22,7 +22,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: siteConfig.url,
   },
-  themeColor: siteConfig.themeColor,
   openGraph: {
     type: "website",
     locale: "en_US",

@@ -11,10 +11,12 @@ export default function Header() {
       <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
         <h1 className="md:text-lg font-semibold text-white">
           <Link href="/" className="flex items-center gap-2">
-            <div className="w-9 h-9 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
+            <div className="md:w-9 md:h-9 w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
               <BookOpen className="h-5 w-5 text-white" />
             </div>
-            <span className="text-2xl font-black text-white">Wiki Reel</span>
+            <span className="md:text-2xl text-xl font-black text-white">
+              Wiki Reel
+            </span>
           </Link>
         </h1>
         <div className="flex items-center space-x-4">

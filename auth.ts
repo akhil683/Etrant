@@ -14,17 +14,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   providers: [Google],
   events: {
     async signIn({ user, isNewUser }: any) {
-      console.log("auth user", user);
-      // if (isNewUser && user.email) {
-      await fetch(`${process.env.NEXT_BASE_URL}/api/send-mail`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: user.email,
-          name: user.name,
-        }),
-      });
-      // }
+      if (isNewUser && user.email) {
+        await fetch(`${process.env.NEXT_BASE_URL}/api/send-mail`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            email: user.email,
+            name: user.name,
+          }),
+        });
+      }
     },
   },
 });
