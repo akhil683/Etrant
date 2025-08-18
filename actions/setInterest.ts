@@ -6,17 +6,17 @@ import { InterestCategory } from "@/types";
 import { eq } from "drizzle-orm";
 
 export const storeInterests = async (
-  interests: InterestCategory[],
+  interests: InterestCategory,
   userEmail: string,
 ) => {
-  if (!interests || interests.length < 1) {
+  if (interests) {
     return { success: false, error: "Interest is required" };
   }
 
   try {
     await db
       .update(users)
-      .set({ interest: interests[0] })
+      .set({ interest: interests })
       .where(eq(users.email, userEmail));
 
     return { success: true, message: "Interest stored successfully" };

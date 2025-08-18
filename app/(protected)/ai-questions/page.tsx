@@ -14,7 +14,7 @@ export default async function AiQuestionPage() {
     redirect("/auth");
   }
 
-  if (userData?.interest === "") {
+  if (userData?.interest === "" || userData?.interest === null) {
     redirect("/interest");
   }
 

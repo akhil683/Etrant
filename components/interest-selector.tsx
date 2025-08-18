@@ -8,6 +8,8 @@ import { InterestCategory } from "@/types";
 import { storeInterests } from "@/actions/setInterest";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { finalization } from "process";
+import { useUserStore } from "@/lib/store/useUserStore";
 
 export const INTERESTS: {
   id: InterestCategory;
@@ -109,11 +111,10 @@ export const INTERESTS: {
 ];
 
 export function InterestSelector() {
-  const { data } = useSession();
+  const { user } = useUserStore();
   const [loading, setLoading] = useState(false);
-  const [selectedInterests, setSelectedInterests] = useState<
-    InterestCategory[]
-  >([]);
+  const [selectedInterests, setSelectedInterests] =
+    useState<InterestCategory | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -121,26 +122,28 @@ export function InterestSelector() {
       const res = await fetch("/api/user");
       const userData = await res.json();
       if (userData) {
-        setSelectedInterests([userData.interest]);
+        setSelectedInterests(userData.interest);
       }
     };
     fetchUser();
   }, []);
+
   const toggleInterest = (interestId: InterestCategory) => {
-    setSelectedInterests((prev) =>
-      prev.includes(interestId)
-        ? prev.filter((id) => id !== interestId)
-        : [...prev, interestId],
-    );
+    setSelectedInterests(interestId);
   };
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
     setLoading(true);
-    if (selectedInterests.length > 0) {
-      storeInterests(selectedInterests, data?.user?.email as string);
-      router.push("/ai-questions");
+    try {
+      if (selectedInterests) {
+        await storeInterests(selectedInterests, user?.email as string);
+        router.push("/ai-questions");
+      }
+    } catch (error) {
+      console.log("interest selection error: ", error);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   return (
@@ -160,7 +163,7 @@ export function InterestSelector() {
             <Card
               key={interest.id}
               className={`md:p-4 p-2 cursor-pointer transition-all duration-200 hover:scale-105 ${
-                selectedInterests.includes(interest.id)
+                selectedInterests === interest.id
                   ? "bg-white text-black border-2 border-white"
                   : "bg-white/10 text-white border border-white/20 hover:bg-white/20"
               }`}
@@ -171,7 +174,7 @@ export function InterestSelector() {
                   <span className="md:text-xl text-lg">{interest.emoji}</span>
                   <span className="font-medium text-sm">{interest.label}</span>
                 </div>
-                {selectedInterests.includes(interest.id) && (
+                {selectedInterests === interest.id && (
                   <Check className="w-5 h-5" />
                 )}
               </div>
@@ -182,11 +185,11 @@ export function InterestSelector() {
         <div className="text-center">
           <Button
             onClick={handleContinue}
-            disabled={selectedInterests.length === 0 || loading}
+            disabled={loading}
             className="bg-white text-black hover:bg-gray-200 px-8 py-3 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
-            Continue ({selectedInterests.length} selected)
+            Continue
           </Button>
         </div>
       </div>
