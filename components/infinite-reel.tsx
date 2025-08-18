@@ -3,9 +3,9 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ArticleCard } from "@/components/article-card";
 import { QuizCard } from "@/components/quiz-card";
-import { Loader2 } from "lucide-react";
 import Header from "./header";
 import { useAppState } from "@/hooks/use-app-state";
+import { AILoader } from "./loader/ReelLoader";
 
 interface Article {
   id: string;
@@ -226,14 +226,7 @@ export function InfiniteReel() {
           </div>
         ))}
 
-        {loading && (
-          <div className="h-full snap-start flex items-center justify-center flex-col gap-6">
-            <Loader2 className="w-8 h-8 animate-spin text-gray-400" />
-            <h2 className="text-center text-gray-200 text-xl">
-              Generating Articles....
-            </h2>
-          </div>
-        )}
+        {loading && <AILoader totalArticles={10} loadingTime={10} />}
       </div>
     </div>
   );

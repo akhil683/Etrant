@@ -65,25 +65,28 @@ export const useUserStore = create<UserState>((set, get) => ({
     const week = `W${getWeekNumber(now)}`;
 
     // ---- Update Stats ----
-    const newTotalQuizzes = currentUser?.stats?.totalQuizzes + 1;
+    const newTotalQuizzes = currentUser?.stats?.totalQuizzes! + 1;
     const newAverageScore =
-      (currentUser?.stats?.averageScore * currentUser?.stats?.totalQuizzes +
+      (currentUser?.stats?.averageScore! * currentUser?.stats?.totalQuizzes! +
         (isCorrect ? 100 : 0)) /
       newTotalQuizzes;
 
-    const newPoints = currentUser.points + (isCorrect ? 10 : 2); // Example scoring system
+    const newPoints = currentUser?.points! + (isCorrect ? 10 : 2); // Example scoring system
     const update = updateStreak(currentUser);
 
     // ---- Update Daily Points ----
     let dailyPoints = [...currentUser.dailyPoints];
-    const todayEntry = dailyPoints.find(
-      (d) => d.date.toString().slice(0, 10) === today,
-    );
 
-    if (todayEntry) {
+    //TODO: fix date expression
+    console.log(today, dailyPoints[0].date);
+    const todayEntry = dailyPoints.find((d) => d?.date?.toString() === today);
+
+    if (todayEntry && todayEntry.points) {
       todayEntry.points += isCorrect ? 10 : 2;
     } else {
       dailyPoints.push({
+        id: Math.floor(Math.random() * 100000),
+        userId: currentUser.id,
         day: now.toLocaleDateString("en-US", { weekday: "long" }),
         date: now.toString(),
         points: isCorrect ? 10 : 2,
@@ -93,11 +96,18 @@ export const useUserStore = create<UserState>((set, get) => ({
     // ---- Update Weekly Activity ----
     let weeklyActivity = [...currentUser.weeklyActivity];
     const currentWeek = weeklyActivity.find((w) => w.week === week);
-    if (currentWeek) {
+    if (currentWeek && currentWeek.quizzes && currentWeek.hours) {
       currentWeek.quizzes += 1;
       currentWeek.hours += 0.01; // Example: 0.6 mins per quiz
     } else {
-      weeklyActivity.push({ week, reels: 0, quizzes: 1, hours: 0.1 });
+      weeklyActivity.push({
+        id: Math.floor(Math.random() * 100000),
+        userId: currentUser.id,
+        week,
+        reels: 0,
+        quizzes: 1,
+        hours: 0.1,
+      });
     }
 
     // ---- Update Badges ----
@@ -109,7 +119,7 @@ export const useUserStore = create<UserState>((set, get) => ({
         description: "Completed 10 quizzes",
         icon: "🎯",
         rarity: "Common",
-        dateUnlocked: now,
+        dateUnlocked: now.toString(),
       });
     }
     if (update.streak === 7 && !badges.find((b) => b.id === 2)) {
@@ -119,7 +129,7 @@ export const useUserStore = create<UserState>((set, get) => ({
         description: "Answered quizzes 7 days in a row",
         icon: "🔥",
         rarity: "Rare",
-        dateUnlocked: now,
+        dateUnlocked: now.toString(),
       });
     }
     const updatedUser: User = {
@@ -177,7 +187,7 @@ export const updateStreak = (user: User): User => {
 
   let newStreak = 1;
   if (lastActive === yesterdayStr) {
-    newStreak = user.streak + 1;
+    newStreak = user.streak! + 1;
   }
 
   return {
