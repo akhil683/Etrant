@@ -8,14 +8,16 @@ export interface Article {
   createdAt: Date;
 }
 
-export interface User {
+interface User {
   id: string;
   name: string;
   points: number;
   streak: number;
-  totalQuizzes: number;
-  correctAnswers: number;
-  createdAt: Date;
+  lastActiveDate: Date;
+  totalQuestionsAttempted: number;
+  totalCorrectAnswers: number;
+  totalWrongAnswers: number;
+  accuracy: number;
 }
 
 export interface QuizOption {
@@ -64,11 +66,11 @@ export interface QuizResult {
 export interface IUser {
   id: string;
   name: string;
+  points: number;
   email: string;
   emailVerified: Date | null;
   image: string;
   interest: string;
-  points: number;
   streak: number;
   lastActiveDate: string;
 }

@@ -1,13 +1,12 @@
-import { getUserData } from "@/actions/getInterest";
+import { auth } from "@/auth";
 import Header from "@/components/header";
 import { InterestSelector } from "@/components/interest-selector";
-import { IUser } from "@/types";
 import { redirect } from "next/navigation";
 
 export default async function InterestPage() {
-  const userData: IUser | null = await getUserData();
+  const session = await auth();
 
-  if (!userData) {
+  if (!session?.user) {
     redirect("/auth");
   }
 

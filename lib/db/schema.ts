@@ -14,7 +14,9 @@ import { drizzle } from "drizzle-orm/neon-http";
 import type { AdapterAccountType } from "@auth/core/adapters";
 
 const connectionString = process.env.DATABASE_URL!;
-const pool = neon(connectionString);
+const pool = neon(
+  "postgresql://neondb_owner:npg_y5EWmYHDCI1l@ep-hidden-tree-a1041pdx-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
+);
 export const db = drizzle(pool);
 
 // -------------------- USERS --------------------

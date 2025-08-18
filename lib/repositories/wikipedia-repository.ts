@@ -53,7 +53,7 @@ export class WikipediaRepository
   async getArticlesByInterests(): Promise<Article[]> {
     const articles: Article[] = [];
 
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 10; i++) {
       try {
         const article = await this.getRandomArticle();
         articles.push({

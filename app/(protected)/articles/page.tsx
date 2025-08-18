@@ -10,7 +10,7 @@ export const metadata: Metadata = articlesMeta;
 export default async function ArticlePage() {
   const session = await auth();
   if (!session) {
-    redirect("/");
+    redirect("/auth");
   }
   return (
     <ErrorBoundary>
