@@ -122,13 +122,6 @@ export function UserMenu() {
             <span>AI Questions</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-gray-700" />
-          {/* <DropdownMenuItem className="hover:bg-gray-700"> */}
-          {/*   <Link href="/daily-digest" className="flex items-center"> */}
-          {/*     <AlarmClockCheck className="mr-2 h-4 w-4" /> */}
-          {/*     <span>Daily Digest</span> */}
-          {/*   </Link> */}
-          {/* </DropdownMenuItem> */}
-          <DropdownMenuSeparator className="bg-gray-700" />
           <DropdownMenuItem className="hover:bg-gray-700">
             <Link href="/leaderboard" className="flex items-center">
               <Trophy className="mr-2 h-4 w-4" />
