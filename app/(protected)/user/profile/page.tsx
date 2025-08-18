@@ -56,20 +56,8 @@ export default function ProfilePage() {
                     Akhil Palsra
                   </h1>
                   <p className="md:text-lg text-gray-300">{user.rank}</p>
-                  {/* <p className="md:text-sm  text-xs text-gray-500"> */}
-                  {/*   Member since {user.joinDate} */}
-                  {/* </p> */}
                 </div>
               </div>
-              {/* <div className="mt-6 md:mt-0 flex gap-3"> */}
-              {/*   <Button */}
-              {/*     variant="outline" */}
-              {/*     className="border-blue-500 text-blue-400 hover:bg-blue-900/20 bg-transparent" */}
-              {/*   > */}
-              {/*     <Settings className="h-5 w-5 mr-2" /> */}
-              {/*     Edit Profile */}
-              {/*   </Button> */}
-              {/* </div> */}
             </div>
 
             {/* Enhanced Key Stats Grid */}

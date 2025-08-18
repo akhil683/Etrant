@@ -5,10 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Check, Loader2 } from "lucide-react";
 import { InterestCategory } from "@/types";
-import { storeInterests } from "@/actions/setInterest";
-import { useSession } from "next-auth/react";
+import { setInterests } from "@/actions/setInterest";
 import { useRouter } from "next/navigation";
-import { finalization } from "process";
 import { useUserStore } from "@/lib/store/useUserStore";
 
 export const INTERESTS: {
@@ -136,7 +134,12 @@ export function InterestSelector() {
     setLoading(true);
     try {
       if (selectedInterests) {
-        await storeInterests(selectedInterests, user?.email as string);
+        console.log("selectedInterests", selectedInterests);
+        const res = await setInterests(
+          selectedInterests,
+          user?.email as string,
+        );
+        console.log("res", res);
         router.push("/ai-questions");
       }
     } catch (error) {

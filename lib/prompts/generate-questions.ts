@@ -46,7 +46,7 @@ Each object in the array must have the following exact structure and adhere to t
     ],
     "previousYearQuestion": "string", // Identifier like "exam_name-year". Leave as an empty string "" if not applicable.
     "correctAnswer": "number", // The 0-based index of the correct option in the "options" array. This MUST match the option with "isCorrect": true.
-    "explanation": "string", // A detailed explanation for why the correct answer is correct and others are not. Optional, but highly recommended.
+    "explanation": "string", // A detailed explanation for why the correct answer is correct and others are not. Optional, but highly recommended. Wordd should be strictly 10-50 words.
     "metadata": { // A nested object for metadata.
       "source": "string", // Must be "ai-generated".
       "complexity": "number", // An integer from 5 to 10, representing difficulty on a 1-10 scale ('medium' maps to 5-7, 'hard' to 8-10).

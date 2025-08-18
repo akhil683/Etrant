@@ -72,7 +72,8 @@ export function UserMenu() {
         >
           <div className="flex items-center justify-start gap-2 p-2">
             <Link
-              href={"/user/profile"}
+              // href={"/user/profile"}
+              href={"/"}
               className="flex flex-col space-y-1 leading-none cursor-pointer"
             >
               {session?.user?.name && (
@@ -121,13 +122,6 @@ export function UserMenu() {
             <BookDown className=" h-4 w-4" />
             <span>AI Questions</span>
           </DropdownMenuItem>
-          <DropdownMenuSeparator className="bg-gray-700" />
-          {/* <DropdownMenuItem className="hover:bg-gray-700"> */}
-          {/*   <Link href="/daily-digest" className="flex items-center"> */}
-          {/*     <AlarmClockCheck className="mr-2 h-4 w-4" /> */}
-          {/*     <span>Daily Digest</span> */}
-          {/*   </Link> */}
-          {/* </DropdownMenuItem> */}
           <DropdownMenuSeparator className="bg-gray-700" />
           <DropdownMenuItem className="hover:bg-gray-700">
             <Link href="/leaderboard" className="flex items-center">
