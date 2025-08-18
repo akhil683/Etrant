@@ -78,8 +78,7 @@ export const useUserStore = create<UserState>((set, get) => ({
     let dailyPoints = [...currentUser.dailyPoints];
 
     //TODO: fix date expression
-    console.log(today, dailyPoints[0].date);
-    const todayEntry = dailyPoints.find((d) => d?.date?.toString() === today);
+    const todayEntry = dailyPoints?.find((d) => d?.date?.toString() === today);
 
     if (todayEntry && todayEntry.points) {
       todayEntry.points += isCorrect ? 10 : 2;

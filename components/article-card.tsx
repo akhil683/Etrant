@@ -19,32 +19,14 @@ interface ArticleCardProps {
 }
 
 export function ArticleCard({ article }: ArticleCardProps) {
-  const [liked, setLiked] = useState(false);
   const [imageError, setImageError] = useState(false);
-
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: article.title,
-          text: article.summary,
-          url: article.url,
-        });
-      } catch (error) {
-        console.log("Error sharing:", error);
-      }
-    } else {
-      // Fallback: copy to clipboard
-      navigator.clipboard.writeText(article.url);
-    }
-  };
 
   const handleReadMore = () => {
     window.open(article.url, "_blank");
   };
 
   return (
-    <div className="h-full mx-auto flex flex-col max-w-7xl bg-black text-white relative">
+    <div className="h-full mx-auto flex flex-col max-w-[1600px] bg-black text-white relative">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         {!imageError ? (

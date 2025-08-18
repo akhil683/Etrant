@@ -55,8 +55,13 @@ export function UserMenu() {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
             <Avatar className="h-8 w-8">
-              <AvatarImage src={user?.image || ""} alt={user?.name || ""} />
-              <AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
+              <AvatarImage
+                src={session?.user?.image || ""}
+                alt={user?.name || ""}
+              />
+              <AvatarFallback>
+                {session?.user?.name?.charAt(0) || "U"}
+              </AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
@@ -70,10 +75,12 @@ export function UserMenu() {
               href={"/user/profile"}
               className="flex flex-col space-y-1 leading-none cursor-pointer"
             >
-              {user?.name && <p className="font-medium">{user?.name}</p>}
-              {user?.email && (
+              {session?.user?.name && (
+                <p className="font-medium">{session?.user?.name}</p>
+              )}
+              {session?.user?.email && (
                 <p className="w-[200px] truncate text-sm text-gray-400">
-                  {user?.email}
+                  {session?.user?.email}
                 </p>
               )}
             </Link>
@@ -115,12 +122,12 @@ export function UserMenu() {
             <span>AI Questions</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-gray-700" />
-          <DropdownMenuItem className="hover:bg-gray-700">
-            <Link href="/daily-digest" className="flex items-center">
-              <AlarmClockCheck className="mr-2 h-4 w-4" />
-              <span>Daily Digest</span>
-            </Link>
-          </DropdownMenuItem>
+          {/* <DropdownMenuItem className="hover:bg-gray-700"> */}
+          {/*   <Link href="/daily-digest" className="flex items-center"> */}
+          {/*     <AlarmClockCheck className="mr-2 h-4 w-4" /> */}
+          {/*     <span>Daily Digest</span> */}
+          {/*   </Link> */}
+          {/* </DropdownMenuItem> */}
           <DropdownMenuSeparator className="bg-gray-700" />
           <DropdownMenuItem className="hover:bg-gray-700">
             <Link href="/leaderboard" className="flex items-center">

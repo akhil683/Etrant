@@ -6,7 +6,7 @@
 
 **Scroll. Learn. Test. Repeat.**
 
-*An Instagram-like knowledge platform for students, aspirants, and curious minds*
+_An Instagram-like knowledge platform for students, aspirants, and curious minds_
 
 [![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=flat&logo=react)](https://reactjs.org/)
@@ -36,25 +36,30 @@ WikiReel transforms the way students learn by combining the addictive swipe expe
 ## 🌟 Key Features
 
 ### 📖 **Knowledge Reels**
+
 Swipe through AI-curated Wikipedia summaries designed for quick comprehension and retention.
 
 ### 🧠 **Smart Quiz Engine**
+
 - Select your target exam (JEE, NEET, UPSC, CAT, etc.)
 - Get personalized MCQ reels based on your syllabus
 - Track performance with detailed analytics
 
 ### 📰 **Daily Current Affairs**
+
 - Automated pipeline delivers fresh content daily at midnight IST
 - Top 20 Indian news articles filtered for UPSC relevance
 - AI-generated visuals for enhanced engagement
 
 ### 🏆 **Gamification System**
+
 - XP points and daily streaks
 - Competitive leaderboards
 - Achievement badges for topic mastery
 - Social learning features
 
 ### 📚 **Multi-Source Content**
+
 - Wikipedia article summaries
 - Research paper insights
 - Educational YouTube transcript analysis
@@ -69,6 +74,7 @@ Swipe through AI-curated Wikipedia summaries designed for quick comprehension an
 <td valign="top" width="33%">
 
 **Frontend**
+
 - Next.js 15 (App Router)
 - React 19
 - TypeScript
@@ -78,6 +84,7 @@ Swipe through AI-curated Wikipedia summaries designed for quick comprehension an
 <td valign="top" width="33%">
 
 **Backend**
+
 - Next.js Server Actions
 - Vercel Cron Jobs
 - Drizzle ORM
@@ -88,6 +95,7 @@ Swipe through AI-curated Wikipedia summaries designed for quick comprehension an
 <td valign="top" width="33%">
 
 **AI & APIs**
+
 - Google Gemini
 
 </td>
@@ -108,7 +116,7 @@ flowchart TD
     F -->|Serve Content| G[Next.js API Routes]
     G -->|Render UI| H[React Reel Interface]
     H -->|User Interaction| I[Progress Tracking]
-    
+
     I[Vercel Cron] -->|Daily Trigger| L[UPSC Digest Pipeline]
     J -->|Process News| B
 ```
@@ -119,13 +127,14 @@ flowchart TD
 
 ### Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - pnpm (recommended) or npm
 - PostgreSQL database (or Neon account)
 
 ### Installation
 
 1. **Clone and Install**
+
    ```bash
    git clone https://github.com/akhil683/wiki-reel.git
    cd wiki-reel
@@ -133,21 +142,23 @@ flowchart TD
    ```
 
 2. **Environment Setup**
+
    ```bash
    cp .env.example .env.local
    ```
-   
+
    Fill in your environment variables:
+
    ```env
    # Database
    DATABASE_URL="your_postgresql_connection_string"
-   
+
    # Authentication
    NEXTAUTH_SECRET="your_nextauth_secret"
    NEXTAUTH_URL="http://localhost:3000"
    GOOGLE_CLIENT_ID="your_google_client_id"
    GOOGLE_CLIENT_SECRET="your_google_client_secret"
-   
+
    # AI Services
    GEMINI_API_KEY="your_gemini_api_key"
 
@@ -157,9 +168,12 @@ flowchart TD
    SMTP_USER=akhilpalsra@gmail.com
    SMTP_PASS=yqts jcup kgua tmrm
 
+
+
    ```
 
 3. **Database Setup**
+
    ```bash
    pnpm drizzle-kit generate
    pnpm drizzle-kit push
@@ -201,6 +215,7 @@ sequenceDiagram
 ```
 
 **Cron Configuration** (`vercel.json`):
+
 ```json
 {
   "crons": [
@@ -239,19 +254,22 @@ wiki-reel/
 ## 🎯 Roadmap
 
 ### 🚧 In Progress
+
 - [ ] **AI Flashcards**: Spaced repetition system for better retention
 - [ ] **Study Circles**: Peer learning groups based on exam categories
 - [ ] **Advanced Analytics**: Detailed performance insights and recommendations
 
 ### 🔮 Future Features
+
 - [ ] **Video Summaries**: AI-generated short explainer videos
-- [ ] **Audio Mode**: Podcast-style learning for commuters  
+- [ ] **Audio Mode**: Podcast-style learning for commuters
 - [ ] **AI Mentor**: Interactive Q&A for deeper understanding
 - [ ] **Offline Mode**: Download reels for offline access
 - [ ] **Micro-Certifications**: Shareable achievement certificates
 - [ ] **Multi-language Support**: Content in regional languages
 
 ### 🌟 Long-term Vision
+
 - [ ] **AR Knowledge Maps**: Immersive 3D topic visualization
 - [ ] **Collaborative Notes**: Community-driven content creation
 - [ ] **Live Study Sessions**: Real-time group learning experiences
@@ -263,14 +281,17 @@ wiki-reel/
 We welcome contributions from the community! Here's how you can help:
 
 ### 🐛 **Found a Bug?**
+
 1. Check [existing issues](https://github.com/akhil683/wiki-reel/issues)
 2. Create a detailed bug report with steps to reproduce
 
 ### 💡 **Have a Feature Idea?**
+
 1. Open a [feature request](https://github.com/akhil683/wiki-reel/issues/new?template=feature_request.md)
 2. Describe the problem it solves and potential implementation
 
 ### 🔧 **Ready to Code?**
+
 1. Fork the repository
 2. Create a feature branch: `git checkout -b feature/amazing-feature`
 3. Make your changes and add tests
@@ -279,6 +300,7 @@ We welcome contributions from the community! Here's how you can help:
 6. Open a Pull Request
 
 ### 📝 **Areas We Need Help With**
+
 - 🎨 UI/UX improvements
 - 🤖 AI prompt optimization
 - 📊 New exam category content

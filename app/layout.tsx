@@ -5,6 +5,7 @@ import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import Head from "next/head";
 import { UserProvider } from "@/components/providers/UserProvider";
+import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import { siteConfig } from "@/lib/config/site";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -59,17 +60,19 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <Head>
-        <script
-          crossOrigin="anonymous"
-          src="//unpkg.com/react-scan/dist/auto.global.js"
-        />
-      </Head>
-      <SessionProvider>
-        <UserProvider>
-          <body className={inter.className}>{children}</body>
-        </UserProvider>
-      </SessionProvider>
+      {/* <Head> */}
+      {/*   <script */}
+      {/*     crossOrigin="anonymous" */}
+      {/*     src="//unpkg.com/react-scan/dist/auto.global.js" */}
+      {/*   /> */}
+      {/* </Head> */}
+      <PostHogProvider>
+        <SessionProvider>
+          <UserProvider>
+            <body className={inter.className}>{children}</body>
+          </UserProvider>
+        </SessionProvider>
+      </PostHogProvider>
     </html>
   );
 }
