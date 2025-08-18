@@ -72,7 +72,8 @@ export function UserMenu() {
         >
           <div className="flex items-center justify-start gap-2 p-2">
             <Link
-              href={"/user/profile"}
+              // href={"/user/profile"}
+              href={"/"}
               className="flex flex-col space-y-1 leading-none cursor-pointer"
             >
               {session?.user?.name && (
