@@ -23,7 +23,6 @@ export default async function LandingPage() {
         <StatsSection />
         <FeaturesGrid />
         <ProcessFlow />
-        {/* <TestimonialsSection /> */}
         <CTABanner />
         <Footer />
       </main>

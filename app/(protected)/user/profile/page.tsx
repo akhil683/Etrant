@@ -14,6 +14,8 @@ import {
 import Image from "next/image";
 import BadgeGallery from "@/components/badge-gallery";
 import Header from "@/components/header";
+import { useUserStore } from "@/lib/store/useUserStore";
+import { redirect } from "next/navigation";
 
 const dailyPoints = [
   { day: "Mon", points: 120, date: "Dec 16" },
@@ -26,19 +28,10 @@ const dailyPoints = [
 ];
 
 export default function ProfilePage() {
-  const user = {
-    name: "Akkhil",
-    avatar: "/placeholder.svg?height=100&width=100",
-    totalPoints: 12450,
-    streak: 75,
-    rank: "Diamond Learner",
-    joinDate: "March 2024",
-    totalReels: 1247,
-    totalQuizzes: 523,
-    averageScore: 87,
-    studyTime: 156,
-    globalRank: 1247,
-  };
+  const { user } = useUserStore();
+  if (!user) {
+    redirect("/auth");
+  }
 
   const maxPoints = Math.max(...dailyPoints.map((d) => d.points));
 
@@ -52,8 +45,8 @@ export default function ProfilePage() {
             <div className="flex flex-col md:flex-row items-start md:items-center md:justify-between bg-gray-900 border border-gray-800 rounded-2xl md:p-8 p-4 shadow-lg">
               <div className="flex items-center gap-6">
                 <Image
-                  src={user.avatar || "/placeholder.svg"}
-                  alt={user.name}
+                  src={user?.image || "/placeholder.svg"}
+                  alt={user?.name as string}
                   width={100}
                   height={100}
                   className="md:w-20 md:h-20 w-12 h-12 rounded-full border-4 border-blue-500 shadow-xl"
@@ -63,9 +56,9 @@ export default function ProfilePage() {
                     Akhil Palsra
                   </h1>
                   <p className="md:text-lg text-gray-300">{user.rank}</p>
-                  <p className="md:text-sm  text-xs text-gray-500">
-                    Member since {user.joinDate}
-                  </p>
+                  {/* <p className="md:text-sm  text-xs text-gray-500"> */}
+                  {/*   Member since {user.joinDate} */}
+                  {/* </p> */}
                 </div>
               </div>
               {/* <div className="mt-6 md:mt-0 flex gap-3"> */}
@@ -90,7 +83,7 @@ export default function ProfilePage() {
                 </CardHeader>
                 <CardContent>
                   <div className="md:text-3xl text-2xl font-bold text-white">
-                    {user.totalPoints.toLocaleString()}
+                    {user?.points}
                   </div>
                   <p className="text-xs text-green-400 mt-1">
                     +2,500 this month
@@ -122,7 +115,7 @@ export default function ProfilePage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-3xl font-bold text-white">
-                    #{user.globalRank}
+                    #{user.rank || 1}
                   </div>
                   <p className="text-xs text-purple-400 mt-1">
                     Top 5% worldwide
@@ -139,7 +132,7 @@ export default function ProfilePage() {
                 </CardHeader>
                 <CardContent>
                   <div className="md:text-3xl text-2xl font-bold text-white">
-                    {user.averageScore}%
+                    {user.stats.averageScore}%
                   </div>
                   <p className="text-xs text-green-400 mt-1">+3% this week</p>
                 </CardContent>
@@ -156,7 +149,7 @@ export default function ProfilePage() {
               </CardHeader>
               <CardContent>
                 <div className="h-64 flex items-end justify-around gap-2 py-4">
-                  {dailyPoints.map((data, index) => (
+                  {user.dailyPoints.map((data, index) => (
                     <div
                       key={index}
                       className="flex flex-col items-center h-full justify-end group"
@@ -165,7 +158,7 @@ export default function ProfilePage() {
                         <div
                           className="md:w-10 w-8 rounded-t-lg bg-gradient-to-t from-blue-500 to-purple-500 transition-all duration-500 ease-out hover:from-blue-400 hover:to-purple-400 cursor-pointer"
                           style={{
-                            height: `${(data.points / maxPoints) * 180}px`,
+                            height: `${(data?.points! / maxPoints) * 180}px`,
                           }}
                         ></div>
                         <div className="absolute -top-8 left-1/2 transform -translate-x-1/2 bg-gray-800 text-white text-xs px-2 py-1 rounded md:opacity-0 group-hover:opacity-100 transition-opacity">
@@ -189,7 +182,7 @@ export default function ProfilePage() {
               <Card className="bg-gray-900/50 border-gray-800 text-center p-6">
                 <BookOpen className="h-8 w-8 text-blue-400 mx-auto mb-3" />
                 <div className="text-2xl font-bold text-white">
-                  {user.totalReels}
+                  {user.stats.totalReels}
                 </div>
                 <div className="text-sm text-gray-400">Reels Watched</div>
               </Card>
@@ -197,7 +190,7 @@ export default function ProfilePage() {
               <Card className="bg-gray-900/50 border-gray-800 text-center p-6">
                 <Award className="h-8 w-8 text-green-400 mx-auto mb-3" />
                 <div className="text-2xl font-bold text-white">
-                  {user.totalQuizzes}
+                  {user.stats.totalQuizzes}
                 </div>
                 <div className="text-sm text-gray-400">Quizzes Completed</div>
               </Card>
@@ -205,7 +198,7 @@ export default function ProfilePage() {
               <Card className="bg-gray-900/50 border-gray-800 text-center p-6">
                 <Clock className="h-8 w-8 text-orange-400 mx-auto mb-3" />
                 <div className="text-2xl font-bold text-white">
-                  {user.studyTime}h
+                  {user.stats.studyTime}h
                 </div>
                 <div className="text-sm text-gray-400">Total Study Time</div>
               </Card>

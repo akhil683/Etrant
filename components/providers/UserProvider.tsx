@@ -1,7 +1,8 @@
 "use client";
 
-import { getUserData } from "@/actions/getInterest";
+import { getUserProfile } from "@/actions/getUserProfile";
 import { updateUser } from "@/actions/updateUser";
+import { useUserStore } from "@/lib/store/useUserStore";
 import { IUser } from "@/types";
 import React, { createContext, useContext, useEffect, useState } from "react";
 
@@ -12,50 +13,22 @@ type UserContextType = {
   refreshUser: () => Promise<void>;
 };
 
-export const updateStreak = (user: IUser): IUser => {
-  const formatDate = (date: Date) => date.toISOString().split("T")[0]; // "YYYY-MM-DD"
-  const today = formatDate(new Date());
-  const lastActive = user.lastActiveDate ?? null;
-
-  // If no lastActiveDate (new user) → first activity today
-  if (!lastActive) {
-    return {
-      ...user,
-      streak: 1,
-      lastActiveDate: today,
-    };
-  }
-
-  // If user already active today → do nothing
-  if (lastActive === today) return user;
-
-  const yesterday = new Date();
-  yesterday.setDate(yesterday.getDate() - 1);
-  const yesterdayStr = formatDate(yesterday);
-
-  let newStreak = 1;
-  if (lastActive === yesterdayStr) {
-    newStreak = user.streak + 1;
-  }
-
-  return {
-    ...user,
-    streak: newStreak,
-    lastActiveDate: today,
-  };
-};
-
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUserState] = useState<IUser | null>(null);
   const [userLoading, setUserLoading] = useState(true);
+  const { setUser } = useUserStore();
 
   const fetchUser = async () => {
     try {
       setUserLoading(true);
-      const res = await getUserData();
-      setUserState(res);
+      console.log("hello");
+      const res = await getUserProfile();
+      console.log("res provider", res);
+      if (res) {
+        setUser(res);
+      }
     } catch (err) {
       console.error("Error fetching user:", err);
     } finally {

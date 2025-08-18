@@ -15,10 +15,12 @@ import { Trophy, LogOut, BookDown, AlarmClockCheck } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useUser } from "../providers/UserProvider";
+import { useUserStore } from "@/lib/store/useUserStore";
 
 export function UserMenu() {
   const { data: session } = useSession();
-  const { user, userLoading } = useUser();
+  const { user } = useUserStore();
+  const { userLoading } = useUser();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -53,13 +55,8 @@ export function UserMenu() {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
             <Avatar className="h-8 w-8">
-              <AvatarImage
-                src={session.user?.image || ""}
-                alt={session.user?.name || ""}
-              />
-              <AvatarFallback>
-                {session.user?.name?.charAt(0) || "U"}
-              </AvatarFallback>
+              <AvatarImage src={user?.image || ""} alt={user?.name || ""} />
+              <AvatarFallback>{user?.name?.charAt(0) || "U"}</AvatarFallback>
             </Avatar>
           </Button>
         </DropdownMenuTrigger>
@@ -73,12 +70,10 @@ export function UserMenu() {
               href={"/user/profile"}
               className="flex flex-col space-y-1 leading-none cursor-pointer"
             >
-              {session.user?.name && (
-                <p className="font-medium">{session.user?.name}</p>
-              )}
-              {session.user?.email && (
+              {user?.name && <p className="font-medium">{user?.name}</p>}
+              {user?.email && (
                 <p className="w-[200px] truncate text-sm text-gray-400">
-                  {session.user?.email}
+                  {user?.email}
                 </p>
               )}
             </Link>

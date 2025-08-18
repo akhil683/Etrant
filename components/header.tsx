@@ -2,10 +2,12 @@
 import { BookOpen, Trophy } from "lucide-react";
 import { UserMenu } from "./auth/user-menu";
 import Link from "next/link";
+import { useUserStore } from "@/lib/store/useUserStore";
 import { useUser } from "./providers/UserProvider";
 
 export default function Header() {
-  const { user, userLoading } = useUser();
+  const { user } = useUserStore();
+  const { userLoading } = useUser();
   return (
     <div className="sticky top-0 z-10 backdrop-blur-sm border-b border-gray-900 bg-black">
       <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">

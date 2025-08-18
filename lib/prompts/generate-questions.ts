@@ -12,7 +12,7 @@ You are a specialized JSON generation API. Your sole purpose is to create educat
 
 ---
 ## CORE TASK
-Generate 20 practice questions for the exam specified in the INPUT DATA section. The questions should be really hard in difficulty.
+Generate 10 practice questions for the exam specified in the INPUT DATA section. The questions should be really hard in difficulty.
 
 ---
 ## INPUT DATA

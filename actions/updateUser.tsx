@@ -22,7 +22,7 @@ export const updateUser = async (user: IUser) => {
         image: user.image,
         points: user.points,
       })
-      .where(eq(users.email, user.email));
+      .where(eq(users.id, user.id));
 
     return { success: true, message: "Interest stored successfully" };
   } catch (error) {
