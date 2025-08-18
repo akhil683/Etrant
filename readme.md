@@ -79,6 +79,8 @@ Swipe through AI-curated Wikipedia summaries designed for quick comprehension an
 - React 19
 - TypeScript
 - TailwindCSS
+- Posthog
+- Zustand
 
 </td>
 <td valign="top" width="33%">
@@ -168,7 +170,9 @@ flowchart TD
    SMTP_USER=akhilpalsra@gmail.com
    SMTP_PASS=yqts jcup kgua tmrm
 
-
+   #Analytics
+   NEXT_PUBLIC_POSTHOG_KEY=phc_Ur3RJkjewYJedlxMwTsCGeyJIAoyF434KqtneLQapGA
+   NEXT_PUBLIC_POSTHOG_HOST=https://us.i.posthog.com
 
    ```
 
