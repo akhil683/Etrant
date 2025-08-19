@@ -45,7 +45,6 @@ export function ArticleCard({ article }: ArticleCardProps) {
 
       {/* Content */}
       <div className="relative z-10 flex flex-col h-full p-6">
-        {/* Topic Badge */}
         <div className="mb-4">
           <span className="inline-block px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm font-medium">
             {article.topic}
@@ -62,28 +61,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
             {article.summary}
           </p>
 
-          {/* Action Buttons */}
           <div className="flex items-center justify-end">
-            {/* <div className="flex items-center space-x-4"> */}
-            {/*   <Button */}
-            {/*     variant="ghost" */}
-            {/*     size="sm" */}
-            {/*     onClick={() => setLiked(!liked)} */}
-            {/*     className={`p-2 ${liked ? "text-red-500" : "text-white"} hover:bg-white/10`} */}
-            {/*   > */}
-            {/*     <Heart className={`w-6 h-6 ${liked ? "fill-current" : ""}`} /> */}
-            {/*   </Button> */}
-            {/**/}
-            {/*   <Button */}
-            {/*     variant="ghost" */}
-            {/*     size="sm" */}
-            {/*     onClick={handleShare} */}
-            {/*     className="p-2 text-white hover:bg-white/10" */}
-            {/*   > */}
-            {/*     <Share2 className="w-6 h-6" /> */}
-            {/*   </Button> */}
-            {/* </div> */}
-
             <Button
               onClick={handleReadMore}
               className="bg-white text-black hover:bg-gray-200 px-4 py-2 rounded-full font-medium"

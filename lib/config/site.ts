@@ -1,7 +1,8 @@
 export const siteConfig = {
   name: "Wiki Reel",
   url: "https://wiki.akkhil.dev",
-  ogImage: "../../app/favicon.ico",
+  ogImage:
+    "https://raw.githubusercontent.com/akhil683/wiki-reel/refs/heads/main/public/wiki_logo_low.png",
   description:
     "WikiReel is an AI-powered learning platform that turns Wikipedia summaries, news, research papers, and exam-focused questions into short, scrollable reels. Learn faster, stay updated, and prepare smarter for UPSC, JEE, NEET, and more.",
   keywords: [
@@ -186,7 +187,7 @@ export const authMetadata = {
     title: "Sign In | WikiReel",
     description:
       "Sign in to WikiReel using Google and unlock AI-powered quizzes, reels, and leaderboard rankings.",
-    url: "https://wiki.akkhil.dev/auth",
+    url: `${siteConfig.url}/auth`,
     siteName: "WikiReel",
     images: [
       {
@@ -230,7 +231,7 @@ export const howItWorkMetadata = {
     title: "How Wikireel Works | 5 Steps to Smarter Learning",
     description:
       "See how Wikireel revolutionizes learning with AI-powered reels, quizzes, and gamified rewards. Education that feels like social media.",
-    url: "https://wiki.akkhil.dev/how-it-works",
+    url: `${siteConfig.url}/how-it-works`,
     siteName: "Wikireel",
     images: [
       {
@@ -252,6 +253,6 @@ export const howItWorkMetadata = {
     creator: "@wikireel",
   },
   alternates: {
-    canonical: "https://wiki.akkhil.dev/how-it-works",
+    canonical: `${siteConfig.url}/how-it-works`,
   },
 };
