@@ -1,5 +1,3 @@
-"use client";
-
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,17 +5,17 @@ import {
   Brain,
   Trophy,
   BookOpen,
-  Zap,
   Target,
-  Users,
-  TrendingUp,
   CheckCircle,
   Star,
   Clock,
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import Navbar from "@/components/home/navbar";
+import { Metadata } from "next";
+import { howItWorkMetadata } from "@/lib/config/site";
+
+export const metadata: Metadata = howItWorkMetadata;
 
 const steps = [
   {
@@ -80,7 +78,6 @@ const steps = [
 ];
 
 export default function HowItWorksPage() {
-  const router = useRouter();
   return (
     <div className="min-h-screen bg-black text-white py-20">
       <Navbar />
@@ -101,7 +98,6 @@ export default function HowItWorksPage() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link href="/auth">
               <Button
-                onClick={() => router.push("/auth")}
                 size="lg"
                 className="bg-gradient-to-r from-blue-600 to-indigo-700 hover:from-blue-700 hover:to-blue-800 text-white px-8 py-4 md:text-lg"
               >
