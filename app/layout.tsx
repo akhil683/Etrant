@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
-import Head from "next/head";
 import { UserProvider } from "@/components/providers/UserProvider";
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import { siteConfig } from "@/lib/config/site";
@@ -59,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="dark">
       {/* <Head> */}
       {/*   <script */}
       {/*     crossOrigin="anonymous" */}

@@ -1,7 +1,8 @@
 export const siteConfig = {
   name: "Wiki Reel",
   url: "https://wiki.akkhil.dev",
-  ogImage: "../../app/favicon.ico",
+  ogImage:
+    "https://raw.githubusercontent.com/akhil683/wiki-reel/refs/heads/main/public/wiki_logo_low.png",
   description:
     "WikiReel is an AI-powered learning platform that turns Wikipedia summaries, news, research papers, and exam-focused questions into short, scrollable reels. Learn faster, stay updated, and prepare smarter for UPSC, JEE, NEET, and more.",
   keywords: [
@@ -163,5 +164,95 @@ export const leaderboardMeta = {
       "See the top performers and knowledge champions on the WikiReel leaderboard. Join the challenge!",
     images: [siteConfig.ogImage],
     creator: "@akkhil_dev",
+  },
+};
+
+export const authMetadata = {
+  title: "Sign In | Wiki Reel",
+  description:
+    "Sign in to WikiReel with Google to explore AI-powered quizzes, reels, and leaderboards. Join the community and track your learning journey.",
+  keywords: [
+    "AI sign in",
+    "Google login",
+    "WikiReel sign in",
+    "AI learning platform",
+    "quiz login",
+    "AI knowledge reels",
+    "AI leaderboard",
+    "Google authentication",
+    "AI education app",
+    "join WikiReel",
+  ],
+  openGraph: {
+    title: "Sign In | WikiReel",
+    description:
+      "Sign in to WikiReel using Google and unlock AI-powered quizzes, reels, and leaderboard rankings.",
+    url: `${siteConfig.url}/auth`,
+    siteName: "WikiReel",
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: "Sign in to WikiReel with Google",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sign In | WikiReel",
+    description:
+      "Join WikiReel with Google sign-in to access AI-powered quizzes, reels, and leaderboard stats.",
+    images: [siteConfig.ogImage],
+  },
+};
+
+export const howItWorkMetadata = {
+  title: "How Wikireel Works | Learn Smarter with AI-Powered Reels",
+  description:
+    "Discover how Wikireel makes learning fun and engaging in just 5 simple steps — from Google sign-in to personalized AI content, quizzes, and gamified rewards.",
+  keywords: [
+    "Wikireel",
+    "AI learning",
+    "study reels",
+    "interactive education",
+    "gamified learning",
+    "AI quizzes",
+    "exam preparation",
+    "JEE NEET UPSC learning",
+    "visual learning",
+    "knowledge reels",
+    "AI education platform",
+    "fun learning app",
+  ],
+  openGraph: {
+    title: "How Wikireel Works | 5 Steps to Smarter Learning",
+    description:
+      "See how Wikireel revolutionizes learning with AI-powered reels, quizzes, and gamified rewards. Education that feels like social media.",
+    url: `${siteConfig.url}/how-it-works`,
+    siteName: "Wikireel",
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: "How Wikireel Works",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "How Wikireel Works | Learn Smarter with AI Reels",
+    description:
+      "Explore Wikireel’s 5-step learning journey — AI-powered content, quizzes, and gamification.",
+    images: [siteConfig.ogImage],
+    creator: "@wikireel",
+  },
+  alternates: {
+    canonical: `${siteConfig.url}/how-it-works`,
   },
 };
