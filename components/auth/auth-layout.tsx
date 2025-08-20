@@ -78,7 +78,7 @@ export default function AuthLayout() {
       {/* Right Side - Sign In Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative">
         {/* Mobile background for smaller screens */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 via-indigo-900/10 to-purple-900/10 lg:hidden"></div>
+        <div className="absolute inset-0 bg-gray-950 lg:hidden"></div>
 
         <div className="relative z-10 w-full max-w-md">
           {/* Mobile Logo - Only visible on smaller screens */}
@@ -150,11 +150,17 @@ export default function AuthLayout() {
           {/* Terms and Privacy */}
           <div className="mt-6 text-center text-xs text-gray-500">
             By continuing, you agree to our{" "}
-            <Link href="/auth" className="text-blue-400 hover:text-blue-300">
+            <Link
+              href="/terms-and-conditions"
+              className="text-blue-400 hover:text-blue-300"
+            >
               Terms of Service
             </Link>{" "}
             and{" "}
-            <Link href="/auth" className="text-blue-400 hover:text-blue-300">
+            <Link
+              href="/privacy-policy"
+              className="text-blue-400 hover:text-blue-300"
+            >
               Privacy Policy
             </Link>
           </div>

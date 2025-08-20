@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ArticleCard } from "@/components/article-card";
-import { QuizCard } from "@/components/quiz-card";
 import Header from "./header";
 import { useAppState } from "@/hooks/use-app-state";
 import { AILoader } from "./loader/ReelLoader";
@@ -64,7 +63,7 @@ export function InfiniteReel() {
             }
           });
         },
-        [loading, hasMore, viewedArticles, showQuiz],
+        [loading, hasMore, viewedArticles],
       );
       if (node) observer.current.observe(node);
     },
@@ -94,13 +93,13 @@ export function InfiniteReel() {
     }
   };
 
-  const handleQuizComplete = (isCorrect: boolean, points: number) => {
-    // if (isCorrect) {
-    //   setUserPoints((prev) => prev + points);
-    // }
-    setShowQuiz(false);
-    setQuizData(null);
-  };
+  // const handleQuizComplete = (isCorrect: boolean, points: number) => {
+  //   if (isCorrect) {
+  //     setUserPoints((prev) => prev + points);
+  //   }
+  //   setShowQuiz(false);
+  //   setQuizData(null);
+  // };
 
   const loadMoreArticles = async () => {
     if (loading) return;
@@ -199,11 +198,11 @@ export function InfiniteReel() {
       <Header />
 
       {/* Quiz Overlay */}
-      {showQuiz && quizData && (
-        <div className="fixed inset-0 z-50 bg-black">
-          <QuizCard quiz={quizData} onComplete={handleQuizComplete} />
-        </div>
-      )}
+      {/* {showQuiz && quizData && ( */}
+      {/*   <div className="fixed inset-0 z-50 bg-black"> */}
+      {/*     <QuizCard quiz={quizData} onComplete={handleQuizComplete} /> */}
+      {/*   </div> */}
+      {/* )} */}
 
       {/* Articles Container */}
       <div

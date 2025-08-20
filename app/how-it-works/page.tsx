@@ -1,81 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Smartphone,
-  Brain,
-  Trophy,
-  BookOpen,
-  Target,
-  CheckCircle,
-  Star,
-  Clock,
-} from "lucide-react";
+import { BookOpen, CheckCircle, Star, Clock } from "lucide-react";
 import Link from "next/link";
 import Navbar from "@/components/home/navbar";
 import { Metadata } from "next";
 import { howItWorkMetadata } from "@/lib/config/site";
+import { stepsHowItWorks } from "@/data/data";
 
 export const metadata: Metadata = howItWorkMetadata;
-
-const steps = [
-  {
-    step: "01",
-    title: " Sign Up",
-    description:
-      "Get started in under 30 seconds with your Google account. No complex forms or credit cards required.",
-    icon: Smartphone,
-    color: "from-blue-500 to-indigo-500",
-    features: [
-      "One-click Google sign-in",
-      "Instant profile setup",
-      "Cross-device sync",
-    ],
-  },
-  {
-    step: "02",
-    title: "Choose Your Path",
-    description:
-      "Select your interest (JEE, NEET, UPSC) or explore general knowledge. Our AI personalizes content just for you.",
-    icon: Target,
-    color: "from-purple-500 to-violet-500",
-    features: [
-      "Personalized content",
-      "Exam-specific modules",
-      "AI-powered recommendations",
-    ],
-  },
-  {
-    step: "03",
-    title: "Swipe Through Reels",
-    description:
-      "Learn like you scroll Instagram! Bite-sized knowledge reels make complex topics digestible and fun.",
-    icon: BookOpen,
-    color: "from-emerald-500 to-green-500",
-    features: [
-      "Instagram-style UI",
-      "Bite-sized content",
-      "Visual learning aids",
-    ],
-  },
-  {
-    step: "04",
-    title: "Test Your Knowledge",
-    description:
-      "Take instant quizzes after each reel. Get immediate feedback and track your understanding in real-time.",
-    icon: Brain,
-    color: "from-orange-500 to-red-500",
-    features: ["Instant quizzes", "Real-time feedback", "Progress tracking"],
-  },
-  {
-    step: "05",
-    title: "Earn & Compete",
-    description:
-      "Gain points, maintain streaks, and climb leaderboards. Learning becomes as addictive as gaming!",
-    icon: Trophy,
-    color: "from-yellow-500 to-orange-500",
-    features: ["Points & XP system", "Streak rewards", "Global leaderboards"],
-  },
-];
 
 export default function HowItWorksPage() {
   return (
@@ -113,7 +45,7 @@ export default function HowItWorksPage() {
           </h2>
 
           <div className="space-y-24">
-            {steps.map((step, index) => (
+            {stepsHowItWorks.map((step, index) => (
               <div
                 key={step.step}
                 className={`flex flex-col items-center gap-12 ${index % 2 === 1 ? "lg:flex-row-reverse" : "lg:flex-row"}`}
