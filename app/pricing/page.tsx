@@ -1,104 +1,15 @@
-"use client";
-
-import Header from "@/components/header";
+import Navbar from "@/components/home/navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check, Star, Zap, Crown } from "lucide-react";
+import { Check } from "lucide-react";
 import Link from "next/link";
-
-const plans = [
-  {
-    name: "Free",
-    price: 0,
-    icon: Star,
-    description: "Perfect for getting started with WikiReel",
-    features: [
-      "5 reels per day",
-      "Basic quizzes",
-      "Limited current affairs",
-      "Basic progress tracking",
-      "Community access",
-    ],
-    limitations: [
-      "Limited daily content",
-      "Basic features only",
-      "No offline access",
-    ],
-    buttonText: "Get Started Free",
-    buttonVariant: "outline" as const,
-    popular: false,
-  },
-  {
-    name: "Pro",
-    price: 99,
-    icon: Zap,
-    description: "Best for serious learners and exam preparation",
-    features: [
-      "Unlimited reels",
-      "Advanced AI quizzes",
-      "Full current affairs access",
-      "Detailed analytics",
-      "Offline downloads",
-      "Priority support",
-      "Custom study plans",
-      "Progress insights",
-    ],
-    limitations: [],
-    buttonText: "Upgrade to Pro",
-    buttonVariant: "default" as const,
-    popular: true,
-  },
-  {
-    name: "Max",
-    price: 199,
-    icon: Crown,
-    description: "Ultimate learning experience with premium features",
-    features: [
-      "Everything in Pro",
-      "1-on-1 mentorship sessions",
-      "Exclusive premium content",
-      "Advanced knowledge maps",
-      "Custom exam simulations",
-      "Priority content requests",
-      "Early access to new features",
-      "Dedicated account manager",
-      "Performance coaching",
-    ],
-    limitations: [],
-    buttonText: "Go Max",
-    buttonVariant: "default" as const,
-    popular: false,
-  },
-];
-
-const faqs = [
-  {
-    question: "Can I switch plans anytime?",
-    answer:
-      "Yes! You can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle.",
-  },
-  {
-    question: "What payment methods do you accept?",
-    answer:
-      "We accept all major credit cards, debit cards, UPI, and net banking. All payments are processed securely.",
-  },
-  {
-    question: "Is there a free trial?",
-    answer:
-      "Yes! All paid plans come with a 7-day free trial. You can cancel anytime during the trial period without being charged.",
-  },
-  {
-    question: "What happens if I cancel?",
-    answer:
-      "You can cancel anytime. You'll continue to have access to your paid features until the end of your current billing period.",
-  },
-];
+import { plans, faqs } from "@/data/data";
 
 export default function PricingPage() {
   return (
     <div>
-      <Header />
-      <div className="min-h-screen bg-gray-950 text-white py-12 px-4">
+      <Navbar />
+      <div className="min-h-screen bg-gray-950 text-white py-24 px-4">
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
           <div className="text-center mb-16">

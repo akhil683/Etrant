@@ -1,6 +1,4 @@
-"use client";
-
-import Header from "@/components/header";
+import Navbar from "@/components/home/navbar";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 import Link from "next/link";
@@ -8,8 +6,8 @@ import Link from "next/link";
 export default function TermsAndConditionsPage() {
   return (
     <div>
-      <Header />
-      <div className="min-h-screen bg-black text-white py-12 px-4">
+      <Navbar />
+      <div className="min-h-screen bg-gray-950 text-white py-24 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-12">
             <h1 className="text-2xl md:text-4xl font-bold text-white mb-4">

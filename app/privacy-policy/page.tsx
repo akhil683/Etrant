@@ -1,6 +1,4 @@
-"use client";
-
-import Header from "@/components/header";
+import Navbar from "@/components/home/navbar";
 import { Button } from "@/components/ui/button";
 import { Mail } from "lucide-react";
 import Link from "next/link";
@@ -8,18 +6,18 @@ import Link from "next/link";
 export default function PrivacyPolicyPage() {
   return (
     <div>
-      <Header />
-      <div className="min-h-screen bg-black text-white py-20 px-4">
+      <Navbar />
+      <div className="min-h-screen bg-gray-950 text-white py-24 px-4">
         <div className="container mx-auto max-w-4xl">
           <div className="mb-12">
-            <h1 className="text-4xl font-bold text-white mb-4">
+            <h1 className="text-2xl md:text-4xl font-bold text-white mb-4">
               Privacy Policy
             </h1>
-            <p className="text-gray-400 text-lg">
+            <p className="text-gray-400 md:text-lg">
               At WikiReel, we respect your privacy and are committed to
               protecting your personal data.
             </p>
-            <p className="text-gray-500 text-sm mt-2">
+            <p className="text-gray-500 text-xs md:text-sm mt-2">
               Effective Date: August 2025
             </p>
           </div>
@@ -27,13 +25,13 @@ export default function PrivacyPolicyPage() {
           <div className="prose prose-invert max-w-none">
             <div className="space-y-8">
               <section>
-                <h2 className="text-2xl font-semibold text-white mb-4">
+                <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">
                   1. Information We Collect
                 </h2>
-                <p className="text-gray-300 mb-3">
+                <p className="text-gray-300 max-md:text-sm mb-3">
                   When you use WikiReel, we may collect:
                 </p>
-                <ul className="text-gray-300 space-y-2 ml-6">
+                <ul className="text-gray-300 space-y-2 max-md:text-sm ml-6">
                   <li>
                     • Account Information: Name, email, and profile picture
                     (from Google Sign-In)
@@ -50,13 +48,13 @@ export default function PrivacyPolicyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold text-white mb-4">
+                <h2 className="md:text-2xl text-xl font-semibold text-white mb-4">
                   2. How We Use Your Information
                 </h2>
-                <p className="text-gray-300 mb-3">
+                <p className="text-gray-300 mb-3 max-md:text-sm">
                   We use the collected information to:
                 </p>
-                <ul className="text-gray-300 space-y-2 ml-6">
+                <ul className="text-gray-300 space-y-2 ml-6 max-md:text-sm">
                   <li>• Provide and improve WikiReel's features</li>
                   <li>
                     • Personalize your experience (e.g., quizzes and topic
@@ -68,10 +66,10 @@ export default function PrivacyPolicyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold text-white mb-4">
+                <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">
                   3. Data Sharing & Third Parties
                 </h2>
-                <div className="text-gray-300 space-y-3">
+                <div className="text-gray-300 space-y-3 max-md:text-sm">
                   <p>We do not sell your data to third parties.</p>
                   <p>
                     Limited data may be shared with trusted services (e.g.,
@@ -87,27 +85,27 @@ export default function PrivacyPolicyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold text-white mb-4">
+                <h2 className=" text-xl md:text-2xl font-semibold text-white mb-4">
                   4. Cookies & Tracking
                 </h2>
-                <p className="text-gray-300 mb-3">
+                <p className="text-gray-300 mb-3 max-md:text-sm">
                   We use cookies and similar technologies to:
                 </p>
-                <ul className="text-gray-300 space-y-2 ml-6">
+                <ul className="text-gray-300 space-y-2 ml-6 max-md:text-sm">
                   <li>• Keep you signed in</li>
                   <li>• Analyze traffic and improve user experience</li>
                 </ul>
-                <p className="text-gray-400 text-sm mt-3">
+                <p className="text-gray-400 md:text-sm text-xs mt-3">
                   You may disable cookies in your browser, but some features may
                   not work properly.
                 </p>
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold text-white mb-4">
+                <h2 className=" text-xl md:text-2xl font-semibold text-white mb-4">
                   5. Data Security
                 </h2>
-                <p className="text-gray-300">
+                <p className="text-gray-300 max-md:text-sm">
                   We implement reasonable security measures to protect your
                   data. However, no system is 100% secure, and we cannot
                   guarantee absolute protection.
@@ -115,11 +113,13 @@ export default function PrivacyPolicyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold text-white mb-4">
+                <h2 className=" text-xl md:text-2xl font-semibold text-white mb-4">
                   6. Your Rights
                 </h2>
-                <p className="text-gray-300 mb-3">You have the right to:</p>
-                <ul className="text-gray-300 space-y-2 ml-6">
+                <p className="text-gray-300 mb-3 max-md:text-sm">
+                  You have the right to:
+                </p>
+                <ul className="text-gray-300 space-y-2 ml-6 max-md:text-sm">
                   <li>• Access and update your personal information</li>
                   <li>• Request deletion of your account and data</li>
                   <li>• Withdraw consent to data usage</li>
@@ -127,10 +127,10 @@ export default function PrivacyPolicyPage() {
               </section>
 
               <section>
-                <h2 className="text-2xl font-semibold text-white mb-4">
+                <h2 className="text-xl md:text-2xl font-semibold text-white mb-4">
                   Contact Us
                 </h2>
-                <p className="text-gray-300 mb-3">
+                <p className="text-gray-300 mb-3 max-md:text-sm">
                   If you have any questions about this Privacy Policy, please
                   contact us at:
                 </p>
