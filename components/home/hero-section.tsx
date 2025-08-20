@@ -56,7 +56,7 @@ export default function HeroSection() {
                 <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-8 border border-white/20">
                   <Users className="md:w-4 md:h-4 w-3 h-3 text-emerald-300" />
                   <span className="text-white/90 md:text-sm text-xs font-medium">
-                    Join 50,000+ Smart Learners
+                    Join 50+ Smart Learners
                   </span>
                 </div>
               </motion.div>
@@ -107,7 +107,7 @@ export default function HeroSection() {
                   onClick={() => router.push("/how-it-works")}
                   size="lg"
                   variant="outline"
-                  className="border-2 border-white/30 text-black hover:text-white hover:bg-white/10 px-6 py-2 md:px-8 md:py-4 md:text-lg rounded-full backdrop-blur-sm"
+                  className="border-2 border-white/30 bg-white text-black hover:text-white hover:bg-white/10 px-6 py-2 md:px-8 md:py-4 md:text-lg rounded-full backdrop-blur-sm"
                 >
                   See How It Works
                 </Button>

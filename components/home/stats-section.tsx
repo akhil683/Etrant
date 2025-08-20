@@ -6,7 +6,7 @@ import { Users, BookOpen, Trophy, Clock } from "lucide-react";
 const stats = [
   {
     icon: Users,
-    value: "50K+",
+    value: "50+",
     label: "Active Learners",
     color: "text-blue-400",
   },
@@ -24,7 +24,7 @@ const stats = [
   },
   {
     icon: Clock,
-    value: "2M+",
+    value: "20+",
     label: "Hours Learned",
     color: "text-purple-400",
   },
