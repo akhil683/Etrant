@@ -11,7 +11,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Trophy, LogOut, BookDown, AlarmClockCheck } from "lucide-react";
+import {
+  Trophy,
+  LogOut,
+  BookDown,
+  AlarmClockCheck,
+  DollarSign,
+} from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useUser } from "../providers/UserProvider";
@@ -127,6 +133,13 @@ export function UserMenu() {
             <Link href="/leaderboard" className="flex items-center">
               <Trophy className="mr-2 h-4 w-4" />
               <span>Leaderboard</span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator className="bg-gray-700" />
+          <DropdownMenuItem className="hover:bg-gray-700">
+            <Link href="/subscription" className="flex items-center">
+              <DollarSign className="mr-2 h-4 w-4" />
+              <span>Subscription</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-gray-700" />
