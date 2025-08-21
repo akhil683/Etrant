@@ -16,7 +16,7 @@ export const plans = [
     icon: Star,
     description: "Perfect for getting started with WikiReel",
     features: [
-      "5 reels per day",
+      "10 reels per day",
       "Basic quizzes",
       "Limited current affairs",
       "Basic progress tracking",

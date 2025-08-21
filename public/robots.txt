@@ -1,0 +1,15 @@
+# *
+User-agent: *
+Allow: /
+
+# *
+User-agent: *
+Disallow: /auth
+Disallow: /api
+Disallow: /protected
+
+# Host
+Host: https://wiki.akkhil.dev
+
+# Sitemaps
+Sitemap: https://wiki.akkhil.dev/sitemap.xml
