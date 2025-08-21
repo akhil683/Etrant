@@ -4,7 +4,8 @@ export const siteConfig = {
   description:
     "WikiReel is an AI-powered learning platform that turns Wikipedia summaries, news, research papers, and exam-focused questions into short, scrollable reels. Learn faster, stay updated, and prepare smarter for UPSC, JEE, NEET, and more.",
   url: "https://wiki.akkhil.dev",
-  ogImage: "../../public/og-image.png",
+  ogImage:
+    "https://raw.githubusercontent.com/akhil683/wiki-reel/refs/heads/main/public/og-image.png",
   icons: {
     icon: "/favicon.ico",
   },
