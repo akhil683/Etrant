@@ -1,21 +1,21 @@
-import Navbar from "@/components/home/navbar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Check } from "lucide-react";
-import Link from "next/link";
 import { plans, faqs } from "@/data/data";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
+import Header from "@/components/header";
 
-export default async function PricingPage() {
+export default async function SubscriptionPage() {
   const session = await auth();
-
-  if (session) {
-    redirect("/subscription");
+  if (!session) {
+    redirect("/auth");
   }
+
+  const handleSubscription = (name: string) => {};
   return (
     <div>
-      <Navbar />
+      <Header />
       <div className="min-h-screen bg-gray-950 text-white py-24 px-4">
         <div className="container mx-auto max-w-7xl">
           {/* Header */}
@@ -94,18 +94,17 @@ export default async function PricingPage() {
 
                   {/* CTA Button */}
                   <div className="pt-4">
-                    <Link href="/auth" className="block">
-                      <Button
-                        variant={plan.buttonVariant}
-                        className={`w-full py-3 text-base font-semibold ${
-                          plan.buttonVariant === "default"
-                            ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white"
-                            : "border-gray-600 text-gray-300 hover:bg-gray-800 bg-transparent"
-                        }`}
-                      >
-                        {plan.buttonText}
-                      </Button>
-                    </Link>
+                    <Button
+                      onClick={() => handleSubscription(plan.name)}
+                      variant={plan.buttonVariant}
+                      className={`w-full py-3 text-base font-semibold ${
+                        plan.buttonVariant === "default"
+                          ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white"
+                          : "border-gray-600 text-gray-300 hover:bg-gray-800 bg-transparent"
+                      }`}
+                    >
+                      {plan.buttonText}
+                    </Button>
                   </div>
 
                   {plan.name === "Free" && (
