@@ -1,10 +1,13 @@
 export const siteConfig = {
+  title: "WikiReel – Learn fast with reels",
   name: "Wiki Reel",
-  url: "https://wiki.akkhil.dev",
-  ogImage:
-    "https://raw.githubusercontent.com/akhil683/wiki-reel/refs/heads/main/public/wiki_logo_low.png",
   description:
     "WikiReel is an AI-powered learning platform that turns Wikipedia summaries, news, research papers, and exam-focused questions into short, scrollable reels. Learn faster, stay updated, and prepare smarter for UPSC, JEE, NEET, and more.",
+  url: "https://wiki.akkhil.dev",
+  ogImage: "../../public/og-image.png",
+  icons: {
+    icon: "/favicon.ico",
+  },
   keywords: [
     "WikiReel",
     "Wikipedia Reels",
@@ -39,9 +42,10 @@ export const siteConfig = {
 export type SiteConfig = typeof siteConfig;
 
 export const articlesMeta = {
-  title: "AI-Summarized Wikipedia Articles | WikiReel",
+  title: "AI-Summarized Wikipedia Articles",
   description:
     "Discover AI-summarized Wikipedia articles in interactive reel format. Learn faster with bite-sized explanations, visual stories, and smart knowledge reels tailored for curious learners.",
+  icon: siteConfig.icons,
   keywords: [
     "Wikipedia Reels",
     "AI Summarized Articles",
@@ -59,7 +63,7 @@ export const articlesMeta = {
   openGraph: {
     type: "website",
     url: `${siteConfig.url}/articles`,
-    title: "AI-Summarized Wikipedia Articles | WikiReel",
+    title: "AI-Summarized Wikipedia Articles",
     description:
       "Bite-sized Wikipedia knowledge in AI-powered reel format. Learn quickly, stay curious.",
     siteName: siteConfig.name,
@@ -124,7 +128,7 @@ export const aiquestionsMeta = {
 };
 
 export const leaderboardMeta = {
-  title: "Leaderboard | WikiReel",
+  title: "Leaderboard",
   description:
     "Check out the WikiReel leaderboard to see top performers, point rankings, and monthly champions. Join the challenge, earn points, and climb the ranks in our knowledge community.",
   keywords: [

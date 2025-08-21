@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.name,
+    default: siteConfig.title,
     template: `%s | ${siteConfig.name}`,
   },
   metadataBase: new URL(siteConfig.url),
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     siteName: siteConfig.name,
     images: [
       {
-        url: `${siteConfig.url}/favicon.ico`,
+        url: siteConfig.ogImage,
         width: 1200,
         height: 630,
         alt: siteConfig.name,
@@ -40,15 +40,20 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: siteConfig.name,
+    title: siteConfig.title,
+    site: "@akhil_web",
     description: siteConfig.description,
-    images: [`${siteConfig.url}/favicon.ico`],
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 600,
+        alt: siteConfig.name,
+      },
+    ],
     creator: "@akkhil_dev",
   },
-  icons: {
-    icon: `${siteConfig.url}/favicon.ico`,
-    shortcut: `${siteConfig.url}/favicon.ico`,
-  },
+  icons: siteConfig.icons,
   manifest: "/site.webmanifest",
 };
 
