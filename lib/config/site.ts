@@ -2,7 +2,7 @@ export const siteConfig = {
   title: "WikiReel – Learn fast with reels",
   name: "Wiki Reel",
   description:
-    "WikiReel is an AI-powered learning platform that turns Wikipedia summaries, news, research papers, and exam-focused questions into short, scrollable reels. Learn faster, stay updated, and prepare smarter for UPSC, JEE, NEET, and more.",
+    "WikiReel is an AI-powered learning platform that turns Wikipedia summaries, news, and exam-focused questions into scrollable reels. Learn faster and prepare smarter for UPSC, JEE, NEET, and more.",
   url: "https://wiki.akkhil.dev",
   ogImage:
     "https://raw.githubusercontent.com/akhil683/wiki-reel/refs/heads/main/public/og-image.png",
