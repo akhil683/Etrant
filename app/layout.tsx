@@ -43,14 +43,7 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     site: "@akhil_web",
     description: siteConfig.description,
-    images: [
-      {
-        url: siteConfig.ogImage,
-        width: 1200,
-        height: 600,
-        alt: siteConfig.name,
-      },
-    ],
+    images: [siteConfig.ogImage],
     creator: "@akkhil_dev",
   },
   icons: siteConfig.icons,
