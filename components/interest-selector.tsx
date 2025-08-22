@@ -139,7 +139,6 @@ export function InterestSelector() {
           selectedInterests,
           user?.email as string,
         );
-        console.log("res", res);
         router.push("/ai-questions");
       }
     } catch (error) {

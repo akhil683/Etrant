@@ -20,13 +20,11 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useUser } from "../providers/UserProvider";
 import { useUserStore } from "@/lib/store/useUserStore";
 
 export function UserMenu() {
   const { data: session } = useSession();
   const { user } = useUserStore();
-  const { userLoading } = useUser();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -97,14 +95,14 @@ export function UserMenu() {
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-400">Streak:</span>
               <span className="font-semibold text-orange-400">
-                {userLoading ? 0 : user?.streak}
+                {user?.streak || 0}
               </span>
             </div>
 
             <div className="flex items-center justify-between text-sm">
               <span className="text-gray-400">Interest:</span>
               <span className="font-semibold text-orange-400">
-                {userLoading
+                {!user
                   ? "none"
                   : user?.interest === null
                     ? "none"

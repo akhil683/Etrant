@@ -1,7 +1,7 @@
 import CTABanner from "@/components/home/cta-banner";
 import FeaturesGrid from "@/components/home/features-grid";
 import HeroSection from "@/components/home/hero-section";
-import Navbar from "@/components/home/navbar"; // Import the new Navbar component
+import Navbar from "@/components/home/navbar";
 import ProcessFlow from "@/components/home/process-flow";
 import StatsSection from "@/components/home/stats-section";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
@@ -23,6 +23,7 @@ export default async function LandingPage() {
         <StatsSection />
         <FeaturesGrid />
         <ProcessFlow />
+        {/* <TestimonialsSection /> */}
         <CTABanner />
         <Footer />
       </main>
