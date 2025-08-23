@@ -1,13 +1,9 @@
 "use client";
 
-import {
-  BookOpen,
-  Twitter,
-  Instagram,
-  Youtube,
-  Mail,
-  MapPin,
-} from "lucide-react";
+import { Twitter, Instagram, Youtube, Mail, MapPin } from "lucide-react";
+import Logo from "@/public/etrant.png";
+import Image from "next/image";
+import Link from "next/link";
 
 export default function Footer() {
   return (
@@ -17,10 +13,16 @@ export default function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="md:w-12 md:h-12 w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
-                <BookOpen className="md:h-7 md:w-7 h-5 w-5 text-white" />
+              <div className="md:w-12 md:h-12 w-8 h-8 rounded-lg flex items-center justify-center">
+                <Image
+                  className="w-full h-full"
+                  src={Logo}
+                  width={500}
+                  height={500}
+                  alt="Etrant Logo"
+                />
               </div>
-              <span className="md:text-3xl text-2xl font-black">Wiki Reel</span>
+              <span className="md:text-3xl text-2xl font-black">Etrant</span>
             </div>
             <p className="text-gray-400 md:text-lg mb-6 max-w-md">
               Transforming education through bite-sized, Instagram-style
@@ -55,35 +57,35 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <a
-                  href="#"
+                  href="/"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Features
                 </a>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/how-it-works"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   How It Works
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/pricing"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Pricing
-                </a>
+                </Link>
               </li>
               <li>
-                <a
-                  href="#"
+                <Link
+                  href="/"
                   className="text-gray-400 hover:text-white transition-colors"
                 >
                   Success Stories
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
@@ -106,18 +108,24 @@ export default function Footer() {
 
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 mb-4 md:mb-0 max-md:text-sm max-md:text-center">
-            © 2024 Wiki Reel. All rights reserved. Scroll. Learn. Test. Repeat.
+            © 2024 Etrant. All rights reserved. Scroll. Learn. Test. Repeat.
           </p>
           <div className="flex gap-6 text-sm text-gray-400 max-md:hidden">
-            <a href="#" className="hover:text-white transition-colors">
+            <Link
+              href="/privacy-policy"
+              className="hover:text-white transition-colors"
+            >
               Privacy Policy
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
+            </Link>
+            <Link
+              href="/terms-and-conditions"
+              className="hover:text-white transition-colors"
+            >
               Terms of Service
-            </a>
-            <a href="#" className="hover:text-white transition-colors">
+            </Link>
+            <Link href="/" className="hover:text-white transition-colors">
               Support
-            </a>
+            </Link>
           </div>
         </div>
       </div>

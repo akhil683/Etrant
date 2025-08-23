@@ -40,7 +40,7 @@ export default async function PricingPage() {
 
           {/* Pricing Cards */}
           <div className="grid md:grid-cols-3 gap-16 md:gap-8 max-w-6xl mx-auto">
-            {plans.map((plan, index) => (
+            {plans.map((plan) => (
               <Card
                 key={plan.name}
                 className={`relative bg-gray-900/50 border-gray-800 hover:border-gray-700 transition-all duration-300 ${

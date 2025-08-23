@@ -14,8 +14,8 @@ export default function TermsAndConditionsPage() {
               Terms & Conditions
             </h1>
             <p className="text-gray-400 md:text-lg">
-              Welcome to WikiReel. By accessing and using our platform, you
-              agree to the following Terms and Conditions.
+              Welcome to Etrant. By accessing and using our platform, you agree
+              to the following Terms and Conditions.
             </p>
             <p className="text-gray-500 text-xs md:text-sm mt-2">
               Last updated: December 2024
@@ -30,9 +30,9 @@ export default function TermsAndConditionsPage() {
                   1. Acceptance of Terms
                 </h2>
                 <p className="text-gray-300 max-md:text-sm">
-                  By signing in and using WikiReel, you agree to be bound by
-                  these Terms and Conditions and our Privacy Policy. If you do
-                  not agree, you may not use our services.
+                  By signing in and using Etrant, you agree to be bound by these
+                  Terms and Conditions and our Privacy Policy. If you do not
+                  agree, you may not use our services.
                 </p>
               </section>
 
@@ -41,7 +41,7 @@ export default function TermsAndConditionsPage() {
                   2. Eligibility
                 </h2>
                 <div className="text-gray-300 max-md:text-sm space-y-3">
-                  <p>You must be at least 13 years old to use WikiReel.</p>
+                  <p>You must be at least 13 years old to use Etrant.</p>
                   <p>
                     If you are under 18, you confirm that you have permission
                     from a parent or legal guardian.
@@ -54,18 +54,18 @@ export default function TermsAndConditionsPage() {
                   3. Use of the Platform
                 </h2>
                 <p className="text-gray-300 max-md:text-sm space-y-3">
-                  WikiReel provides AI-powered learning content including reels,
+                  Etrant provides AI-powered learning content including reels,
                   quizzes, and summaries. By using our platform, you agree to:
                 </p>
                 <ul className="text-gray-300 max-md:text-sm space-y-2 mt-2 ml-6">
                   <li>
-                    • Use WikiReel for personal and educational purposes only
+                    • Use Etrant for personal and educational purposes only
                   </li>
                   <li>
                     • Not attempt to hack, misuse, or disrupt the platform
                   </li>
                   <li>
-                    • Respect the intellectual property rights of WikiReel and
+                    • Respect the intellectual property rights of Etrant and
                     third-party sources
                   </li>
                 </ul>
@@ -76,14 +76,14 @@ export default function TermsAndConditionsPage() {
                   4. Account & Authentication
                 </h2>
                 <div className="text-gray-300 max-md:text-sm space-y-3">
-                  <p>You can sign in to WikiReel using Google Sign-In.</p>
+                  <p>You can sign in to Etrant using Google Sign-In.</p>
                   <p>
                     You are responsible for maintaining the security of your
                     account.
                   </p>
                   <p>
-                    WikiReel is not responsible for unauthorized access caused
-                    by negligence in safeguarding login credentials.
+                    Etrant is not responsible for unauthorized access caused by
+                    negligence in safeguarding login credentials.
                   </p>
                 </div>
               </section>
@@ -94,9 +94,9 @@ export default function TermsAndConditionsPage() {
                 </h2>
                 <div className="text-gray-300 max-md:text-sm space-y-3">
                   <p>
-                    WikiReel generates summaries and quizzes using AI
-                    technology. While we strive for accuracy, we do not
-                    guarantee 100% correctness.
+                    Etrant generates summaries and quizzes using AI technology.
+                    While we strive for accuracy, we do not guarantee 100%
+                    correctness.
                   </p>
                   <p>
                     The platform is for educational and informational purposes
@@ -112,8 +112,8 @@ export default function TermsAndConditionsPage() {
                 </h2>
                 <p className="text-gray-300 max-md:text-sm space-y-3">
                   Your personal information is handled in accordance with our
-                  Privacy Policy. By using WikiReel, you consent to the
-                  collection and use of your data as outlined in the policy.
+                  Privacy Policy. By using Etrant, you consent to the collection
+                  and use of your data as outlined in the policy.
                 </p>
               </section>
 
@@ -123,7 +123,7 @@ export default function TermsAndConditionsPage() {
                 </h2>
                 <div className="text-gray-300 max-md:text-sm space-y-3">
                   <p>
-                    WikiReel is provided "as is" without warranties of any kind.
+                    Etrant is provided "as is" without warranties of any kind.
                   </p>
                   <p>
                     We are not liable for any direct, indirect, or incidental
@@ -174,7 +174,7 @@ export default function TermsAndConditionsPage() {
               </Link>
             </div>
             <p className="text-gray-500 text-sm">
-              By continuing to use WikiReel, you acknowledge that you have read
+              By continuing to use Etrant, you acknowledge that you have read
               and agree to these Terms & Conditions.
             </p>
           </div>

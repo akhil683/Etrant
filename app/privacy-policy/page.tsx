@@ -14,8 +14,8 @@ export default function PrivacyPolicyPage() {
               Privacy Policy
             </h1>
             <p className="text-gray-400 md:text-lg">
-              At WikiReel, we respect your privacy and are committed to
-              protecting your personal data.
+              At Etrant, we respect your privacy and are committed to protecting
+              your personal data.
             </p>
             <p className="text-gray-500 text-xs md:text-sm mt-2">
               Effective Date: August 2025
@@ -29,7 +29,7 @@ export default function PrivacyPolicyPage() {
                   1. Information We Collect
                 </h2>
                 <p className="text-gray-300 max-md:text-sm mb-3">
-                  When you use WikiReel, we may collect:
+                  When you use Etrant, we may collect:
                 </p>
                 <ul className="text-gray-300 space-y-2 max-md:text-sm ml-6">
                   <li>
@@ -55,7 +55,7 @@ export default function PrivacyPolicyPage() {
                   We use the collected information to:
                 </p>
                 <ul className="text-gray-300 space-y-2 ml-6 max-md:text-sm">
-                  <li>• Provide and improve WikiReel's features</li>
+                  <li>• Provide and improve Etrant's features</li>
                   <li>
                     • Personalize your experience (e.g., quizzes and topic
                     recommendations)
@@ -78,8 +78,8 @@ export default function PrivacyPolicyPage() {
                   </p>
                   <p>
                     Content may include links to external sources (Wikipedia,
-                    YouTube, blogs). WikiReel is not responsible for their
-                    privacy practices.
+                    YouTube, blogs). Etrant is not responsible for their privacy
+                    practices.
                   </p>
                 </div>
               </section>
@@ -157,8 +157,8 @@ export default function PrivacyPolicyPage() {
               </Link>
             </div>
             <p className="text-gray-500 text-sm">
-              By using WikiReel, you acknowledge that you have read and
-              understand this Privacy Policy.
+              By using Etrant, you acknowledge that you have read and understand
+              this Privacy Policy.
             </p>
           </div>
         </div>

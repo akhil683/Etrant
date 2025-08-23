@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
-// import { UserProvider } from "@/components/providers/UserProvider";
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import { siteConfig } from "@/lib/config/site";
+import { UserProvider } from "@/components/providers/UserProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -65,9 +65,9 @@ export default function RootLayout({
       {/* </Head> */}
       <PostHogProvider>
         <SessionProvider>
-          {/* <UserProvider> */}
-          <body className={inter.className}>{children}</body>
-          {/* </UserProvider> */}
+          <UserProvider>
+            <body className={inter.className}>{children}</body>
+          </UserProvider>
         </SessionProvider>
       </PostHogProvider>
     </html>

@@ -80,7 +80,7 @@ export default function FeaturesGrid() {
             Why Students Love
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
               {" "}
-              Wiki Reel
+              Etrant
             </span>{" "}
             {/* Adjusted gradient for dark theme */}
           </h2>

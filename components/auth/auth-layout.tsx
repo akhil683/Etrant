@@ -8,6 +8,8 @@ import {
 import { BookOpen } from "lucide-react";
 import Link from "next/link";
 import SignIn from "./sign-in";
+import Image from "next/image";
+import Logo from "@/public/etrant.png";
 
 export default function AuthLayout() {
   return (
@@ -21,13 +23,13 @@ export default function AuthLayout() {
         <div className="relative z-10 flex flex-col items-center justify-center w-full p-12 text-center">
           {/* App Logo */}
           <div className="mb-8">
-            <div className="w-32 h-32 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-3xl flex items-center justify-center mb-6 shadow-2xl">
-              <BookOpen className="h-16 w-16 text-white" />
+            <div className="w-32 h-32 rounded-3xl flex items-center justify-center mb-6 shadow-2xl">
+              <Image src={Logo} className="w-full h-full" alt="Etrant Logo" />
             </div>
             <h1 className="text-5xl font-black text-white mb-4">
-              Wiki{" "}
+              Think{" "}
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                Reel
+                Etrant
               </span>
             </h1>
             <p className="text-xl text-orange-300 font-bold mb-4">
@@ -69,9 +71,9 @@ export default function AuthLayout() {
               <BookOpen className="h-10 w-10 text-white" />
             </div>
             <h1 className="text-3xl font-black text-white">
-              Wiki{" "}
+              Think{" "}
               <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-                Reel
+                Etrant
               </span>
             </h1>
           </div>

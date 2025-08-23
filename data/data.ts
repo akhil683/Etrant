@@ -14,7 +14,7 @@ export const plans = [
     name: "Free",
     price: 0,
     icon: Star,
-    description: "Perfect for getting started with WikiReel",
+    description: "Perfect for getting started with Etrant",
     features: [
       "10 reels per day",
       "Basic quizzes",

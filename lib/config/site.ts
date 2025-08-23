@@ -1,8 +1,8 @@
 export const siteConfig = {
-  title: "WikiReel – Learn fast with reels",
-  name: "Wiki Reel",
+  title: "Etrant – Learn fast with reels",
+  name: "Etrant",
   description:
-    "WikiReel is an AI-powered learning platform that turns Wikipedia summaries, news, and exam-focused questions into scrollable reels. Learn faster and prepare smarter for UPSC, JEE, NEET, and more.",
+    "Etrant is an AI-powered learning platform that turns Wikipedia summaries, news, and exam-focused questions into scrollable reels. Learn faster and prepare smarter for UPSC, JEE, NEET, and more.",
   url: "https://wiki.akkhil.dev",
   ogImage:
     "https://raw.githubusercontent.com/akhil683/wiki-reel/refs/heads/main/public/og-image.png",
@@ -10,7 +10,7 @@ export const siteConfig = {
     icon: "/favicon.ico",
   },
   keywords: [
-    "WikiReel",
+    "Etrant",
     "Wikipedia Reels",
     "Exam Preparation",
     "UPSC Current Affairs",
@@ -36,7 +36,7 @@ export const siteConfig = {
       url: "https://akkhil.dev",
     },
   ],
-  creator: "WikiReel Team",
+  creator: "Etrant Team",
   themeColor: "#6366f1",
 };
 
@@ -79,25 +79,25 @@ export const articlesMeta = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI-Summarized Wikipedia Articles | WikiReel",
+    title: "AI-Summarized Wikipedia Articles | Etrant",
     description:
-      "Get Wikipedia knowledge in bite-sized AI-summarized reels. Learn faster with WikiReel.",
+      "Get Wikipedia knowledge in bite-sized AI-summarized reels. Learn faster with Etrant.",
     images: [siteConfig.ogImage],
     creator: "@akkhil_dev",
   },
 };
 
 export const aiquestionsMeta = {
-  title: "AI-Powered Questions | WikiReel",
+  title: "AI-Powered Questions",
   description:
-    "Practice AI-generated questions tailored to your interests. Improve learning with interactive question reels and personalized quizzes on WikiReel.",
+    "Practice AI-generated questions tailored to your interests. Improve learning with interactive question reels and personalized quizzes on Etrant.",
   keywords: [
     "AI questions",
     "personalized learning",
     "quiz reels",
     "exam preparation",
     "interactive learning",
-    "WikiReel AI",
+    "Etrant AI",
   ],
   alternates: {
     canonical: `${siteConfig.url}/ai-questions`,
@@ -105,22 +105,22 @@ export const aiquestionsMeta = {
   openGraph: {
     type: "website",
     url: `${siteConfig.url}/ai-questions`,
-    title: "AI Questions | WikiReel",
+    title: "AI Questions | Etrant",
     description:
-      "Discover personalized, AI-generated questions in reel format. Learn smarter, faster with WikiReel’s AI-driven practice.",
+      "Discover personalized, AI-generated questions in reel format. Learn smarter, faster with Etrant’s AI-driven practice.",
     siteName: siteConfig.name,
     images: [
       {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "WikiReel AI Questions",
+        alt: "Etrant AI Questions",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AI-Powered Questions | WikiReel",
+    title: "AI-Powered Questions | Etrant",
     description:
       "Boost your learning with personalized AI-generated questions in interactive reels.",
     images: [siteConfig.ogImage],
@@ -131,10 +131,10 @@ export const aiquestionsMeta = {
 export const leaderboardMeta = {
   title: "Leaderboard",
   description:
-    "Check out the WikiReel leaderboard to see top performers, point rankings, and monthly champions. Join the challenge, earn points, and climb the ranks in our knowledge community.",
+    "Check out the Etrant leaderboard to see top performers, point rankings, and monthly champions. Join the challenge, earn points, and climb the ranks in our knowledge community.",
   keywords: [
     "Leaderboard",
-    "WikiReel Rankings",
+    "Etrant Rankings",
     "Top Performers",
     "Monthly Champions",
     "Points Leaderboard",
@@ -144,62 +144,62 @@ export const leaderboardMeta = {
     "Gamified Learning",
     "Top Users",
     "Best Performers",
-    "WikiReel Points",
+    "Etrant Points",
   ],
   openGraph: {
     type: "website",
     url: `${siteConfig.url}/leaderboard`,
-    title: "Leaderboard | WikiReel",
+    title: "Leaderboard | Etrant",
     description:
-      "Discover the top learners and monthly champions on WikiReel. Earn points, compete, and rise in the knowledge leaderboard.",
+      "Discover the top learners and monthly champions on Etrant. Earn points, compete, and rise in the knowledge leaderboard.",
     siteName: siteConfig.name,
     images: [
       {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "WikiReel Leaderboard",
+        alt: "Etrant Leaderboard",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Leaderboard | WikiReel",
+    title: "Leaderboard | Etrant",
     description:
-      "See the top performers and knowledge champions on the WikiReel leaderboard. Join the challenge!",
+      "See the top performers and knowledge champions on the Etrant leaderboard. Join the challenge!",
     images: [siteConfig.ogImage],
     creator: "@akkhil_dev",
   },
 };
 
 export const authMetadata = {
-  title: "Sign In | Wiki Reel",
+  title: "Sign In",
   description:
-    "Sign in to WikiReel with Google to explore AI-powered quizzes, reels, and leaderboards. Join the community and track your learning journey.",
+    "Sign in to Etrant with Google to explore AI-powered quizzes, reels, and leaderboards. Join the community and track your learning journey.",
   keywords: [
     "AI sign in",
     "Google login",
-    "WikiReel sign in",
+    "Etrant sign in",
     "AI learning platform",
     "quiz login",
     "AI knowledge reels",
     "AI leaderboard",
     "Google authentication",
     "AI education app",
-    "join WikiReel",
+    "Join Etrant",
   ],
   openGraph: {
-    title: "Sign In | WikiReel",
+    title: "Sign In | Etrant",
     description:
-      "Sign in to WikiReel using Google and unlock AI-powered quizzes, reels, and leaderboard rankings.",
+      "Sign in to Etrant using Google and unlock AI-powered quizzes, reels, and leaderboard rankings.",
     url: `${siteConfig.url}/auth`,
-    siteName: "WikiReel",
+    siteName: "Etrant",
     images: [
       {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "Sign in to WikiReel with Google",
+        alt: "Sign in to Etrant with Google",
       },
     ],
     locale: "en_US",
@@ -207,19 +207,19 @@ export const authMetadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sign In | WikiReel",
+    title: "Sign In | Etrant",
     description:
-      "Join WikiReel with Google sign-in to access AI-powered quizzes, reels, and leaderboard stats.",
+      "Join Etrant with Google sign-in to access AI-powered quizzes, reels, and leaderboard stats.",
     images: [siteConfig.ogImage],
   },
 };
 
 export const howItWorkMetadata = {
-  title: "How Wikireel Works | Learn Smarter with AI-Powered Reels",
+  title: "How Etrant Works | Learn Smarter with AI-Powered Reels",
   description:
-    "Discover how Wikireel makes learning fun and engaging in just 5 simple steps — from Google sign-in to personalized AI content, quizzes, and gamified rewards.",
+    "Discover how Etrant makes learning fun and engaging in just 5 simple steps — from Google sign-in to personalized AI content, quizzes, and gamified rewards.",
   keywords: [
-    "Wikireel",
+    "Etrant",
     "AI learning",
     "study reels",
     "interactive education",
@@ -233,17 +233,17 @@ export const howItWorkMetadata = {
     "fun learning app",
   ],
   openGraph: {
-    title: "How Wikireel Works | 5 Steps to Smarter Learning",
+    title: "How Etrant Works | 5 Steps to Smarter Learning",
     description:
-      "See how Wikireel revolutionizes learning with AI-powered reels, quizzes, and gamified rewards. Education that feels like social media.",
+      "See how Etrant revolutionizes learning with AI-powered reels, quizzes, and gamified rewards. Education that feels like social media.",
     url: `${siteConfig.url}/how-it-works`,
-    siteName: "Wikireel",
+    siteName: "Etrant",
     images: [
       {
         url: siteConfig.ogImage,
         width: 1200,
         height: 630,
-        alt: "How Wikireel Works",
+        alt: "How Etrant Works",
       },
     ],
     locale: "en_US",
@@ -251,9 +251,9 @@ export const howItWorkMetadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "How Wikireel Works | Learn Smarter with AI Reels",
+    title: "How Etrant Works | Learn Smarter with AI Reels",
     description:
-      "Explore Wikireel’s 5-step learning journey — AI-powered content, quizzes, and gamification.",
+      "Explore Etrant’s 5-step learning journey — AI-powered content, quizzes, and gamification.",
     images: [siteConfig.ogImage],
     creator: "@wikireel",
   },
