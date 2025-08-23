@@ -5,11 +5,11 @@ interface ISubscriptions {
 
 export const subscriptions: ISubscriptions[] = [
   {
-    plan_id: "plan_R8nr4icSP0pAQ3",
+    plan_id: "plan_R8rFpJWpbf4p57",
     name: "Pro",
   },
   {
-    plan_id: "plan_R8nrJtjHz9ajBS",
+    plan_id: "plan_R8rG7ALxfCfku8",
     name: "Max",
   },
 ];

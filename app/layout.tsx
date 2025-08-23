@@ -7,6 +7,7 @@ import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import { siteConfig } from "@/lib/config/site";
 import { UserProvider } from "@/components/providers/UserProvider";
 import Head from "next/head";
+import Script from "next/script";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -69,7 +70,13 @@ export default function RootLayout({
       <PostHogProvider>
         <SessionProvider>
           <UserProvider>
-            <body className={inter.className}>{children}</body>
+            <body className={inter.className}>
+              {children}
+              <Script
+                src="https://checkout.razorpay.com/v1/checkout.js"
+                strategy="afterInteractive"
+              />
+            </body>
           </UserProvider>
         </SessionProvider>
       </PostHogProvider>

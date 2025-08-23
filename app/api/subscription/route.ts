@@ -11,7 +11,7 @@ export async function POST(req: Request) {
     }
 
     const userPlan = subscriptions.find((p) => p.name === plan);
-
+    console.log("user plan", userPlan);
     if (!userPlan) {
       return NextResponse.json(
         { error: `Plan '${plan}' not found` },
