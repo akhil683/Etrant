@@ -6,6 +6,7 @@ import { SessionProvider } from "next-auth/react";
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import { siteConfig } from "@/lib/config/site";
 import { UserProvider } from "@/components/providers/UserProvider";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -57,12 +58,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning className="dark">
-      {/* <Head> */}
-      {/*   <script */}
-      {/*     crossOrigin="anonymous" */}
-      {/*     src="//unpkg.com/react-scan/dist/auto.global.js" */}
-      {/*   /> */}
-      {/* </Head> */}
+      <Head>
+        <meta
+          name="google-site-verification"
+          content="EwF6VPOPDKObEf3SzaXf1GkyPmCdDiofW9MqDonM03w"
+        />
+      </Head>
       <PostHogProvider>
         <SessionProvider>
           <UserProvider>
