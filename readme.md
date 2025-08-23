@@ -1,8 +1,8 @@
-# 📚 WikiReel
+# 📚 Etrant
 
 <div align="center">
   
-![WikiReel App](https://raw.githubusercontent.com/akhil683/wiki-reel/refs/heads/main/public/wiki_logo_low.png)
+![Etrant App](https://raw.githubusercontent.com/akhil683/wiki-reel/refs/heads/main/public/etrant.png)
 
 **Scroll. Learn. Test. Repeat.**
 
@@ -19,11 +19,11 @@ _An Instagram-like knowledge platform for students, aspirants, and curious minds
 
 ---
 
-## 🎯 What is WikiReel?
+## 🎯 What is Etrant?
 
-WikiReel transforms the way students learn by combining the addictive swipe experience of Instagram with educational content. Get bite-sized Wikipedia summaries, exam-focused quizzes, and daily current affairs delivered through an intuitive reel-based interface.
+Etrant transforms the way students learn by combining the addictive swipe experience of Instagram with educational content. Get bite-sized Wikipedia summaries, exam-focused quizzes, and daily current affairs delivered through an intuitive reel-based interface.
 
-### ✨ Why WikiReel?
+### ✨ Why Etrant?
 
 - **📱 Mobile-First Learning**: Learn on-the-go with a familiar social media interface
 - **🎯 Exam-Focused**: Tailored content for JEE, NEET, UPSC, and other competitive exams
@@ -37,7 +37,7 @@ WikiReel transforms the way students learn by combining the addictive swipe expe
 
 ### 📖 **Knowledge Reels**
 
-Swipe through AI-curated Wikipedia summaries designed for quick comprehension and retention.
+Swipe through AI-curated Etrant summaries designed for quick comprehension and retention.
 
 ### 🧠 **Smart Quiz Engine**
 
@@ -188,7 +188,7 @@ flowchart TD
    pnpm dev
    ```
 
-Visit `http://localhost:3000` to see WikiReel in action! 🎉
+Visit `http://localhost:3000` to see Etrant in action! 🎉
 
 ---
 
