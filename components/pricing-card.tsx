@@ -3,9 +3,41 @@ import { Check } from "lucide-react";
 import { plans } from "@/data/data";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
+import { useState } from "react";
 
 export default function PricingCard() {
-  const handleSubscription = (name: string) => {};
+  // const [loading, setLoading] = useState(false);
+  //
+  // const subscribe = async (plan: string) => {
+  //   setLoading(true);
+  //   const res = await fetch("/api/subscription", {
+  //     method: "POST",
+  //     headers: { "Content-Type": "application/json" },
+  //     body: JSON.stringify({ plan }),
+  //   });
+  //
+  //   const data = await res.json();
+  //   console.log("Subscription created:", data);
+  //
+  //   if (data.id) {
+  //     const options = {
+  //       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
+  //       subscription_id: data.id,
+  //       name: "My App",
+  //       description:
+  //         plan === "pro" ? "Pro Plan Subscription" : "Max Plan Subscription",
+  //       handler: function (response: any) {
+  //         console.log("Payment success:", response);
+  //         // Send to backend for verification
+  //       },
+  //       theme: { color: plan === "pro" ? "#2563eb" : "#16a34a" },
+  //     };
+  //
+  //     const rzp = new (window as any).Razorpay(options);
+  //     rzp.open();
+  //   }
+  //   setLoading(false);
+  // };
   return (
     <div className="grid md:grid-cols-3 gap-16 md:gap-8 max-w-6xl mx-auto">
       {plans.map((plan) => (
@@ -62,7 +94,7 @@ export default function PricingCard() {
             {/* CTA Button */}
             <div className="pt-4">
               <Button
-                onClick={() => handleSubscription(plan.name)}
+                // onClick={() => subscribe(plan.name)}
                 variant={plan.buttonVariant}
                 className={`w-full py-3 text-base font-semibold ${
                   plan.buttonVariant === "default"

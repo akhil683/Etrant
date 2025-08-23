@@ -65,6 +65,7 @@
     "postgres": "^3.4.7",
     "posthog-js": "^1.260.1",
     "posthog-node": "^5.7.0",
+    "razorpay": "^2.9.6",
     "react": "^19",
     "react-day-picker": "9.8.0",
     "react-dom": "^19",

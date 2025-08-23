@@ -44,7 +44,9 @@ export const metadata: Metadata = {
     title: siteConfig.title,
     site: "@akhil_web",
     description: siteConfig.description,
-    images: [siteConfig.ogImage],
+    images: [
+      "https://raw.githubusercontent.com/akhil683/wiki-reel/refs/heads/main/public/og-image.png",
+    ],
     creator: "@akkhil_dev",
   },
   icons: siteConfig.icons,

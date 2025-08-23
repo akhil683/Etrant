@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
-import { Loader2 } from "lucide-react";
 import { McqCard } from "./question-card";
 import { QuestionData } from "@/lib/repositories/question-repository";
 import Header from "./header";
