@@ -1,7 +1,5 @@
 "use client";
 
-import { BookOpen } from "lucide-react";
-
 export default function Loading() {
   return (
     <div className="min-h-screen bg-gray-950 flex items-center justify-center">
@@ -13,9 +11,9 @@ export default function Loading() {
         </div>
 
         <h1 className="text-3xl font-black text-white mb-4">
-          Wiki{" "}
+          Think{" "}
           <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Reel
+            Etrant
           </span>
         </h1>
 

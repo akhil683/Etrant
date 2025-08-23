@@ -6,7 +6,7 @@ import { Download, ShuffleIcon as Swipe, Target, Trophy } from "lucide-react";
 const steps = [
   {
     icon: Download,
-    title: "Sign Up to WikiReel",
+    title: "Sign Up to Etrant",
     description:
       "Get the app and create your personalized learning profile in under 30 seconds.",
     color: "from-blue-500 to-indigo-500",

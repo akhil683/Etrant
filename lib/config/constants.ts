@@ -1,5 +1,3 @@
-import type { InterestCategory } from "@/types";
-
 export const APP_CONFIG = {
   QUIZ_TRIGGER_INTERVAL: 5,
   QUIZ_TIME_LIMIT: 15,
@@ -7,31 +5,6 @@ export const APP_CONFIG = {
   ARTICLES_PER_LOAD: 5,
   MAX_RETRIES: 3,
   LEADERBOARD_SIZE: 20,
-} as const;
-
-export const INTEREST_CATEGORIES: Record<InterestCategory, string[]> = {
-  science: ["physics", "chemistry", "biology", "mathematics", "astronomy"],
-  technology: [
-    "computer science",
-    "artificial intelligence",
-    "robotics",
-    "internet",
-  ],
-  history: [
-    "ancient history",
-    "world war",
-    "civilization",
-    "historical figures",
-  ],
-  art: ["painting", "sculpture", "architecture", "artists"],
-  sports: ["football", "basketball", "olympics", "athletes"],
-  music: ["classical music", "rock music", "musicians", "instruments"],
-  nature: ["animals", "plants", "ecology", "environment"],
-  space: ["planets", "stars", "space exploration", "astronomy"],
-  food: ["cuisine", "cooking", "nutrition", "restaurants"],
-  travel: ["countries", "cities", "landmarks", "tourism"],
-  literature: ["novels", "poetry", "authors", "books"],
-  philosophy: ["philosophers", "ethics", "logic", "metaphysics"],
 } as const;
 
 export const FALLBACK_ARTICLES = [

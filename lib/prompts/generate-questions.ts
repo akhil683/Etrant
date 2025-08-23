@@ -24,7 +24,7 @@ Generate 10 practice questions for the exam specified in the INPUT DATA section.
 
 ### 1. Top-Level Structure
 - The entire output MUST be a single JSON array "[...]".
-- The array MUST contain exactly 20 JSON objects.
+- The array MUST contain exactly 10 JSON objects.
 - The response MUST start with "[" and end with "]". There must be NO other text or formatting outside of this JSON array.
 - **CRITICAL:** DO NOT wrap the output in markdown code blocks.
 
@@ -64,7 +64,7 @@ Each object in the array must have the following exact structure and adhere to t
 ---
 ## FINAL CHECKLIST (Internal monologue before responding)
 1.  Is my entire response starting with '[' and ending with ']' and nothing else?
-2.  Does the array contain exactly 20 objects?
+2.  Does the array contain exactly 10 objects?
 3.  Have I avoided all markdown and conversational text?
 4.  Does every object precisely match the specified schema and data types?
 5.  In every object, is there exactly one correct option and does the 'correctAnswer' index match it?

@@ -164,15 +164,9 @@ export class QuestionRepository implements IWikipediaRepository {
             ],
           },
         ],
-        // generationConfig: {
-        //   temperature: 0.7,
-        //   maxOutputTokens: 4000,
-        // },
       });
 
       const responseText = response.text;
-      console.log("Gemini response:", responseText);
-
       // Parse the JSON response
       let questions: QuestionData[];
 
@@ -202,7 +196,7 @@ export class QuestionRepository implements IWikipediaRepository {
             throw new Error(`Question ${index} is missing required fields`);
           }
         });
-
+        console.log("question length", questions.length);
         return questions;
       } catch (parseError) {
         console.error("Failed to parse AI response:", parseError);

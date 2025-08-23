@@ -1,11 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpen, CheckCircle, Star, Clock } from "lucide-react";
+import { CheckCircle, Star, Clock } from "lucide-react";
+import Logo from "@/public/etrant.png";
 import Link from "next/link";
 import Navbar from "@/components/home/navbar";
 import { Metadata } from "next";
 import { howItWorkMetadata } from "@/lib/config/site";
 import { stepsHowItWorks } from "@/data/data";
+import Image from "next/image";
 
 export const metadata: Metadata = howItWorkMetadata;
 
@@ -18,7 +20,7 @@ export default function HowItWorksPage() {
           <h1 className="text-4xl md:text-6xl font-black mb-6">
             How{" "}
             <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              Wiki Reel
+              Etrant
             </span>{" "}
             Works
           </h1>
@@ -119,12 +121,14 @@ export default function HowItWorksPage() {
                   <div className="bg-gray-800 px-4 pt-12 pb-4">
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <div className="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg flex items-center justify-center">
-                          <BookOpen className="h-5 w-5 text-white" />
+                        <div className="w-8 h-8 rounded-lg flex items-center justify-center">
+                          <Image
+                            src={Logo}
+                            className="w-full h-full"
+                            alt="Etrant Logo"
+                          />
                         </div>
-                        <h3 className="text-lg font-bold text-white">
-                          Wiki Reel
-                        </h3>
+                        <h3 className="text-lg font-bold text-white">Etrant</h3>
                       </div>
                       <div className="flex items-center gap-2">
                         <Star className="h-5 w-5 text-yellow-400" />

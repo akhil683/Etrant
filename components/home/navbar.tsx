@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import Logo from "@/public/etrant.png";
 
 export default function Navbar() {
   const router = useRouter();
@@ -18,11 +20,17 @@ export default function Navbar() {
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
-          <div className="md:w-9 md:h-9 w-7 h-7 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-lg flex items-center justify-center">
-            <BookOpen className="md:h-5 md:w-5 h-4 w-4 text-white" />
+          <div className="md:w-9 md:h-9 w-7 h-7 rounded-lg flex items-center justify-center">
+            <Image
+              className="w-full h-full"
+              src={Logo}
+              width={500}
+              height={500}
+              alt="Etrant Logo"
+            />
           </div>
           <span className="md:text-2xl text-xl font-black text-white">
-            Wiki Reel
+            Etrant
           </span>
         </Link>
 
