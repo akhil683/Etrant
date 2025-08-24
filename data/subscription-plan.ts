@@ -1,4 +1,4 @@
-interface ISubscriptions {
+export interface ISubscriptions {
   plan_id: string;
   name: string;
 }
