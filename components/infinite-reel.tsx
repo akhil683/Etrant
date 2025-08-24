@@ -93,14 +93,6 @@ export function InfiniteReel() {
     }
   };
 
-  // const handleQuizComplete = (isCorrect: boolean, points: number) => {
-  //   if (isCorrect) {
-  //     setUserPoints((prev) => prev + points);
-  //   }
-  //   setShowQuiz(false);
-  //   setQuizData(null);
-  // };
-
   const loadMoreArticles = async () => {
     if (loading) return;
 
@@ -150,7 +142,6 @@ export function InfiniteReel() {
     }
   };
 
-  // Handle scroll events to ensure snap behavior
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
@@ -163,7 +154,7 @@ export function InfiniteReel() {
       clearTimeout(scrollTimeout);
       scrollTimeout = setTimeout(() => {
         const scrollTop = container.scrollTop;
-        const windowHeight = window.innerHeight - 73; // Account for header
+        const windowHeight = window.innerHeight - 73;
         const targetIndex = Math.round(scrollTop / windowHeight);
 
         if (targetIndex !== currentIndex) {
@@ -194,17 +185,8 @@ export function InfiniteReel() {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* Header */}
       <Header />
 
-      {/* Quiz Overlay */}
-      {/* {showQuiz && quizData && ( */}
-      {/*   <div className="fixed inset-0 z-50 bg-black"> */}
-      {/*     <QuizCard quiz={quizData} onComplete={handleQuizComplete} /> */}
-      {/*   </div> */}
-      {/* )} */}
-
-      {/* Articles Container */}
       <div
         ref={containerRef}
         className="md:h-[calc(100vh-73px)] h-[calc(100vh-146px)] overflow-y-auto snap-y snap-mandatory scroll-smooth"

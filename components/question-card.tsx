@@ -9,6 +9,7 @@ import { CheckCircle, XCircle } from "lucide-react";
 import { QuestionData } from "@/lib/repositories/question-repository";
 import confetti from "canvas-confetti";
 import { useUserStore } from "@/lib/store/useUserStore";
+import { Button } from "./ui/button";
 
 export function McqCard({
   currentQuestion,
@@ -57,7 +58,7 @@ export function McqCard({
   };
 
   return (
-    <Card className="border-0 overflow-hidden bg-black h-full flex justify-center items-center">
+    <Card className="border-0 overflow-hidden bg-black md:h-full flex justify-center items-center">
       <CardContent className="p-0 w-full">
         {/* Question Header */}
         <div className="bg-black text-white p-6">
@@ -113,12 +114,11 @@ export function McqCard({
           {currentQuestion.options.map((option, index) => {
             const isSelected = selectedAnswer === option.name;
             const isCorrect = option.isCorrect;
-            const showResult = isAnswered;
 
             let buttonClass =
               "w-full text-left rounded-xl transition-all duration-300 transform rounded-full";
 
-            if (showResult) {
+            if (isAnswered) {
               if (isCorrect) {
                 buttonClass +=
                   " bg-green-500 border-green-400 text-green-800 shadow-green-100";
@@ -154,10 +154,10 @@ export function McqCard({
                       </span>
                     </div>
 
-                    {showResult && isCorrect && (
+                    {isAnswered && isCorrect && (
                       <CheckCircle className="w-5 h-5 text-green-200 animate-pulse" />
                     )}
-                    {showResult && isSelected && !isCorrect && (
+                    {isAnswered && isSelected && !isCorrect && (
                       <XCircle className="w-5 h-5 text-red-200 animate-pulse" />
                     )}
                   </div>
@@ -165,6 +165,11 @@ export function McqCard({
               </div>
             );
           })}
+          <div
+            className={`w-full justify-end mt-8 ${isAnswered ? "flex" : "invisible"}`}
+          >
+            <Button className="rounded-full">Explanation</Button>
+          </div>
         </div>
       </CardContent>
     </Card>
