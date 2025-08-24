@@ -180,7 +180,7 @@ export function QuestionReel({ interests }: InfiniteReelProps) {
           </div>
         ))}
 
-        {loading && <AILoader totalArticles={10} loadingTime={20} />}
+        {loading && <AILoader totalArticles={10} loadingTime={10} />}
       </div>
     </div>
   );

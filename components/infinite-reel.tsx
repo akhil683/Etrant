@@ -225,7 +225,7 @@ export function InfiniteReel() {
           </div>
         ))}
 
-        {loading && <AILoader totalArticles={10} loadingTime={10} />}
+        {loading && <AILoader totalArticles={10} loadingTime={5} />}
       </div>
     </div>
   );
