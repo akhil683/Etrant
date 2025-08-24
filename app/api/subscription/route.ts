@@ -4,14 +4,13 @@ import { subscriptions } from "@/data/subscription-plan";
 
 export async function POST(req: Request) {
   try {
-    const { plan } = await req.json();
+    const { plan, userMail } = await req.json();
 
     if (!plan) {
       return NextResponse.json({ error: "Plan is required" }, { status: 400 });
     }
 
     const userPlan = subscriptions.find((p) => p.name === plan);
-    console.log("user plan", userPlan);
     if (!userPlan) {
       return NextResponse.json(
         { error: `Plan '${plan}' not found` },
@@ -23,6 +22,9 @@ export async function POST(req: Request) {
       plan_id: userPlan.plan_id,
       total_count: 12, // 12 billing cycles (1 year if monthly)
       customer_notify: 1,
+      notes: {
+        userMail: userMail,
+      },
     });
 
     return NextResponse.json(subscription, { status: 201 });

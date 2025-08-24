@@ -4,6 +4,7 @@ import { plans } from "@/data/data";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
 
 declare global {
   interface Window {
@@ -13,13 +14,14 @@ declare global {
 
 export default function PricingCard() {
   const [loading, setLoading] = useState(false);
+  const { data: session } = useSession();
 
   const subscribe = async (plan: string) => {
     setLoading(true);
     const res = await fetch("/api/subscription", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ plan }),
+      body: JSON.stringify({ plan, userMail: session?.user?.email }),
     });
 
     const data = await res.json();
