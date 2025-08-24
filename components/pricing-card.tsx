@@ -34,9 +34,22 @@ export default function PricingCard() {
           plan === "Pro" ? "Pro Plan Subscription" : "Max Plan Subscription",
         image:
           "https://raw.githubusercontent.com/akhil683/wiki-reel/refs/heads/main/public/etrant.png",
-        handler: function (response: any) {
+        handler: async function (response: any) {
           console.log("Payment success:", response);
-          // Send to backend for verification
+
+          const verify = await fetch("/api/subscription/verify", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(response),
+          });
+
+          const result = await verify.json();
+
+          if (result.success) {
+            window.location.href = "/success";
+          } else {
+            alert("Payment verification failed!");
+          }
         },
         method: {
           netbanking: true,
@@ -47,7 +60,7 @@ export default function PricingCard() {
         upi: {
           flow: "collect", // to show QR + enter UPI ID option
         },
-        theme: { color: plan === "Pro" ? "#6366f1 " : "#ec4899 " },
+        theme: { color: plan === "Pro" ? "#ec4899 " : "#ec4899 " },
       };
 
       const rzp = new window.Razorpay(options);
