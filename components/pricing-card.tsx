@@ -24,6 +24,7 @@ export default function PricingCard() {
 
 const PayCard = ({ plan }: { plan: IPlan }) => {
   const [loading, setLoading] = useState(false);
+  const [afterLoading, setAfterLoading] = useState(false);
   const { data: session } = useSession();
 
   const subscribe = async (plan: string) => {
@@ -47,6 +48,7 @@ const PayCard = ({ plan }: { plan: IPlan }) => {
         image:
           "https://raw.githubusercontent.com/akhil683/wiki-reel/refs/heads/main/public/etrant.png",
         handler: async function (response: any) {
+          setAfterLoading(true);
           console.log("Payment success:", response);
 
           const verify = await fetch("/api/subscription/verify", {
@@ -56,6 +58,7 @@ const PayCard = ({ plan }: { plan: IPlan }) => {
           });
 
           const result = await verify.json();
+          setLoading(false);
           console.log("result", result);
           if (result.success) {
             window.location.href = `subscription/success?payment_id=${response.razorpay_payment_id}`;
@@ -81,76 +84,85 @@ const PayCard = ({ plan }: { plan: IPlan }) => {
     setLoading(false);
   };
   return (
-    <Card
-      key={plan.name}
-      className={`relative bg-gray-900/50 border-gray-800 hover:border-gray-700 transition-all duration-300 ${
-        plan.popular ? "ring-2 ring-blue-500/50 scale-105" : ""
-      }`}
-    >
-      {plan.popular && (
-        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
-          <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
-            Most Popular
+    <>
+      <Card
+        key={plan.name}
+        className={`relative bg-gray-900/50 border-gray-800 hover:border-gray-700 transition-all duration-300 ${
+          plan.popular ? "ring-2 ring-blue-500/50 scale-105" : ""
+        }`}
+      >
+        {plan.popular && (
+          <div className="absolute -top-4 left-1/2 transform -translate-x-1/2">
+            <div className="bg-gradient-to-r from-blue-500 to-purple-500 text-white px-4 py-1 rounded-full text-sm font-semibold">
+              Most Popular
+            </div>
           </div>
+        )}
+
+        <CardHeader className="text-center pb-8">
+          <div className="flex justify-center mb-4">
+            <div
+              className={`w-16 h-16 rounded-2xl flex items-center justify-center ${
+                plan.name === "Free"
+                  ? "bg-gray-700"
+                  : plan.name === "Pro"
+                    ? "bg-gradient-to-r from-blue-500 to-indigo-500"
+                    : "bg-gradient-to-r from-purple-500 to-pink-500"
+              }`}
+            >
+              <plan.icon className="h-8 w-8 text-white" />
+            </div>
+          </div>
+          <CardTitle className="text-2xl font-bold text-white mb-2">
+            {plan.name}
+          </CardTitle>
+          <div className="mb-4">
+            <span className="text-4xl font-black text-white">
+              ₹{plan.price}
+            </span>
+            <span className="text-gray-400 ml-1">/month</span>
+          </div>
+          <p className="text-gray-400 text-sm">{plan.description}</p>
+        </CardHeader>
+
+        <CardContent className="space-y-6">
+          {/* Features */}
+          <div className="space-y-3">
+            {plan.features.map((feature: string) => (
+              <div key={feature} className="flex items-start gap-3">
+                <Check className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
+                <span className="text-gray-300 text-sm">{feature}</span>
+              </div>
+            ))}
+          </div>
+
+          {/* CTA Button */}
+          <div className="pt-4">
+            <Button
+              onClick={() => subscribe(plan.name)}
+              variant={plan.buttonVariant}
+              className={`w-full py-3 text-base font-semibold ${
+                plan.buttonVariant === "default"
+                  ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white"
+                  : "border-gray-600 text-gray-300 hover:bg-gray-800 bg-transparent"
+              }`}
+            >
+              {loading ? <Loader2 className="animate-spin" /> : plan.buttonText}
+            </Button>
+          </div>
+
+          {plan.name === "Free" && (
+            <p className="text-xs text-gray-500 text-center">
+              No credit card required
+            </p>
+          )}
+        </CardContent>
+      </Card>
+      {afterLoading && (
+        <div className="absolute z-50 top-0 bottom-0 inset-0 bg-black/40 min-h-screen w-full flex justify-center items-center">
+          <Loader2 className="w-16 h-16 text-white animate-spin" />
         </div>
       )}
-
-      <CardHeader className="text-center pb-8">
-        <div className="flex justify-center mb-4">
-          <div
-            className={`w-16 h-16 rounded-2xl flex items-center justify-center ${
-              plan.name === "Free"
-                ? "bg-gray-700"
-                : plan.name === "Pro"
-                  ? "bg-gradient-to-r from-blue-500 to-indigo-500"
-                  : "bg-gradient-to-r from-purple-500 to-pink-500"
-            }`}
-          >
-            <plan.icon className="h-8 w-8 text-white" />
-          </div>
-        </div>
-        <CardTitle className="text-2xl font-bold text-white mb-2">
-          {plan.name}
-        </CardTitle>
-        <div className="mb-4">
-          <span className="text-4xl font-black text-white">₹{plan.price}</span>
-          <span className="text-gray-400 ml-1">/month</span>
-        </div>
-        <p className="text-gray-400 text-sm">{plan.description}</p>
-      </CardHeader>
-
-      <CardContent className="space-y-6">
-        {/* Features */}
-        <div className="space-y-3">
-          {plan.features.map((feature: string) => (
-            <div key={feature} className="flex items-start gap-3">
-              <Check className="h-5 w-5 text-green-400 mt-0.5 flex-shrink-0" />
-              <span className="text-gray-300 text-sm">{feature}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA Button */}
-        <div className="pt-4">
-          <Button
-            onClick={() => subscribe(plan.name)}
-            variant={plan.buttonVariant}
-            className={`w-full py-3 text-base font-semibold ${
-              plan.buttonVariant === "default"
-                ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white"
-                : "border-gray-600 text-gray-300 hover:bg-gray-800 bg-transparent"
-            }`}
-          >
-            {loading ? <Loader2 className="animate-spin" /> : plan.buttonText}
-          </Button>
-        </div>
-
-        {plan.name === "Free" && (
-          <p className="text-xs text-gray-500 text-center">
-            No credit card required
-          </p>
-        )}
-      </CardContent>
-    </Card>
+    </>
   );
 };

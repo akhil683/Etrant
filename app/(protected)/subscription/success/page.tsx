@@ -1,9 +1,21 @@
+"use client";
+import { useEffect } from "react";
 import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
-import { Check, CheckCircle, Home, Search } from "lucide-react";
+import { Check, Home, Search } from "lucide-react";
 import Link from "next/link";
+import confetti from "canvas-confetti";
 
 export default function SuccessPage() {
+  useEffect(() => {
+    confetti({
+      particleCount: 100,
+      spread: 70,
+      origin: { y: 0.6 },
+      colors: ["#10B981", "#34D399", "#6EE7B7", "#A7F3D0"],
+    });
+  }, []);
+
   return (
     <div className="bg-black">
       <Header />
