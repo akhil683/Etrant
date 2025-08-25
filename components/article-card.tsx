@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { ExternalLink, Heart, Share2 } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import Image from "next/image";
 
 interface Article {

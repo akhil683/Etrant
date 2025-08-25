@@ -10,6 +10,9 @@ export interface User {
   points: number | null;
   lastActiveDate: string | null;
   rank: string | null;
+  plan: string | null;
+  subscriptionActive: boolean | null;
+  subscriptionEnd: string | null;
   stats: {
     totalReels: number | null;
     totalQuizzes: number | null;

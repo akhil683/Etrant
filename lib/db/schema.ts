@@ -13,10 +13,11 @@ import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 import type { AdapterAccountType } from "@auth/core/adapters";
 
-const connectionString = process.env.DATABASE_URL!;
-const pool = neon(
-  "postgresql://neondb_owner:npg_y5EWmYHDCI1l@ep-hidden-tree-a1041pdx-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require",
-);
+const connectionString = process.env.DATABASE_URL as string;
+if (!connectionString) {
+  throw new Error("DATABASE_URL is not set");
+}
+const pool = neon(connectionString);
 export const db = drizzle(pool);
 
 // -------------------- USERS --------------------
@@ -31,8 +32,11 @@ export const users = pgTable("user", {
   streak: integer("streak").default(0),
   interest: text("interest"),
   points: integer("points").default(0),
-  lastActiveDate: text("lastActiveDate"),
   rank: text("rank"),
+  lastActiveDate: text("lastActiveDate"),
+  plan: text("plan").default("Free"),
+  subscriptionActive: boolean("subscriptionActive").default(false),
+  subscriptionEnd: text("subscriptionEnd"),
   joinDate: date("joinDate"),
 });
 

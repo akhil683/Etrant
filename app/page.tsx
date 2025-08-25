@@ -13,7 +13,7 @@ export default async function LandingPage() {
   const session = await auth();
 
   if (session) {
-    redirect("/articles");
+    return redirect("/articles");
   }
   return (
     <ErrorBoundary>

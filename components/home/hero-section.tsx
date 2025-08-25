@@ -3,12 +3,11 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Sparkles, Users, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Logo from "@/public/etrant.png";
+import Link from "next/link";
 
 export default function HeroSection() {
-  const router = useRouter();
   return (
     <section className="relative min-h-screen bg-black overflow-hidden">
       <div className="absolute inset-0">
@@ -97,22 +96,24 @@ export default function HeroSection() {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="flex flex-col sm:flex-row gap-4"
               >
-                <Button
-                  onClick={() => router.push("/auth")}
-                  size="lg"
-                  className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white md:font-bold px-6 py-2 md:px-8 md:py-4 md:text-lg rounded-full shadow-2xl transform transition-all"
-                >
-                  Start Learning Free
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-                <Button
-                  onClick={() => router.push("/how-it-works")}
-                  size="lg"
-                  variant="outline"
-                  className="border-2 border-white/30 bg-white text-black hover:text-white hover:bg-white/10 px-6 py-2 md:px-8 md:py-4 md:text-lg rounded-full backdrop-blur-sm"
-                >
-                  See How It Works
-                </Button>
+                <Link href={"/auth"}>
+                  <Button
+                    size="lg"
+                    className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white md:font-bold px-6 py-2 md:px-8 md:py-4 md:text-lg rounded-full shadow-2xl transform transition-all"
+                  >
+                    Start Learning Free
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link href={"/how-it-works"}>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="border-2 border-white/30 bg-white text-black hover:text-white hover:bg-white/10 px-6 py-2 md:px-8 md:py-4 md:text-lg rounded-full backdrop-blur-sm"
+                  >
+                    See How It Works
+                  </Button>
+                </Link>
               </motion.div>
             </div>
 

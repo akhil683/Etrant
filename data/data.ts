@@ -9,7 +9,26 @@ import {
   Zap,
 } from "lucide-react";
 
-export const plans = [
+export interface IPlan {
+  name: string;
+  price: number;
+  icon: any;
+  description: string;
+  features: string[];
+  limitations: string[];
+  buttonText: string;
+  buttonVariant:
+    | "link"
+    | "default"
+    | "destructive"
+    | "outline"
+    | "secondary"
+    | "ghost"
+    | null
+    | undefined;
+  popular: boolean;
+}
+export const plans: IPlan[] = [
   {
     name: "Free",
     price: 0,
