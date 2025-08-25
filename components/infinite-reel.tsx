@@ -63,7 +63,7 @@ export function InfiniteReel() {
             }
           });
         },
-        [loading, hasMore, viewedArticles],
+        // [loading, hasMore, viewedArticles],
       );
       if (node) observer.current.observe(node);
     },

@@ -15,8 +15,6 @@ export async function POST(req: Request) {
     .digest("hex");
 
   if (generated_signature === razorpay_signature) {
-    // ✅ Payment verified successfully
-    // Save to DB: userId, plan, status=active, subscriptionId, etc.
     return NextResponse.json({ success: true });
   } else {
     return NextResponse.json({ success: false }, { status: 400 });

@@ -1,15 +1,12 @@
 "use client";
 
-import { BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Logo from "@/public/etrant.png";
 
 export default function Navbar() {
-  const router = useRouter();
   return (
     <motion.nav
       initial={{ y: -100, opacity: 0 }}
@@ -36,12 +33,11 @@ export default function Navbar() {
 
         {/* Sign In Button */}
         <div className="flex items-center gap-4">
-          <Button
-            onClick={() => router.push("/auth")}
-            className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white md:px-5 md:py-2 px-3 py-1 rounded-lg md:font-medium shadow-md"
-          >
-            Sign Up
-          </Button>
+          <Link href={"/auth"}>
+            <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white md:px-5 md:py-2 px-3 py-1 rounded-lg md:font-medium shadow-md">
+              Sign Up
+            </Button>
+          </Link>
         </div>
       </div>
     </motion.nav>
