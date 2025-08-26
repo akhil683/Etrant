@@ -29,10 +29,6 @@ const dailyPoints = [
 
 export default function ProfilePage() {
   const { user } = useUserStore();
-  if (!user) {
-    redirect("/auth");
-  }
-
   const maxPoints = Math.max(...dailyPoints.map((d) => d.points));
 
   return (

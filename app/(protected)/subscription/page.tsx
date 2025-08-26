@@ -1,15 +1,8 @@
 import { faqs } from "@/data/data";
-import { redirect } from "next/navigation";
-import { auth } from "@/auth";
 import Header from "@/components/header";
 import PricingCard from "@/components/pricing-card";
 
 export default async function SubscriptionPage() {
-  const session = await auth();
-  if (!session) {
-    redirect("/auth");
-  }
-
   return (
     <div>
       <Header />

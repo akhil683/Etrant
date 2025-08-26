@@ -1,18 +1,12 @@
 import { getLeaderboard } from "@/actions/getLeaderboard";
-import { auth } from "@/auth";
 import Header from "@/components/header";
 import { leaderboardMeta } from "@/lib/config/site";
 import { Metadata } from "next";
 import Image from "next/image";
-import { redirect } from "next/navigation";
 
 export const metadata: Metadata = leaderboardMeta;
 
 export default async function LeaderboardPage() {
-  const session = await auth();
-  if (!session?.user) {
-    redirect("/auth");
-  }
   const leaderboard = await getLeaderboard();
 
   if (!leaderboard) return null;

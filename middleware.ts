@@ -6,7 +6,8 @@ const publicRoutes = ["/", "/auth", "/pricing", "/how-it-works", "/"];
 
 const protectedRoutes = [
   "/articles",
-  "/ai-question",
+  "/ai-questions",
+  "/leaderboard",
   "/subscription",
   "/user",
   "/interest",
