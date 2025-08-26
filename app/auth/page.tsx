@@ -8,11 +8,5 @@ import { authMetadata } from "@/lib/config/site";
 export const metadata: Metadata = authMetadata;
 
 export default async function SignUpPage() {
-  const session = await auth();
-
-  if (session) {
-    redirect("/interest");
-  }
-
   return <AuthLayout />;
 }

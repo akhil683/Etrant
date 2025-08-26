@@ -133,13 +133,14 @@ export function InterestSelector() {
   const handleContinue = async () => {
     setLoading(true);
     try {
+      console.log("selectedInterests", selectedInterests);
       if (selectedInterests) {
-        console.log("selectedInterests", selectedInterests);
         const res = await setInterests(
           selectedInterests,
           user?.email as string,
         );
-        router.push("/ai-questions");
+        console.log("res", res);
+        // router.push("/ai-questions");
       }
     } catch (error) {
       console.log("interest selection error: ", error);

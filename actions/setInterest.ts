@@ -9,18 +9,15 @@ export const setInterests = async (
   interests: InterestCategory,
   userEmail: string,
 ) => {
-  console.log("interest", interests);
   if (!interests) {
     return { success: false, error: "Interest is required" };
   }
 
   try {
-    const newUser = await db
+    await db
       .update(users)
       .set({ interest: interests })
       .where(eq(users.email, userEmail));
-
-    console.log("new user", newUser);
 
     return { success: true, message: "Interest stored successfully" };
   } catch (error) {
