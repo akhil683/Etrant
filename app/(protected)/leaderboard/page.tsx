@@ -19,7 +19,7 @@ export default async function LeaderboardPage() {
   const remaining = leaderboard.slice(0);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white text-5xl">
       <Header />
       <div className="container mx-auto px-4 py-8">
         {/* Header */}

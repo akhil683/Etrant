@@ -6,15 +6,9 @@ import ProcessFlow from "@/components/home/process-flow";
 import StatsSection from "@/components/home/stats-section";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
 import Footer from "@/components/home/footer";
-import { auth } from "@/auth";
-import { redirect } from "next/navigation";
+import Loading from "./loading.tsx";
 
-export default async function LandingPage() {
-  const session = await auth();
-
-  if (session) {
-    return redirect("/articles");
-  }
+export default function LandingPage() {
   return (
     <ErrorBoundary>
       <main className="bg-gray-950 overflow-x-hidden">

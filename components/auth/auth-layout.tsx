@@ -5,7 +5,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { BookOpen } from "lucide-react";
 import Link from "next/link";
 import SignIn from "./sign-in";
 import Image from "next/image";
@@ -14,14 +13,11 @@ import Logo from "@/public/etrant.png";
 export default function AuthLayout() {
   return (
     <div className="min-h-screen bg-gray-950 flex">
-      {/* Left Side - App Logo and Branding */}
       <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-blue-900/20 via-indigo-900/20 to-purple-900/20 relative overflow-hidden">
-        {/* Background animated elements */}
         <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-emerald-500/10 rounded-full mix-blend-screen blur-3xl animate-blob-1" />
         <div className="absolute bottom-1/4 right-1/4 w-72 h-72 bg-orange-500/10 rounded-full mix-blend-screen blur-3xl animate-blob-2" />
 
         <div className="relative z-10 flex flex-col items-center justify-center w-full p-12 text-center">
-          {/* App Logo */}
           <div className="mb-8">
             <div className="w-32 h-32 rounded-3xl flex items-center justify-center mb-6 shadow-2xl">
               <Image src={Logo} className="w-full h-full" alt="Etrant Logo" />
@@ -67,8 +63,8 @@ export default function AuthLayout() {
         <div className="relative z-10 w-full max-w-md">
           {/* Mobile Logo - Only visible on smaller screens */}
           <div className="lg:hidden text-center mb-8">
-            <div className="w-20 h-20 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl">
-              <BookOpen className="h-10 w-10 text-white" />
+            <div className="w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-4 shadow-xl">
+              <Image src={Logo} className="w-full h-full" alt="Etrant Logo" />
             </div>
             <h1 className="text-3xl font-black text-white">
               Think{" "}
@@ -98,7 +94,7 @@ export default function AuthLayout() {
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                   <span className="bg-gray-900 px-2 text-gray-400">
-                    Trusted by 50,000+ learners
+                    Trusted by 50+ learners
                   </span>
                 </div>
               </div>
