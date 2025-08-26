@@ -12,51 +12,11 @@
   "dir": "ltr",
   "icons": [
     {
-      "src": "/etrant.png",
+      "src": "../public/etrant.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
     }
   ],
-  "categories": ["education", "productivity", "ai", "learning", "study"],
-  "screenshots": [
-    {
-      "src": "/screenshots/home.png",
-      "sizes": "1080x1920",
-      "type": "image/png",
-      "form_factor": "narrow"
-    },
-    {
-      "src": "/screenshots/reels.png",
-      "sizes": "1080x1920",
-      "type": "image/png",
-      "form_factor": "narrow"
-    },
-    {
-      "src": "/screenshots/quizzes.png",
-      "sizes": "1080x1920",
-      "type": "image/png",
-      "form_factor": "narrow"
-    }
-  ],
-  "shortcuts": [
-    {
-      "name": "Start Learning",
-      "short_name": "Learn",
-      "url": "/reels",
-      "icons": [{ "src": "/icons/learn.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "Take a Quiz",
-      "short_name": "Quiz",
-      "url": "/quizzes",
-      "icons": [{ "src": "/icons/quiz.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "My Profile",
-      "short_name": "Profile",
-      "url": "/profile",
-      "icons": [{ "src": "/icons/profile.png", "sizes": "192x192" }]
-    }
-  ]
+  "categories": ["education", "productivity", "ai", "learning", "study"]
 }

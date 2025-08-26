@@ -51,7 +51,7 @@ export default function ProfilePage() {
                   <h1 className="md:text-4xl text-2xl font-bold text-white mb-1">
                     Akhil Palsra
                   </h1>
-                  <p className="md:text-lg text-gray-300">{user.rank}</p>
+                  <p className="md:text-lg text-gray-300">{user?.rank}</p>
                 </div>
               </div>
             </div>
@@ -84,7 +84,7 @@ export default function ProfilePage() {
                 </CardHeader>
                 <CardContent>
                   <div className="md:text-3xl text-2xl font-bold text-white">
-                    {user.streak} Days
+                    {user?.streak} Days
                   </div>
                   <p className="text-xs text-orange-400 mt-1">Personal best!</p>
                 </CardContent>
@@ -99,7 +99,7 @@ export default function ProfilePage() {
                 </CardHeader>
                 <CardContent>
                   <div className="text-3xl font-bold text-white">
-                    #{user.rank || 1}
+                    #{user?.rank || 1}
                   </div>
                   <p className="text-xs text-purple-400 mt-1">
                     Top 5% worldwide
@@ -116,7 +116,7 @@ export default function ProfilePage() {
                 </CardHeader>
                 <CardContent>
                   <div className="md:text-3xl text-2xl font-bold text-white">
-                    {user.stats.averageScore}%
+                    {user?.stats?.averageScore}%
                   </div>
                   <p className="text-xs text-green-400 mt-1">+3% this week</p>
                 </CardContent>
@@ -133,7 +133,7 @@ export default function ProfilePage() {
               </CardHeader>
               <CardContent>
                 <div className="h-64 flex items-end justify-around gap-2 py-4">
-                  {user.dailyPoints.map((data, index) => (
+                  {user?.dailyPoints?.map((data, index) => (
                     <div
                       key={index}
                       className="flex flex-col items-center h-full justify-end group"
@@ -166,7 +166,7 @@ export default function ProfilePage() {
               <Card className="bg-gray-900/50 border-gray-800 text-center p-6">
                 <BookOpen className="h-8 w-8 text-blue-400 mx-auto mb-3" />
                 <div className="text-2xl font-bold text-white">
-                  {user.stats.totalReels}
+                  {user?.stats.totalReels}
                 </div>
                 <div className="text-sm text-gray-400">Reels Watched</div>
               </Card>
@@ -174,7 +174,7 @@ export default function ProfilePage() {
               <Card className="bg-gray-900/50 border-gray-800 text-center p-6">
                 <Award className="h-8 w-8 text-green-400 mx-auto mb-3" />
                 <div className="text-2xl font-bold text-white">
-                  {user.stats.totalQuizzes}
+                  {user?.stats.totalQuizzes}
                 </div>
                 <div className="text-sm text-gray-400">Quizzes Completed</div>
               </Card>
@@ -182,7 +182,7 @@ export default function ProfilePage() {
               <Card className="bg-gray-900/50 border-gray-800 text-center p-6">
                 <Clock className="h-8 w-8 text-orange-400 mx-auto mb-3" />
                 <div className="text-2xl font-bold text-white">
-                  {user.stats.studyTime}h
+                  {user?.stats?.studyTime}h
                 </div>
                 <div className="text-sm text-gray-400">Total Study Time</div>
               </Card>
