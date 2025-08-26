@@ -51,6 +51,14 @@ Swipe through AI-curated Etrant summaries designed for quick comprehension and r
 - Top 20 Indian news articles filtered for UPSC relevance
 - AI-generated visuals for enhanced engagement
 
+### 🏦 **Subscription System**
+
+- Monthly subscription plans for premium access
+- Razorpay payment gateway integration
+- Unlock advanced reels, analytics, and features
+- Secure, fast, and seamless checkout experience
+- Automatic payment verification and subscription activation
+
 ### 🏆 **Gamification System**
 
 - XP points and daily streaks
