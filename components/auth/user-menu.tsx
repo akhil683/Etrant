@@ -25,7 +25,6 @@ import { useUserStore } from "@/lib/store/useUserStore";
 export function UserMenu() {
   const { data: session } = useSession();
   const { user } = useUserStore();
-  console.log("user", user);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
@@ -53,14 +52,18 @@ export function UserMenu() {
       </div>
     );
   }
-
   return (
     <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
+            {user?.subscriptionActive === true && (
+              <p className="bg-yellow-700 text-xs px-1 rounded-full absolute z-30 top-0 -right-2">
+                {user?.plan}
+              </p>
+            )}
             <Avatar
-              className={`w-8 h-8 border-2 ${user?.plan !== "Pro" || "Max" ? "border-transparent" : "border-pink-500"}`}
+              className={`w-8 h-8 border-2 ${user?.subscriptionActive === true ? "border-yellow-600" : "border-transparent"}`}
             >
               <AvatarImage
                 src={session?.user?.image || ""}
