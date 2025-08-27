@@ -105,15 +105,13 @@ export default function HeroSection() {
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
-                <Link href={"/how-it-works"}>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="border-2 border-white/30 bg-white text-black hover:text-white hover:bg-white/10 px-6 py-2 md:px-8 md:py-4 md:text-lg rounded-full backdrop-blur-sm"
-                  >
-                    See How It Works
-                  </Button>
-                </Link>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-2 border-white/30 bg-white text-black hover:text-white hover:bg-white/10 px-6 py-2 md:px-8 md:py-4 md:text-lg rounded-full backdrop-blur-sm"
+                >
+                  See How It Works
+                </Button>
               </motion.div>
             </div>
 

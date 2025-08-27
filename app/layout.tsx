@@ -8,6 +8,7 @@ import { siteConfig } from "@/lib/config/site";
 import { UserProvider } from "@/components/providers/UserProvider";
 import Head from "next/head";
 import Script from "next/script";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -76,6 +77,7 @@ export default function RootLayout({
                 src="https://checkout.razorpay.com/v1/checkout.js"
                 strategy="afterInteractive"
               />
+              <Toaster />
             </body>
           </UserProvider>
         </SessionProvider>

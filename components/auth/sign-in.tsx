@@ -5,17 +5,18 @@ import Image from "next/image";
 import { Button } from "../ui/button";
 import { signIn } from "next-auth/react";
 import GoogleIcon from "../../public/google_icon.png";
+import { toast } from "sonner";
 
 export default function SignIn() {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
 
   const handleProviderSignIn = async (providerId: string) => {
     setLoading(true);
     try {
       await signIn(providerId, { callbackUrl: "/" });
     } catch (error) {
-      setError("An error occurred during sign up");
+      toast.error("Something went wrong. Try Again.");
+    } finally {
       setLoading(false);
     }
   };

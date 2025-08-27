@@ -6,7 +6,6 @@ import ProcessFlow from "@/components/home/process-flow";
 import StatsSection from "@/components/home/stats-section";
 import { ErrorBoundary } from "@/components/ui/error-boundary";
 import Footer from "@/components/home/footer";
-import Loading from "./loading.tsx";
 
 export default function LandingPage() {
   return (
@@ -17,7 +16,6 @@ export default function LandingPage() {
         <StatsSection />
         <FeaturesGrid />
         <ProcessFlow />
-        {/* <TestimonialsSection /> */}
         <CTABanner />
         <Footer />
       </main>
