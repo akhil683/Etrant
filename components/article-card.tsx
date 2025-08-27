@@ -26,7 +26,7 @@ export function ArticleCard({ article }: ArticleCardProps) {
   };
 
   return (
-    <div className="h-full mx-auto flex flex-col max-w-[1600px] bg-black text-white relative">
+    <div className="h-full mx-auto flex flex-col max-w-[1600px] bg-gray-950 text-white relative">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         {!imageError ? (

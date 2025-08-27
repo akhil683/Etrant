@@ -54,7 +54,7 @@ export function AILoader({
   }, []);
 
   return (
-    <div className="fixed inset-0 backdrop-blur-sm flex items-center justify-center z-30">
+    <div className="fixed inset-0 bg-gray-950 backdrop-blur-sm flex items-center justify-center z-30">
       <Card className="w-full max-w-md p-8 space-y-6 bg-transparent border-transparent animate-in fade-in-0 zoom-in-95 duration-300">
         {/* Header */}
         <div className="text-center space-y-2">

@@ -184,31 +184,27 @@ export function InfiniteReel() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <Header />
+    <div
+      ref={containerRef}
+      className="h-[calc(100vh-73px)] overflow-y-auto snap-y snap-mandatory scroll-smooth"
+      style={{
+        scrollbarWidth: "none",
+        msOverflowStyle: "none",
+        WebkitOverflowScrolling: "touch",
+      }}
+    >
+      {articles.map((article, index) => (
+        <div
+          key={`${article.id}-${index}`}
+          data-index={index}
+          ref={index === articles.length - 1 ? lastArticleElementRef : null}
+          className="h-full snap-start snap-always flex-shrink-0"
+        >
+          <ArticleCard article={article} />
+        </div>
+      ))}
 
-      <div
-        ref={containerRef}
-        className="md:h-[calc(100vh-73px)] h-[calc(100vh-146px)] overflow-y-auto snap-y snap-mandatory scroll-smooth"
-        style={{
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-          WebkitOverflowScrolling: "touch",
-        }}
-      >
-        {articles.map((article, index) => (
-          <div
-            key={`${article.id}-${index}`}
-            data-index={index}
-            ref={index === articles.length - 1 ? lastArticleElementRef : null}
-            className="h-full snap-start snap-always flex-shrink-0"
-          >
-            <ArticleCard article={article} />
-          </div>
-        ))}
-
-        {loading && <AILoader totalArticles={10} loadingTime={5} />}
-      </div>
+      {loading && <AILoader totalArticles={10} loadingTime={5} />}
     </div>
   );
 }

@@ -72,6 +72,9 @@ export interface IUser {
   image: string;
   interest: string;
   streak: number;
+  plan: string;
+  subscriptionActive: boolean;
+  subscriptionEnd: string;
   lastActiveDate: string;
 }
 

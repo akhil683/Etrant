@@ -3,7 +3,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { McqCard } from "./question-card";
 import { QuestionData } from "@/lib/repositories/question-repository";
-import Header from "./header";
 import { AILoader } from "./loader/ReelLoader";
 
 interface InfiniteReelProps {
@@ -156,32 +155,27 @@ export function QuestionReel({ interests }: InfiniteReelProps) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      {/* Header */}
-      <Header />
-      {/* Articles Container */}
-      <div
-        ref={containerRef}
-        className="h-[calc(100vh-73px)] overflow-y-auto snap-y snap-mandatory scroll-smooth"
-        style={{
-          scrollbarWidth: "none",
-          msOverflowStyle: "none",
-          WebkitOverflowScrolling: "touch",
-        }}
-      >
-        {questions.map((question, index) => (
-          <div
-            key={`${question.question}-${index}`}
-            data-index={index}
-            ref={index === questions.length - 1 ? lastArticleElementRef : null}
-            className="h-full snap-start snap-always flex-shrink-0"
-          >
-            <McqCard currentQuestion={question} />
-          </div>
-        ))}
+    <div
+      ref={containerRef}
+      className="h-[calc(100vh-73px)] overflow-y-auto snap-y snap-mandatory scroll-smooth"
+      style={{
+        scrollbarWidth: "none",
+        msOverflowStyle: "none",
+        WebkitOverflowScrolling: "touch",
+      }}
+    >
+      {questions.map((question, index) => (
+        <div
+          key={`${question.question}-${index}`}
+          data-index={index}
+          ref={index === questions.length - 1 ? lastArticleElementRef : null}
+          className="h-full snap-start snap-always flex-shrink-0"
+        >
+          <McqCard currentQuestion={question} />
+        </div>
+      ))}
 
-        {loading && <AILoader totalArticles={10} loadingTime={10} />}
-      </div>
+      {loading && <AILoader totalArticles={10} loadingTime={10} />}
     </div>
   );
 }

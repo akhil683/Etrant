@@ -109,7 +109,7 @@ export const INTERESTS: {
 ];
 
 export function InterestSelector() {
-  const { user } = useUserStore();
+  const { user, setUser } = useUserStore();
   const [loading, setLoading] = useState(false);
   const [selectedInterests, setSelectedInterests] =
     useState<InterestCategory | null>(null);
@@ -133,14 +133,13 @@ export function InterestSelector() {
   const handleContinue = async () => {
     setLoading(true);
     try {
-      console.log("selectedInterests", selectedInterests);
       if (selectedInterests) {
         const res = await setInterests(
           selectedInterests,
           user?.email as string,
         );
-        console.log("res", res);
-        // router.push("/ai-questions");
+        setUser({ ...user, interest: selectedInterests });
+        router.push("/ai-questions");
       }
     } catch (error) {
       console.log("interest selection error: ", error);
