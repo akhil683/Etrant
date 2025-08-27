@@ -9,7 +9,7 @@ import Logo from "@/public/etrant.png";
 export default function Header() {
   const { user } = useUserStore();
   return (
-    <div className="sticky top-0 z-50 backdrop-blur-sm border-b border-gray-900 bg-black">
+    <div className="sticky top-0 z-50 backdrop-blur-sm border-b border-gray-900">
       <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
         <h1 className="md:text-lg font-semibold text-white">
           <Link href="/" className="flex items-center gap-2">

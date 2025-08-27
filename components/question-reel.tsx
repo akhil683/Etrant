@@ -156,7 +156,7 @@ export function QuestionReel({ interests }: InfiniteReelProps) {
   }, []);
 
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-gray-950 text-white">
       {/* Header */}
       <Header />
       {/* Articles Container */}
