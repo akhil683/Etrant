@@ -1,19 +1,11 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import Logo from "@/public/etrant.png";
 
 export default function Navbar() {
   return (
-    <motion.nav
-      initial={{ y: -100, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.8, ease: "easeOut" }}
-      className="fixed top-0 z-50 w-full backdrop-blur-lg border-b border-gray-800 py-4"
-    >
+    <nav className="fixed top-0 z-50 w-full backdrop-blur-lg border-b border-gray-800 py-4">
       <div className="container mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
@@ -21,8 +13,8 @@ export default function Navbar() {
             <Image
               className="w-full h-full"
               src={Logo}
-              width={500}
-              height={500}
+              width={50}
+              height={50}
               alt="Etrant Logo"
             />
           </div>
@@ -40,6 +32,6 @@ export default function Navbar() {
           </Link>
         </div>
       </div>
-    </motion.nav>
+    </nav>
   );
 }
