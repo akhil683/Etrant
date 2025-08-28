@@ -11,24 +11,36 @@ export default function ShowExplanation({
   return (
     <div>
       <Button
-        className="bg-white rounded-full text-black"
+        className="bg-white rounded-full text-black hover:bg-gray-100"
         onClick={() => setShowExplanation(true)}
       >
         Explanation
       </Button>
+
       {showExplanation && (
-        <div className="absolute inset-0 bg-black/50">
-          <div className=" min-h-screen flex justify-center items-center">
-            <div className="bg-[#222] max-w-lg p-6 m-2 rounded-xl">
-              <div className="flex justify-between mb-4">
-                <p className="text-xl">Explanation</p>
-                <X
-                  onClick={() => setShowExplanation(false)}
-                  className="text-white text-2xl p-1 rounded-full hover:bg-white hover:text-black duration-200 cursor-pointer"
-                />
-              </div>
-              <p className="text-gray-300 md:text-lg">{explanation}</p>
+        <div
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex justify-center items-center z-50"
+          onClick={() => setShowExplanation(false)}
+        >
+          <div
+            className="bg-[#1e1e1e] max-w-lg w-full mx-4 p-6 rounded-2xl shadow-2xl animate-in fade-in zoom-in duration-200"
+            onClick={(e) => e.stopPropagation()} // prevent close when clicking inside
+          >
+            {/* Header */}
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold text-white">Explanation</h2>
+              <button
+                onClick={() => setShowExplanation(false)}
+                className="text-gray-400 hover:text-white hover:bg-gray-700 p-1.5 rounded-full transition-colors duration-200"
+              >
+                <X className="w-5 h-5" />
+              </button>
             </div>
+
+            {/* Body */}
+            <p className="text-gray-300 md:text-lg leading-relaxed">
+              {explanation}
+            </p>
           </div>
         </div>
       )}
