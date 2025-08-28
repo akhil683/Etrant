@@ -59,10 +59,10 @@ export function McqCard({
 
   return (
     <>
-      <Card className="border-0 overflow-hidden bg-black md:h-full flex justify-center items-center">
+      <Card className="border-0 overflow-hidden md:h-full flex justify-center items-center">
         <CardContent className="p-0 w-full">
           {/* Question Header */}
-          <div className="bg-black text-white p-6">
+          <div className="text-white p-6">
             <div className="flex items-center justify-between mb-4">
               <Badge
                 className={`${getDifficultyColor(currentQuestion.difficulty)} text-xs font-medium`}
@@ -130,7 +130,7 @@ export function McqCard({
                     disabled={isAnswered}
                     className={buttonClass}
                   >
-                    <div className="flex p-4 bg-black/80 items-center justify-between md:text-lg">
+                    <div className="flex p-4 bg-black/60 items-center justify-between md:text-lg">
                       <div className="flex items-center space-x-3">
                         <div className="min-w-6 min-h-6 md:min-w-8 md:min-h-8 rounded-full bg-gradient-to-r from-purple-100 to-pink-100 flex items-center justify-center text-sm font-bold text-gray-800">
                           {String.fromCharCode(65 + index)}

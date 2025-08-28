@@ -42,7 +42,14 @@ export default async function LeaderboardPage() {
                   className="rounded-full border-2 border-gray-600"
                 />
                 <div>
-                  <h3 className="font-semibold md:text-lg">{user.name}</h3>
+                  <h3 className="font-semibold md:text-lg">
+                    {user.name}
+                    {user.subscriptionActive && (
+                      <span className="ml-1 text-xs px-1 rounded-full bg-yellow-600">
+                        Pro{user.plan}
+                      </span>
+                    )}
+                  </h3>
                 </div>
               </div>
               <div className="text-right">

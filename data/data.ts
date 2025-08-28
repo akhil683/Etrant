@@ -35,7 +35,7 @@ export const plans: IPlan[] = [
     icon: Star,
     description: "Perfect for getting started with Etrant",
     features: [
-      "10 reels per day",
+      "100 reels per month",
       "Basic quizzes",
       "Limited current affairs",
       "Basic progress tracking",
@@ -56,7 +56,7 @@ export const plans: IPlan[] = [
     icon: Zap,
     description: "Best for serious learners and exam preparation",
     features: [
-      "Unlimited reels",
+      "2000 reels per month",
       "Advanced AI quizzes",
       "Full current affairs access",
       "Detailed analytics",
@@ -72,18 +72,17 @@ export const plans: IPlan[] = [
   },
   {
     name: "Max",
-    price: 199,
+    price: 149,
     icon: Crown,
     description: "Ultimate learning experience with premium features",
     features: [
+      "Unlimited Reels",
       "Everything in Pro",
-      "1-on-1 mentorship sessions",
       "Exclusive premium content",
       "Advanced knowledge maps",
       "Custom exam simulations",
       "Priority content requests",
       "Early access to new features",
-      "Dedicated account manager",
       "Performance coaching",
     ],
     limitations: [],
