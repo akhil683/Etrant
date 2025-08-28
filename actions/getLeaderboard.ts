@@ -15,6 +15,8 @@ export const getLeaderboard = async () => {
       interest: users.interest,
       points: users.points,
       streak: users.streak,
+      subscriptionActive: users.subscriptionActive,
+      plan: users.plan,
       lastActiveDate: users.lastActiveDate,
     })
     .from(users)

@@ -5,6 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { Button } from "./ui/button";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
+import { useUserStore } from "@/lib/store/useUserStore";
 
 declare global {
   interface Window {
@@ -25,6 +26,7 @@ export default function PricingCard() {
 const PayCard = ({ plan }: { plan: IPlan }) => {
   const [loading, setLoading] = useState(false);
   const [afterLoading, setAfterLoading] = useState(false);
+  const { user } = useUserStore();
   const { data: session } = useSession();
 
   const subscribe = async (plan: string) => {
@@ -141,13 +143,21 @@ const PayCard = ({ plan }: { plan: IPlan }) => {
             <Button
               onClick={() => subscribe(plan.name)}
               variant={plan.buttonVariant}
+              disabled={user?.plan === plan.name}
               className={`w-full py-3 text-base font-semibold ${
                 plan.buttonVariant === "default"
                   ? "bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white"
                   : "border-gray-600 text-gray-300 hover:bg-gray-800 bg-transparent"
               }`}
             >
-              {loading ? <Loader2 className="animate-spin" /> : plan.buttonText}
+              {user?.plan === plan.name ? (
+                "Already a Member"
+              ) : loading ? (
+                <Loader2 className="animate-spin" />
+              ) : (
+                plan.buttonText
+              )}
+              {}
             </Button>
           </div>
 
