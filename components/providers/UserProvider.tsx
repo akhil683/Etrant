@@ -22,7 +22,6 @@ export const UserProvider = ({ children }: { children: React.ReactNode }) => {
     try {
       setUserLoading(true);
       const res = await getUserProfile();
-      console.log("res provider", res);
       if (res) {
         setUser(res);
       }

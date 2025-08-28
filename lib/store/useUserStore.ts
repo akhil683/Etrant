@@ -20,14 +20,14 @@ export interface User {
     studyTime: number | null;
     globalRank: number | null;
   };
-  dailyPoints: {
+  dailyPoints?: {
     id: number;
     userId: string;
     day: string | null;
     date: string | null;
     points: number | null;
   }[];
-  weeklyActivity: {
+  weeklyActivity?: {
     id: number;
     userId: string;
     week: string | null;
@@ -35,7 +35,7 @@ export interface User {
     quizzes: number | null;
     hours: number | null;
   }[];
-  badges: {
+  badges?: {
     id: number | null;
     name: string | null;
     description: string | null;
@@ -78,62 +78,62 @@ export const useUserStore = create<UserState>((set, get) => ({
     const update = updateStreak(currentUser);
 
     // ---- Update Daily Points ----
-    let dailyPoints = [...currentUser.dailyPoints];
+    // let dailyPoints = [...currentUser.dailyPoints];
 
     //TODO: fix date expression
-    const todayEntry = dailyPoints?.find((d) => d?.date?.toString() === today);
-
-    if (todayEntry && todayEntry.points) {
-      todayEntry.points += isCorrect ? 10 : 2;
-    } else {
-      dailyPoints.push({
-        id: Math.floor(Math.random() * 100000),
-        userId: currentUser.id,
-        day: now.toLocaleDateString("en-US", { weekday: "long" }),
-        date: now.toString(),
-        points: isCorrect ? 10 : 2,
-      });
-    }
+    // const todayEntry = dailyPoints?.find((d) => d?.date?.toString() === today);
+    //
+    // if (todayEntry && todayEntry.points) {
+    //   todayEntry.points += isCorrect ? 10 : 2;
+    // } else {
+    //   dailyPoints.push({
+    //     id: Math.floor(Math.random() * 100000),
+    //     userId: currentUser.id,
+    //     day: now.toLocaleDateString("en-US", { weekday: "long" }),
+    //     date: now.toString(),
+    //     points: isCorrect ? 10 : 2,
+    //   });
+    // }
 
     // ---- Update Weekly Activity ----
-    let weeklyActivity = [...currentUser.weeklyActivity];
-    const currentWeek = weeklyActivity.find((w) => w.week === week);
-    if (currentWeek && currentWeek.quizzes && currentWeek.hours) {
-      currentWeek.quizzes += 1;
-      currentWeek.hours += 0.01; // Example: 0.6 mins per quiz
-    } else {
-      weeklyActivity.push({
-        id: Math.floor(Math.random() * 100000),
-        userId: currentUser.id,
-        week,
-        reels: 0,
-        quizzes: 1,
-        hours: 0.1,
-      });
-    }
+    // let weeklyActivity = [...currentUser.weeklyActivity];
+    // const currentWeek = weeklyActivity.find((w) => w.week === week);
+    // if (currentWeek && currentWeek.quizzes && currentWeek.hours) {
+    //   currentWeek.quizzes += 1;
+    //   currentWeek.hours += 0.01; // Example: 0.6 mins per quiz
+    // } else {
+    //   weeklyActivity.push({
+    //     id: Math.floor(Math.random() * 100000),
+    //     userId: currentUser.id,
+    //     week,
+    //     reels: 0,
+    //     quizzes: 1,
+    //     hours: 0.1,
+    //   });
+    // }
 
     // ---- Update Badges ----
-    let badges = [...currentUser.badges];
-    if (newTotalQuizzes === 10 && !badges.find((b) => b.id === 1)) {
-      badges.push({
-        id: 1,
-        name: "Quiz Beginner",
-        description: "Completed 10 quizzes",
-        icon: "🎯",
-        rarity: "Common",
-        dateUnlocked: now.toString(),
-      });
-    }
-    if (update.streak === 7 && !badges.find((b) => b.id === 2)) {
-      badges.push({
-        id: 2,
-        name: "7-Day Streak",
-        description: "Answered quizzes 7 days in a row",
-        icon: "🔥",
-        rarity: "Rare",
-        dateUnlocked: now.toString(),
-      });
-    }
+    // let badges = [...currentUser.badges];
+    // if (newTotalQuizzes === 10 && !badges.find((b) => b.id === 1)) {
+    //   badges.push({
+    //     id: 1,
+    //     name: "Quiz Beginner",
+    //     description: "Completed 10 quizzes",
+    //     icon: "🎯",
+    //     rarity: "Common",
+    //     dateUnlocked: now.toString(),
+    //   });
+    // }
+    // if (update.streak === 7 && !badges.find((b) => b.id === 2)) {
+    //   badges.push({
+    //     id: 2,
+    //     name: "7-Day Streak",
+    //     description: "Answered quizzes 7 days in a row",
+    //     icon: "🔥",
+    //     rarity: "Rare",
+    //     dateUnlocked: now.toString(),
+    //   });
+    // }
     const updatedUser: User = {
       ...currentUser,
       points: newPoints,
@@ -144,9 +144,9 @@ export const useUserStore = create<UserState>((set, get) => ({
         totalQuizzes: newTotalQuizzes,
         averageScore: newAverageScore,
       },
-      dailyPoints,
-      weeklyActivity,
-      badges,
+      // dailyPoints,
+      // weeklyActivity,
+      // badges,
     };
     console.log("updated zustand user", updatedUser);
     set({ user: updatedUser });
