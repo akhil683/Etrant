@@ -23,7 +23,7 @@ import { useRouter } from "next/navigation";
 import { useUserStore } from "@/lib/store/useUserStore";
 
 export function UserMenu() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { user } = useUserStore();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -41,6 +41,9 @@ export function UserMenu() {
     }
   };
 
+  if (status === "loading") {
+    return <div></div>;
+  }
   if (!session) {
     return (
       <div className="flex items-center space-x-2">
@@ -58,7 +61,7 @@ export function UserMenu() {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
             {user?.subscriptionActive === true && (
-              <p className="bg-yellow-700 text-xs px-1 rounded-full absolute z-30 top-0 -right-2">
+              <p className="bg-yellow-700 text-[8px] px-1 py-0 rounded-full absolute z-30 top-0 -right-2">
                 {user?.plan}
               </p>
             )}

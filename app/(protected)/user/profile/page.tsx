@@ -15,7 +15,6 @@ import Image from "next/image";
 import BadgeGallery from "@/components/badge-gallery";
 import Header from "@/components/header";
 import { useUserStore } from "@/lib/store/useUserStore";
-import { redirect } from "next/navigation";
 
 const dailyPoints = [
   { day: "Mon", points: 120, date: "Dec 16" },

@@ -8,8 +8,8 @@ import { subscriptions } from "@/data/subscription-plan";
 
 export async function POST(req: NextRequest) {
   try {
-    // const secret = process.env.RAZORPAY_WEBHOOK_SECRET!;
-    const secret = "Akhil@04";
+    const secret = process.env.RAZORPAY_WEBHOOK_SECRET!;
+    // const secret = "Akhil@04";
     if (!secret) {
       console.error("Webhook secret missing");
       return NextResponse.json(

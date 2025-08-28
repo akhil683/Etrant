@@ -90,47 +90,47 @@ export async function POST(req: Request) {
       });
 
     // 3. Replace daily_points
-    await db.delete(dailyPoints).where(eq(dailyPoints.userId, user.id));
-    if (user.dailyPoints?.length) {
-      await db.insert(dailyPoints).values(
-        user.dailyPoints.map((dp) => ({
-          userId: user.id,
-          day: dp.day,
-          date: dp.date ? new Date(dp.date).toISOString() : null,
-          points: dp.points,
-        })),
-      );
-    }
+    // await db.delete(dailyPoints).where(eq(dailyPoints.userId, user.id));
+    // if (user.dailyPoints?.length) {
+    //   await db.insert(dailyPoints).values(
+    //     user.dailyPoints.map((dp) => ({
+    //       userId: user.id,
+    //       day: dp.day,
+    //       date: dp.date ? new Date(dp.date).toISOString() : null,
+    //       points: dp.points,
+    //     })),
+    //   );
+    // }
 
     // 4. Replace weekly_activity
-    await db.delete(weeklyActivity).where(eq(weeklyActivity.userId, user.id));
-    if (user.weeklyActivity?.length) {
-      await db.insert(weeklyActivity).values(
-        user.weeklyActivity.map((wa) => ({
-          userId: user.id,
-          week: wa.week,
-          reels: wa.reels,
-          quizzes: wa.quizzes,
-          hours: wa.hours,
-        })),
-      );
-    }
+    // await db.delete(weeklyActivity).where(eq(weeklyActivity.userId, user.id));
+    // if (user.weeklyActivity?.length) {
+    //   await db.insert(weeklyActivity).values(
+    //     user.weeklyActivity.map((wa) => ({
+    //       userId: user.id,
+    //       week: wa.week,
+    //       reels: wa.reels,
+    //       quizzes: wa.quizzes,
+    //       hours: wa.hours,
+    //     })),
+    //   );
+    // }
 
     // 5. Sync user_badges (avoid duplicates)
-    if (user.badges?.length) {
-      for (const badge of user.badges) {
-        await db
-          .insert(userBadges)
-          .values({
-            userId: user.id,
-            badgeId: badge.id,
-            dateUnlocked: badge.dateUnlocked
-              ? new Date(badge.dateUnlocked).toISOString()
-              : null,
-          })
-          .onConflictDoNothing();
-      }
-    }
+    // if (user.badges?.length) {
+    //   for (const badge of user.badges) {
+    //     await db
+    //       .insert(userBadges)
+    //       .values({
+    //         userId: user.id,
+    //         badgeId: badge.id,
+    //         dateUnlocked: badge.dateUnlocked
+    //           ? new Date(badge.dateUnlocked).toISOString()
+    //           : null,
+    //       })
+    //       .onConflictDoNothing();
+    //   }
+    // }
 
     // ✅ Return updated user
     return NextResponse.json({ success: true, user: body });
