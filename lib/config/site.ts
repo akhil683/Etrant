@@ -3,7 +3,7 @@ export const siteConfig = {
   name: "Etrant",
   description:
     "Etrant is an AI-powered learning platform that turns Wikipedia summaries, news, and exam-focused questions into scrollable reels. Learn faster and prepare smarter for UPSC, JEE, NEET, and more.",
-  url: "https://wiki.akkhil.dev",
+  url: "https://etrant.akkhil.dev",
   ogImage:
     "https://raw.githubusercontent.com/akhil683/wiki-reel/refs/heads/main/public/og-image.png",
   icons: {
