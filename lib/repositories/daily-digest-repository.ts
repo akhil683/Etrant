@@ -68,17 +68,6 @@ export class DailyDigestService {
         return [];
       }
       console.log("relevant articles", relevantArticles);
-      // const summarizedArticles = await this.summarizeArticles(
-      //   relevantArticles,
-      //   examType,
-      // );
-      // console.log("summary", summarizedArticles);
-
-      // const top5Articles = await this.rankAndSelectTop5(
-      //   summarizedArticles,
-      //   examType,
-      // );
-      // const articlesWithImages = await this.generateImages(top5Articles);
 
       console.log("Daily digest generated successfully.");
       return relevantArticles;
