@@ -86,7 +86,6 @@ export function UserMenu() {
         >
           <div className="flex items-center justify-start gap-2 p-2">
             <Link
-              // href={"/user/profile"}
               href={"/"}
               className="flex flex-col space-y-1 leading-none cursor-pointer"
             >
@@ -121,9 +120,8 @@ export function UserMenu() {
             </div>
           </div>
           <DropdownMenuSeparator className="bg-gray-700" />
-
-          <DropdownMenuItem className="hover:bg-gray-700">
-            <Link href="/articles" className="flex items-center">
+          <DropdownMenuItem asChild className="hover:bg-gray-700">
+            <Link href="/articles" className="flex items-center cursor-pointer">
               <AlarmClockCheck className="mr-2 h-4 w-4" />
               <span>Article Reel</span>
             </Link>
@@ -137,15 +135,21 @@ export function UserMenu() {
             <span>AI Questions</span>
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-gray-700" />
-          <DropdownMenuItem className="hover:bg-gray-700">
-            <Link href="/leaderboard" className="flex items-center">
+          <DropdownMenuItem asChild className="hover:bg-gray-700">
+            <Link
+              href="/leaderboard"
+              className="flex items-center cursor-pointer"
+            >
               <Trophy className="mr-2 h-4 w-4" />
               <span>Leaderboard</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-gray-700" />
-          <DropdownMenuItem className="hover:bg-gray-700">
-            <Link href="/subscription" className="flex items-center">
+          <DropdownMenuItem asChild className="hover:bg-gray-700">
+            <Link
+              href="/subscription"
+              className="cursor-pointer flex items-center"
+            >
               <DollarSign className="mr-2 h-4 w-4" />
               <span>Subscription</span>
             </Link>
