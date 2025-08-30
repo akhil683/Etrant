@@ -1,7 +1,4 @@
 {
-  "functions": {
-    "api/daily-digest/route.ts": { "runtime": "nodejs18.x" }
-  },
   "crons": [
     {
       "path": "/api/daily-digest",
