@@ -1,15 +1,24 @@
-"use client";
+import { digestService } from "@/lib/repositories/daily-digest-repository";
 
-import { useEffect } from "react";
+export async function getDailyDigest() {
+  try {
+    const articles = await digestService.generateDailyDigest();
+    return {
+      success: true,
+      data: articles,
+    };
+  } catch (error) {
+    console.error("DailyDigest Error:", error);
 
+    return {
+      success: false,
+      error: error instanceof Error ? error.message : "Unknown error occurred",
+    };
+  }
+}
 export default async function DailyDigestPage() {
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const res = await fetch("api/daily-digest");
-  //     const articles = await res.json();
-  //     console.log("articles", articles);
-  //   };
-  //   fetchUser();
-  // }, []);
-  return <div>Hello</div>;
+  const articles = await getDailyDigest();
+  console.log("articles", articles.data);
+
+  return <div>{JSON.stringify(articles)}</div>;
 }

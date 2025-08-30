@@ -26,11 +26,15 @@ INSTRUCTIONS:
 2. Consider potential examination questions that could arise from this news
 3. Include diverse topics - avoid bias toward any single domain
 4. Return ONLY valid JSON format as specified
-5. Match titles exactly as provided
+5. relevant_questions array length must be between 2-5
+6. Match titles exactly as provided
+7. Summary must be exactly 80-120 words
+8. Structure each summary: start with main event, then key details, end with implications
+9.- Connect to exam-relevant topics: governance, economy, polity, etc.
 
 Headlines and Descriptions:
 ${articles.map((a, index) => `${index + 1}. Title: "${a.title}"\nDescription: "${a.description || a.title}"`).join("\n\n")}
 
 Return ONLY this JSON format:
-[{"title": "exact_title_from_above", "is_relevant": true/false}]`;
+[{"title": "exact_title_from_above", "is_relevant": true/false, "summary": "summary", "topic": "topic_name", relevant_questions: [{"question": "question", "answer": "answer"}]}]`;
 };

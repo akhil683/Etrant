@@ -110,6 +110,9 @@ importers:
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.21(postcss@8.5.6)
+      axios:
+        specifier: ^1.11.0
+        version: 1.11.0
       canvas-confetti:
         specifier: ^1.9.3
         version: 1.9.3

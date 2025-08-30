@@ -25,5 +25,5 @@ Output Requirements:
 - Use exam‑focused keywords: schemes, Acts, Articles, committees, statistics
 - Use active voice, no personal opinions, factual only
 
-Do NOT output anything else—no notes, no commentary, no explanatory text.`;
+Do NOT output anything else: no notes, no commentary, no explanatory text.`;
 };

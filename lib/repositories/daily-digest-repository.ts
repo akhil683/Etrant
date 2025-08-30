@@ -57,32 +57,32 @@ export class DailyDigestService {
   ): Promise<Article[]> {
     try {
       const articles = await this.fetchTopNews();
-      console.log("daily", articles);
       if (!articles.length) {
         console.log("No articles found.");
         return [];
       }
 
       const relevantArticles = await this.filterForExamRelevance(articles);
-      console.log("relevant articles", relevantArticles);
       if (!relevantArticles.length) {
         console.log(`No ${examType}-relevant articles found.`);
         return [];
       }
+      console.log("relevant articles", relevantArticles);
+      // const summarizedArticles = await this.summarizeArticles(
+      //   relevantArticles,
+      //   examType,
+      // );
+      // console.log("summary", summarizedArticles);
 
-      const summarizedArticles = await this.summarizeArticles(
-        relevantArticles,
-        examType,
-      );
-      console.log("summary", summarizedArticles);
-      const top5Articles = await this.rankAndSelectTop5(
-        summarizedArticles,
-        examType,
-      );
-      const articlesWithImages = await this.generateImages(top5Articles);
+      // const top5Articles = await this.rankAndSelectTop5(
+      //   summarizedArticles,
+      //   examType,
+      // );
+      // const articlesWithImages = await this.generateImages(top5Articles);
 
       console.log("Daily digest generated successfully.");
-      return articlesWithImages;
+      return relevantArticles;
+      // return articlesWithImages;
     } catch (error) {
       console.error("Error generating daily digest:", error);
       throw error;
@@ -220,7 +220,6 @@ export class DailyDigestService {
     });
     let content = [];
     const responseText = result.text;
-    console.log("exam relevance", responseText);
     try {
       // Clean the response text to extract JSON
       const cleanedResponse = responseText!
