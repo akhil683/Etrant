@@ -68,26 +68,26 @@ export async function POST(req: Request) {
       .where(eq(users.id, user.id));
 
     // 2. Update user_stats (upsert style)
-    await db
-      .insert(userStats)
-      .values({
-        userId: user.id,
-        totalReels: user.stats.totalReels,
-        totalQuizzes: user.stats.totalQuizzes,
-        averageScore: user.stats.averageScore,
-        studyTime: user.stats.studyTime,
-        globalRank: user.stats.globalRank ?? null,
-      })
-      .onConflictDoUpdate({
-        target: userStats.userId,
-        set: {
-          totalReels: user.stats.totalReels,
-          totalQuizzes: user.stats.totalQuizzes,
-          averageScore: user.stats.averageScore,
-          studyTime: user.stats.studyTime,
-          globalRank: user.stats.globalRank ?? null,
-        },
-      });
+    // await db
+    //   .insert(userStats)
+    //   .values({
+    //     userId: user.id,
+    //     totalReels: user.stats.totalReels,
+    //     totalQuizzes: user.stats.totalQuizzes,
+    //     averageScore: user.stats.averageScore,
+    //     studyTime: user.stats.studyTime,
+    //     globalRank: user.stats.globalRank ?? null,
+    //   })
+    //   .onConflictDoUpdate({
+    //     target: userStats.userId,
+    //     set: {
+    //       totalReels: user.stats.totalReels,
+    //       totalQuizzes: user.stats.totalQuizzes,
+    //       averageScore: user.stats.averageScore,
+    //       studyTime: user.stats.studyTime,
+    //       globalRank: user.stats.globalRank ?? null,
+    //     },
+    //   });
 
     // 3. Replace daily_points
     // await db.delete(dailyPoints).where(eq(dailyPoints.userId, user.id));

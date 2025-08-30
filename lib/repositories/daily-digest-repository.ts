@@ -14,6 +14,17 @@ export interface Article {
   pubDate?: string;
 }
 
+interface IArticle {
+  title: string;
+  is_relevant: boolean;
+  summary: string;
+  relevant_questions: {
+    question: string;
+    answer: string;
+  }[];
+  source_url: string;
+  topic: string;
+}
 /**
  * Daily Digest Service - Singleton service for generating exam-focused news digests
  *
@@ -54,7 +65,7 @@ export class DailyDigestService {
    */
   async generateDailyDigest(
     examType: string = "competitive exam",
-  ): Promise<Article[]> {
+  ): Promise<IArticle[]> {
     try {
       const articles = await this.fetchTopNews();
       if (!articles.length) {
@@ -68,6 +79,17 @@ export class DailyDigestService {
         return [];
       }
       console.log("relevant articles", relevantArticles);
+      // const summarizedArticles = await this.summarizeArticles(
+      //   relevantArticles,
+      //   examType,
+      // );
+      // console.log("summary", summarizedArticles);
+
+      // const top5Articles = await this.rankAndSelectTop5(
+      //   summarizedArticles,
+      //   examType,
+      // );
+      // const articlesWithImages = await this.generateImages(top5Articles);
 
       console.log("Daily digest generated successfully.");
       return relevantArticles;
@@ -193,7 +215,7 @@ export class DailyDigestService {
    */
   private async filterForExamRelevance(
     articles: Article[],
-  ): Promise<Article[]> {
+  ): Promise<IArticle[]> {
     const result = await this.genAI.models.generateContent({
       model: "gemini-1.5-flash-latest",
       // model: "gemini-2.0-flash-exp",
