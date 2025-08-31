@@ -78,7 +78,6 @@ export class DailyDigestService {
         console.log(`No ${examType}-relevant articles found.`);
         return [];
       }
-      console.log("relevant articles", relevantArticles);
       // const summarizedArticles = await this.summarizeArticles(
       //   relevantArticles,
       //   examType,
@@ -91,7 +90,6 @@ export class DailyDigestService {
       // );
       // const articlesWithImages = await this.generateImages(top5Articles);
 
-      console.log("Daily digest generated successfully.");
       return relevantArticles;
       // return articlesWithImages;
     } catch (error) {
