@@ -19,8 +19,8 @@ export default async function DailyDigests() {
       {articles?.map((article) => (
         <Link href={"/daily-digest"} key={article?.title}>
           <div className="bg-gray-800 p-4 rounded-xl border border-gray-600 hover:border-gray-500 duration-500">
-            <div>
-              <h2 className="text-2xl text-gray-100">{article?.title}</h2>
+            <div className="border-b border-gray-300">
+              <h2 className="text-lg md:text-2xl">{article?.title}</h2>
               <div className="flex items-center gap-2 my-4">
                 {article?.topic?.split(",")?.map((topic: any) => {
                   const colors = [
@@ -35,7 +35,7 @@ export default async function DailyDigests() {
                   return (
                     <span
                       key={topic}
-                      className={`${randomColor} px-4 py-1 text-sm rounded-full`}
+                      className={`${randomColor} px-4 py-1 text-xs md:text-sm rounded-full`}
                     >
                       {topic}
                     </span>

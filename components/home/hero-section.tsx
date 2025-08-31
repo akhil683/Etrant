@@ -18,7 +18,7 @@ export default function HeroSection() {
       <div className="absolute bottom-40 left-16 text-emerald-300/60">
         <BookOpen size={50} />
       </div>
-      <div className="relative z-10 container mx-auto px-6 md:py-20 py-28">
+      <div className="relative z-10 container mx-auto px-6 py-28">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left content */}
