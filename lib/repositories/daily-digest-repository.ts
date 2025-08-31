@@ -14,6 +14,17 @@ export interface Article {
   pubDate?: string;
 }
 
+interface IArticle {
+  title: string;
+  is_relevant: boolean;
+  summary: string;
+  relevant_questions: {
+    question: string;
+    answer: string;
+  }[];
+  source_url: string;
+  topic: string;
+}
 /**
  * Daily Digest Service - Singleton service for generating exam-focused news digests
  *
@@ -54,35 +65,33 @@ export class DailyDigestService {
    */
   async generateDailyDigest(
     examType: string = "competitive exam",
-  ): Promise<Article[]> {
+  ): Promise<IArticle[]> {
     try {
       const articles = await this.fetchTopNews();
-      console.log("daily", articles);
       if (!articles.length) {
         console.log("No articles found.");
         return [];
       }
 
       const relevantArticles = await this.filterForExamRelevance(articles);
-      console.log("relevant articles", relevantArticles);
       if (!relevantArticles.length) {
         console.log(`No ${examType}-relevant articles found.`);
         return [];
       }
+      // const summarizedArticles = await this.summarizeArticles(
+      //   relevantArticles,
+      //   examType,
+      // );
+      // console.log("summary", summarizedArticles);
 
-      const summarizedArticles = await this.summarizeArticles(
-        relevantArticles,
-        examType,
-      );
-      console.log("summary", summarizedArticles);
-      const top5Articles = await this.rankAndSelectTop5(
-        summarizedArticles,
-        examType,
-      );
-      const articlesWithImages = await this.generateImages(top5Articles);
+      // const top5Articles = await this.rankAndSelectTop5(
+      //   summarizedArticles,
+      //   examType,
+      // );
+      // const articlesWithImages = await this.generateImages(top5Articles);
 
-      console.log("Daily digest generated successfully.");
-      return articlesWithImages;
+      return relevantArticles;
+      // return articlesWithImages;
     } catch (error) {
       console.error("Error generating daily digest:", error);
       throw error;
@@ -204,7 +213,7 @@ export class DailyDigestService {
    */
   private async filterForExamRelevance(
     articles: Article[],
-  ): Promise<Article[]> {
+  ): Promise<IArticle[]> {
     const result = await this.genAI.models.generateContent({
       model: "gemini-1.5-flash-latest",
       // model: "gemini-2.0-flash-exp",
@@ -220,7 +229,6 @@ export class DailyDigestService {
     });
     let content = [];
     const responseText = result.text;
-    console.log("exam relevance", responseText);
     try {
       // Clean the response text to extract JSON
       const cleanedResponse = responseText!

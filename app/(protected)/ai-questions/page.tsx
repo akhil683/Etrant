@@ -5,6 +5,8 @@ import { IUser } from "@/types";
 import { aiquestionsMeta } from "@/lib/config/site";
 import { redirect } from "next/navigation";
 import LockedPage from "@/components/locked-page";
+import { Suspense } from "react";
+import CircleLoader from "@/components/loader/simple-loader-circle";
 
 export const metadata: Metadata = aiquestionsMeta;
 
@@ -19,5 +21,9 @@ export default async function AiQuestionPage() {
     return <LockedPage />;
   }
 
-  return <QuestionReel interests={userData?.interest as string} />;
+  return (
+    <Suspense fallback={<CircleLoader />}>
+      <QuestionReel interests={userData?.interest as string} />;
+    </Suspense>
+  );
 }

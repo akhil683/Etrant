@@ -1,15 +1,13 @@
-"use client";
-
-import { useEffect } from "react";
+import DailyDigests from "@/components/daily-digest";
+import CircleLoader from "@/components/loader/simple-loader-circle";
+import { Suspense } from "react";
 
 export default async function DailyDigestPage() {
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     const res = await fetch("api/daily-digest");
-  //     const articles = await res.json();
-  //     console.log("articles", articles);
-  //   };
-  //   fetchUser();
-  // }, []);
-  return <div>Hello</div>;
+  return (
+    <div className="p-6 flex justify-center items-center flex-col gap-6">
+      <Suspense fallback={<CircleLoader />}>
+        <DailyDigests />
+      </Suspense>
+    </div>
+  );
 }

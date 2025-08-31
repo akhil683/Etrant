@@ -46,7 +46,7 @@ export default async function LeaderboardPage() {
                     {user.name}
                     {user.subscriptionActive && (
                       <span className="ml-1 text-xs px-1 rounded-full bg-yellow-600">
-                        Pro{user.plan}
+                        {user.plan}
                       </span>
                     )}
                   </h3>

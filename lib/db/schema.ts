@@ -7,6 +7,7 @@ import {
   integer,
   serial,
   date,
+  jsonb,
   real,
 } from "drizzle-orm/pg-core";
 import { neon } from "@neondatabase/serverless";
@@ -55,6 +56,19 @@ export const userStats = pgTable(
   },
   (t) => [primaryKey({ columns: [t.userId] })],
 );
+// -------------------- DAILY DIGEST  --------------------
+
+export const dailyDigest = pgTable("daily_digest", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  isRelevant: boolean("is_relevant").notNull().default(false),
+  summary: text("summary").notNull(),
+  relevantQuestions:
+    jsonb("relevant_questions").$type<{ question: string; answer: string }[]>(),
+  sourceUrl: text("source_url"),
+  topic: text("topic"), // store comma-separated tags OR normalize into another table
+  date: text("date").notNull(),
+});
 
 // -------------------- DAILY POINTS --------------------
 export const dailyPoints = pgTable("daily_points", {
