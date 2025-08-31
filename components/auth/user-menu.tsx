@@ -17,6 +17,7 @@ import {
   BookDown,
   AlarmClockCheck,
   DollarSign,
+  Book,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -120,6 +121,14 @@ export function UserMenu() {
             </div>
           </div>
           <DropdownMenuSeparator className="bg-gray-700" />
+          <DropdownMenuItem
+            onClick={aiQuestionHandler}
+            className="hover:bg-gray-700 cursor-pointer"
+          >
+            <BookDown className=" h-4 w-4" />
+            <span>AI Questions</span>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator className="bg-gray-700" />
           <DropdownMenuItem asChild className="hover:bg-gray-700">
             <Link href="/articles" className="flex items-center cursor-pointer">
               <AlarmClockCheck className="mr-2 h-4 w-4" />
@@ -127,12 +136,15 @@ export function UserMenu() {
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-gray-700" />
-          <DropdownMenuItem
-            onClick={aiQuestionHandler}
-            className="hover:bg-gray-700 cursor-pointer"
-          >
-            <BookDown className=" h-4 w-4" />
-            <span>AI Questions</span>
+
+          <DropdownMenuItem asChild className="hover:bg-gray-700">
+            <Link
+              href="/daily-digest"
+              className="flex items-center cursor-pointer"
+            >
+              <Book className="mr-2 h-4 w-4" />
+              <span>Daily Digest</span>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-gray-700" />
           <DropdownMenuItem asChild className="hover:bg-gray-700">
