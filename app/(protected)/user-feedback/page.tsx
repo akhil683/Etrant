@@ -1,3 +1,9 @@
+import FeedbackForm from "@/components/feedback-form";
+
 export default function FeedbackPage() {
-  return <div>User Feedback Page</div>;
+  return (
+    <section className="min-h-screen flex justify-center items-center px-4 pb-12">
+      <FeedbackForm />
+    </section>
+  );
 }

@@ -41,6 +41,14 @@ export const users = pgTable("user", {
   joinDate: date("joinDate"),
 });
 
+// -------------------- FEEDBACK --------------------
+export const feedbacks = pgTable("feedbacks", {
+  id: serial("id").primaryKey(),
+  userName: text("user_name").notNull(),
+  email: text("email").notNull(),
+  feedback: text("feedback").notNull(),
+});
+
 // -------------------- USER STATS --------------------
 export const userStats = pgTable(
   "user_stats",
