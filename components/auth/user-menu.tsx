@@ -18,6 +18,7 @@ import {
   AlarmClockCheck,
   DollarSign,
   Book,
+  FormInput,
 } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -164,6 +165,17 @@ export function UserMenu() {
             >
               <DollarSign className="mr-2 h-4 w-4" />
               <span>Subscription</span>
+            </Link>
+          </DropdownMenuItem>
+          <DropdownMenuSeparator className="bg-gray-700" />
+
+          <DropdownMenuItem asChild className="hover:bg-gray-700">
+            <Link
+              href="/user-feedback"
+              className="cursor-pointer flex items-center"
+            >
+              <FormInput className="mr-2 h-4 w-4" />
+              <span>Feedback</span>
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator className="bg-gray-700" />
