@@ -14,6 +14,14 @@ interface IArticle {
 }
 export default async function DailyDigests() {
   const articles = (await getDailyDigest()) as IArticle[];
+  if (articles.length < 1) {
+    return (
+      <div className="h-full w-full mt-48 flex justify-center items-center">
+        <p className="text-gray-400 text-2xl">No Latest News.</p>
+      </div>
+    );
+  }
+
   return (
     <>
       {articles?.map((article) => (
