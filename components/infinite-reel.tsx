@@ -2,7 +2,6 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ArticleCard } from "@/components/article-card";
-import Header from "./header";
 import { useAppState } from "@/hooks/use-app-state";
 import { AILoader } from "./loader/ReelLoader";
 

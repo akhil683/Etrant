@@ -13,7 +13,6 @@ export async function GET(request: NextRequest) {
       });
     }
     const articles = await digestService.generateDailyDigest();
-    console.log("articles", articles);
     for (const article of articles) {
       if (!article.is_relevant) return;
       await db

@@ -9,9 +9,6 @@ interface InfiniteReelProps {
   interests: string;
 }
 
-//TODO: global state for question so that question generation
-//will now start if we go to another route.
-
 export function QuestionReel({ interests }: InfiniteReelProps) {
   const [questions, setQuestions] = useState<QuestionData[]>([]);
   const [loading, setLoading] = useState(false);
@@ -63,7 +60,6 @@ export function QuestionReel({ interests }: InfiniteReelProps) {
 
   const loadMoreArticles = async () => {
     if (loading) return;
-    console.log(interests);
     setLoading(true);
     try {
       const response = await fetch("/api/questions", {
@@ -76,7 +72,6 @@ export function QuestionReel({ interests }: InfiniteReelProps) {
 
       if (response.ok) {
         const newArticles = await response.json();
-        console.log("yo", newArticles);
 
         if (newArticles && newArticles.data.length > 0) {
           setQuestions((prev) => [...prev, ...newArticles.data]);
