@@ -2,6 +2,7 @@ import { getDailyDigest } from "@/lib/db/get-daily-digest";
 import Link from "next/link";
 
 interface IArticle {
+  id: number;
   title: string;
   is_relevant: boolean;
   summary: string;
@@ -52,6 +53,14 @@ export default async function DailyDigests() {
               </div>
             </div>
             <p className="mt-4 text-gray-300">{article?.summary}</p>
+            <div className="flex justify-end">
+              <Link
+                href={`/daily-digest/${article?.id}`}
+                className="text-blue-400 hover:underline-offset-2 hover:text-blue-200 hover:underline duration-200"
+              >
+                Details
+              </Link>
+            </div>
           </div>
         </Link>
       ))}
