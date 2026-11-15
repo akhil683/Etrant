@@ -91,17 +91,20 @@ export default function CreateGroupPage() {
     };
 
     return (
-        <div className="container mx-auto px-4 py-8 max-w-3xl">
+        <div className="container mx-auto max-w-2xl px-5 pb-16 pt-24 md:px-8 md:pt-12">
             <Link href="/groups">
                 <Button variant="ghost" className="mb-4 gap-2">
                     <ArrowLeft className="w-4 h-4" />
-                    Back to Groups
+                    Back to groups
                 </Button>
             </Link>
 
             <Card>
                 <CardHeader>
-                    <CardTitle className="text-2xl">Create Study Group</CardTitle>
+                    <CardTitle className="text-2xl">Create study group</CardTitle>
+                    <p className="text-sm text-muted-foreground">
+                        Set up a room for your exam and invite your study circle.
+                    </p>
                 </CardHeader>
                 <CardContent>
                     <form onSubmit={handleSubmit} className="space-y-6">
@@ -142,7 +145,7 @@ export default function CreateGroupPage() {
                                     value={formData.examType}
                                     onChange={handleInputChange}
                                     required
-                                    className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                                    className="flex h-10 w-full rounded-lg border border-input bg-card px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-50"
                                 >
                                     <option value="">Select Exam</option>
                                     {examTypes.map((type) => (
@@ -210,15 +213,16 @@ export default function CreateGroupPage() {
                                 {formData.tags.map((tag) => (
                                     <span
                                         key={tag}
-                                        className="bg-secondary text-secondary-foreground px-3 py-1 rounded-full text-sm flex items-center gap-2"
+                                        className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-medium flex items-center gap-2"
                                     >
                                         {tag}
                                         <button
                                             type="button"
                                             onClick={() => removeTag(tag)}
-                                            className="hover:text-destructive"
+                                            className="text-primary/70 transition-colors hover:text-destructive"
+                                            aria-label={`Remove ${tag}`}
                                         >
-                                            ×
+                                            &times;
                                         </button>
                                     </span>
                                 ))}
@@ -226,7 +230,7 @@ export default function CreateGroupPage() {
                         </div>
 
                         {/* Privacy Toggle */}
-                        <div className="flex items-center justify-between p-4 border rounded-lg">
+                        <div className="flex items-center justify-between rounded-xl border border-border bg-background p-4">
                             <div className="space-y-0.5">
                                 <Label className="text-base">Public Group</Label>
                                 <p className="text-sm text-muted-foreground">
@@ -242,7 +246,7 @@ export default function CreateGroupPage() {
                         {/* Submit Button */}
                         <Button
                             type="submit"
-                            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white"
+                            className="w-full"
                             disabled={isSubmitting}
                         >
                             {isSubmitting ? (

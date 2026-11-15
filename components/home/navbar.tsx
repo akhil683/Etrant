@@ -1,32 +1,51 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/public/etrant.png";
+import { useSession } from "next-auth/react";
 
 export default function Navbar() {
+  const { data: session } = useSession();
+
   return (
-    <nav className="fixed top-0 z-50 w-full backdrop-blur-lg border-b border-gray-800 py-4">
-      <div className="container mx-auto px-6 flex items-center justify-between">
-        {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <div className="md:w-9 md:h-9 w-7 h-7 rounded-lg flex items-center justify-center">
+    <nav className="fixed top-0 z-50 w-full border-b border-border/80 bg-background/80 backdrop-blur-lg">
+      <div className="container mx-auto flex items-center justify-between py-3">
+        <Link href="/" className="flex items-center gap-2.5">
+          <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-primary/10 ring-1 ring-primary/20">
             <Image
-              className="w-full h-full"
+              className="h-full w-full object-cover"
               src={Logo}
               width={50}
               height={50}
-              alt="Etrant Logo"
+              alt="Etrant logo"
             />
           </div>
-          <span className="md:text-2xl text-xl font-black text-white">
+          <span className="font-display text-xl font-bold tracking-tight text-foreground">
             Etrant
           </span>
         </Link>
-        {/* Sign In Button */}
-        <div className="flex items-center gap-4">
-          <Link href={"/auth"}>
-            <Button className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white md:px-5 md:py-2 px-3 py-1 rounded-lg md:font-medium shadow-md">
-              Sign Up
+
+        <div className="hidden items-center gap-8 md:flex">
+          <Link
+            href="/how-it-works"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            How it works
+          </Link>
+          <Link
+            href="/pricing"
+            className="text-sm font-medium text-muted-foreground transition-colors hover:text-foreground"
+          >
+            Pricing
+          </Link>
+        </div>
+
+        <div className="flex items-center gap-2.5">
+          <Link href={session?.user ? "/daily-digest" : "/auth"}>
+            <Button className="h-9 px-5">
+              {session?.user ? "Open app" : "Get started"}
             </Button>
           </Link>
         </div>

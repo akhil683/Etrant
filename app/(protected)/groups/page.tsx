@@ -5,8 +5,10 @@ import Link from "next/link";
 import { Search, Users, Calendar, BookOpen, Plus } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
 import CircleLoader from "@/components/loader/simple-loader-circle";
 import { useGroups, useJoinGroup } from "@/hooks/use-groups";
+import { cn } from "@/lib/utils";
 
 export default function GroupsPage() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -26,169 +28,142 @@ export default function GroupsPage() {
 
   const examTypes = ["JEE", "NEET", "UPSC", "CAT", "GATE", "SSC", "Banking"];
 
-  const getTagColor = (index: number) => {
-    const colors = [
-      "bg-green-700",
-      "bg-orange-700",
-      "bg-indigo-700",
-      "bg-yellow-700",
-      "bg-blue-700",
-    ];
-    return colors[index % colors.length];
-  };
-
   return (
-    <div className="container mx-auto px-4 max-md:pt-24 py-8 max-w-7xl">
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
+    <div className="page-shell">
+      <div className="mb-8 flex flex-col justify-between gap-4 border-b border-border pb-6 md:flex-row md:items-end">
         <div>
-          <h1 className="md:text-3xl text-xl font-bold text-gray-900 dark:text-gray-100">
-            Exam Study Groups
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 max-md:text-sm mt-1">
-            Join groups and collaborate with fellow students
+          <p className="eyebrow">Study together</p>
+          <h1 className="page-title">Exam groups</h1>
+          <p className="page-description">
+            Join a room, share resources and keep each other accountable.
           </p>
         </div>
         <Link href="/groups/create">
-          <Button className="bg-indigo-600 hover:bg-indigo-700 text-white">
-            <Plus className="w-4 h-4" />
-            Create Group
+          <Button className="w-full md:w-auto">
+            <Plus className="h-4 w-4" />
+            Create group
           </Button>
         </Link>
       </div>
 
-      {/* Search and Filters */}
-      <div className="mb-6 space-y-4">
+      <div className="mb-7 space-y-4">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 md:w-5 md:h-5 w-4 h-4" />
+          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             type="text"
             placeholder="Search groups..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="pl-10 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 max-md:text-sm"
+            className="pl-9"
           />
         </div>
 
-        {/* Exam Type Filters */}
-        <div className="flex flex-wrap gap-2">
-          <Button
-            size={"sm"}
+        <div className="flex flex-wrap gap-1.5">
+          <button
             onClick={() => setExamTypeFilter("")}
-            className={` transition-colors duration-200 ${examTypeFilter === ""
-              ? "bg-indigo-600 text-white"
-              : "bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700"
-              }`}
+            className={cn(
+              "rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors",
+              examTypeFilter === ""
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground",
+            )}
           >
             All
-          </Button>
+          </button>
           {examTypes.map((type) => (
-            <Button
-              size={"sm"}
+            <button
               key={type}
               onClick={() => setExamTypeFilter(type)}
-              className={`transition-colors duration-200 ${examTypeFilter === type
-                ? "bg-indigo-600 text-white"
-                : "bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-700"
-                }`}
+              className={cn(
+                "rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors",
+                examTypeFilter === type
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border bg-card text-muted-foreground hover:border-primary/40 hover:text-foreground",
+              )}
             >
               {type}
-            </Button>
+            </button>
           ))}
         </div>
       </div>
 
-      {/* Groups Grid */}
       {isLoading ? (
         <CircleLoader />
       ) : groups.length === 0 ? (
-        <div className="text-center py-12">
-          <Users className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-gray-100 mb-2">
-            No groups found
-          </h3>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
-            Try adjusting your search or create a new group
+        <div className="surface py-16 text-center">
+          <Users className="mx-auto mb-4 h-10 w-10 text-muted-foreground" />
+          <h3 className="mb-1 text-xl font-bold">No groups found</h3>
+          <p className="mb-6 text-sm text-muted-foreground">
+            Try a different search, or start a group for your exam.
           </p>
           <Link href="/groups/create">
-            <Button className="bg-indigo-600 hover:bg-indigo-700 text-white">
-              Create New Group
-            </Button>
+            <Button>Create a group</Button>
           </Link>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
           {groups.map((group) => (
-            <div
-              key={group.id}
-              className="bg-gray-300 dark:bg-gray-900 p-4 rounded-xl border border-gray-400 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 transition-all duration-300"
-            >
-              <div className="border-b border-gray-400 dark:border-gray-700 pb-4">
-                <h2 className="text-lg font-semibold text-gray-950 dark:text-gray-100 line-clamp-1">
+            <div key={group.id} className="surface surface-hover flex flex-col p-5">
+              <div className="border-b border-border pb-4">
+                <h2 className="line-clamp-1 text-lg font-bold text-foreground">
                   {group.name}
                 </h2>
-                <p className="text-sm text-gray-700 dark:text-gray-400 mt-1 line-clamp-2">
+                <p className="mt-1 line-clamp-2 text-sm leading-relaxed text-muted-foreground">
                   {group.description || "No description"}
                 </p>
               </div>
 
-              <div className="mt-4 space-y-3">
-                {/* Tags */}
-                <div className="flex flex-wrap gap-2">
-                  <span className="bg-indigo-700 px-3 py-1 text-xs rounded-full text-white flex items-center gap-1">
-                    <BookOpen className="w-3 h-3" />
+              <div className="mt-4 flex-1 space-y-3">
+                <div className="flex flex-wrap gap-1.5">
+                  <Badge variant="secondary">
+                    <BookOpen className="h-3 w-3" />
                     {group.examType}
-                  </span>
+                  </Badge>
                   {group.examYear && (
-                    <span className="bg-blue-700 px-3 py-1 text-xs rounded-full text-white flex items-center gap-1">
-                      <Calendar className="w-3 h-3" />
+                    <Badge variant="secondary">
+                      <Calendar className="h-3 w-3" />
                       {group.examYear}
-                    </span>
+                    </Badge>
                   )}
                   {group.subject && (
-                    <span className="bg-green-700 px-3 py-1 text-xs rounded-full text-white">
-                      {group.subject}
-                    </span>
+                    <Badge variant="secondary">{group.subject}</Badge>
                   )}
                 </div>
 
-                {/* Member Count */}
-                <div className="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                  <Users className="w-4 h-4 mr-1" />
+                <div className="flex items-center text-xs text-muted-foreground">
+                  <Users className="mr-1.5 h-3.5 w-3.5" />
                   {group.memberCount || 0} members
                   {group.maxMembers && ` / ${group.maxMembers}`}
                 </div>
 
-                {/* Custom Tags */}
                 {group.tags && group.tags.length > 0 && (
                   <div className="flex flex-wrap gap-1">
                     {group.tags.slice(0, 3).map((tag, idx) => (
                       <span
                         key={idx}
-                        className={`${getTagColor(idx)} px-2 py-1 text-[10px] rounded-full text-white`}
+                        className="rounded-full border border-border px-2 py-0.5 text-[10px] font-medium text-muted-foreground"
                       >
                         {tag}
                       </span>
                     ))}
                   </div>
                 )}
-
-                {/* Action Button */}
-                {group.isMember ? (
-                  <Link href={`/groups/${group.id}`} className="block w-full">
-                    <Button className="w-full bg-green-600 hover:bg-green-700 text-white rounded-lg font-medium transition-colors duration-200 mt-2">
-                      Open Chat
-                    </Button>
-                  </Link>
-                ) : (
-                  <Button
-                    onClick={() => handleJoinGroup(group.id)}
-                    className="w-full px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors duration-200 mt-2"
-                  >
-                    Join Group
-                  </Button>
-                )}
               </div>
+
+              {group.isMember ? (
+                <Link href={`/groups/${group.id}`} className="mt-4 block w-full">
+                  <Button className="w-full" variant="outline">
+                    Open chat
+                  </Button>
+                </Link>
+              ) : (
+                <Button
+                  onClick={() => handleJoinGroup(group.id)}
+                  className="mt-4 w-full"
+                >
+                  Join group
+                </Button>
+              )}
             </div>
           ))}
         </div>

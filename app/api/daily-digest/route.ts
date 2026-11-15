@@ -1,5 +1,6 @@
 import { db } from "@/lib/db/db";
 import { digestService } from "@/lib/repositories/daily-digest-repository";
+import { generateDailyQuestions } from "@/lib/repositories/daily-question-repository";
 import { NextRequest, NextResponse } from "next/server";
 import { dailyDigest } from "@/lib/db/schema";
 import { getTodayDate } from "@/lib/utils";
@@ -68,10 +69,39 @@ export async function GET(request: NextRequest) {
       }
     }
 
+    // Generate the question reel for this day's digest. This is the only place
+    // that creates daily questions. The app only reads them.
+    const digestDateText = getTodayDate();
+    const [day, month, year] = digestDateText.split("-");
+    const digestDate = `${year}-${month}-${day}`;
+    let questionResult:
+      | Awaited<ReturnType<typeof generateDailyQuestions>>
+      | null = null;
+
+    if (insertedArticles.length > 0) {
+      try {
+        questionResult = await generateDailyQuestions(
+          insertedArticles.map((article) => ({
+            title: article.title,
+            summary: article.summary,
+            topic: article.topic,
+            sourceUrl: article.sourceUrl,
+          })),
+          digestDate,
+        );
+      } catch (error) {
+        // The digest is already stored. Do not fail the cron because question
+        // generation failed. A retry will skip rows that already exist.
+        console.error("Daily question generation failed:", error);
+      }
+    }
+
     return NextResponse.json({
       success: true,
       data: insertedArticles,
       count: insertedArticles.length,
+      digestDate,
+      questions: questionResult,
     });
   } catch (error) {
     console.error("Daily Digest API Error:", error);

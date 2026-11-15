@@ -13,49 +13,43 @@ export default async function sendSubscriptionEmail(
     await transporter.sendMail({
       from: `"Etrant" <${process.env.SMTP_USER}>`,
       to: email,
-      subject: `🎉 Welcome to Etrant ${plan || "Subscription"}!`,
+      subject: `Welcome to Etrant ${plan || "Subscription"}`,
       html: `
-  <div style="font-family: Arial, sans-serif; background-color: #f7f8fa; padding: 20px;">
-    <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 10px; overflow: hidden; box-shadow: 0 2px 6px rgba(0,0,0,0.05);">
-      
-      <!-- Header -->
-      <div style="text-align: center; padding: 20px; background-color: #1a73e8;">
-        <img src="https://raw.githubusercontent.com/akhil683/Portfolio_Blogs/refs/heads/main/images/etrant_high.png" alt="Etrant Logo" style="max-width: 120px;" />
+  <div style="font-family: Arial, sans-serif; background-color: #f8fafc; padding: 24px;">
+    <div style="max-width: 600px; margin: auto; background: #ffffff; border-radius: 12px; overflow: hidden; border: 1px solid #e2e8f0;">
+      <div style="text-align: center; padding: 24px; background-color: #2563eb;">
+        <img src="https://raw.githubusercontent.com/akhil683/Portfolio_Blogs/refs/heads/main/images/etrant_high.png" alt="Etrant" style="max-width: 120px;" />
       </div>
-      
-      <!-- Body -->
-      <div style="padding: 25px;">
-        <h2 style="color: #1a73e8; margin-bottom: 10px;">
+
+      <div style="padding: 28px;">
+        <h2 style="color: #0f172a; margin: 0 0 12px;">
           Thank you for subscribing, ${name || "Learner"}!
         </h2>
-        <p style="color: #555; line-height: 1.6;">
-          You’ve successfully upgraded to <strong>Etrant ${plan}</strong>.  
-          Your learning journey just got faster, deeper, and more powerful 🚀.
+        <p style="color: #475569; line-height: 1.6; margin: 0 0 20px;">
+          Your <strong>Etrant ${plan || "Subscription"}</strong> is now active.
+          Here is what you have unlocked:
         </p>
 
-        <h3 style="color: #333; margin-top: 25px;">Here’s what you unlocked:</h3>
-        <ul style="line-height: 1.6; padding-left: 18px; color: #555;">
-          <li><strong>Unlimited AI Reels</strong> — No limits, dive deep into any topic.</li>
-          <li><strong>Ad-Free Experience</strong> — 100% focus on learning.</li>
-          <li><strong>Premium Knowledge Maps</strong> — Explore advanced connections between topics.</li>
-          <li><strong>Exclusive Pro/Max MCQs</strong> — Higher quality, exam-ready questions.</li>
-          <li><strong>Priority Updates</strong> — Be the first to access new features.</li>
+        <ul style="line-height: 1.7; padding-left: 18px; color: #475569; margin: 0 0 24px;">
+          <li><strong>Unlimited AI reels</strong> across your exam syllabus</li>
+          <li><strong>Full current affairs</strong> and the complete daily digest</li>
+          <li><strong>Advanced practice questions</strong> with explanations</li>
+          <li><strong>Progress insights</strong> and study streaks</li>
+          <li><strong>Priority access</strong> to new features</li>
         </ul>
 
-        <div style="text-align: center; margin: 30px 0;">
-          <a href="https://wiki.akkhil.dev" 
-            style="background-color: #1a73e8; color: #ffffff; padding: 12px 25px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block;">
-            Explore Your ${plan} Features
+        <div style="text-align: center; margin: 28px 0;">
+          <a href="https://etrant.akkhil.dev/daily-digest"
+            style="background-color: #2563eb; color: #ffffff; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold; display: inline-block;">
+            Start today&apos;s digest
           </a>
         </div>
 
-        <p style="font-size: 10px; color: #777; line-height: 1.4;">
-          We’re committed to making your preparation smarter, faster, and more enjoyable.  
-          Thanks for supporting Etrant ❤️
+        <p style="font-size: 12px; color: #64748b; line-height: 1.5; margin: 0;">
+          Questions about billing? Reply to this email and we will help.
         </p>
-
-        <p style="font-size: 10px; color: #777; margin-top: 10px;">
-          – The Etrant Team
+        <p style="font-size: 12px; color: #64748b; margin: 12px 0 0;">
+          — The Etrant Team
         </p>
       </div>
     </div>
@@ -63,10 +57,10 @@ export default async function sendSubscriptionEmail(
 `,
     });
 
-    console.log(`✅ Subscription email sent to: ${email} (${plan})`);
+    console.log(`Subscription email sent to: ${email} (${plan})`);
     return { success: true };
   } catch (error) {
-    console.error(`❌ Failed to send subscription email to ${email}:`, error);
+    console.error(`Failed to send subscription email to ${email}:`, error);
     return { success: false, error: (error as Error).message };
   }
 }

@@ -1,7 +1,5 @@
 "use client";
 
-import type React from "react";
-
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -10,6 +8,7 @@ import { QuestionData } from "@/types";
 import confetti from "canvas-confetti";
 import { useUserStore } from "@/lib/store/useUserStore";
 import ShowExplanation from "./show-explanation";
+import { getDifficultyColor, cn } from "@/lib/utils";
 
 export function McqCard({
   currentQuestion,
@@ -22,10 +21,10 @@ export function McqCard({
 
   const triggerCorrectConfetti = () => {
     confetti({
-      particleCount: 100,
-      spread: 70,
+      particleCount: 80,
+      spread: 65,
       origin: { y: 0.6 },
-      colors: ["#10B981", "#34D399", "#6EE7B7", "#A7F3D0"],
+      colors: ["#2563EB", "#60A5FA", "#FFFFFF"],
     });
   };
 
@@ -44,121 +43,102 @@ export function McqCard({
     }
   };
 
-  const getDifficultyColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "easy":
-        return "bg-green-100 text-green-800 border-green-200";
-      case "medium":
-        return "bg-yellow-100 text-yellow-800 border-yellow-200";
-      case "hard":
-        return "bg-red-100 text-red-800 border-red-200";
-      default:
-        return "bg-gray-100 text-gray-800 border-gray-200";
-    }
-  };
-
   return (
-    <>
-      <Card className="border-0 max-md:pt-24 overflow-hidden md:h-full flex justify-center items-center">
-        <CardContent className="p-0 w-full">
-          {/* Question Header */}
-          <div className="text-white p-6">
-            <div className="flex items-center justify-between mb-4">
+    <div className="flex h-full w-full items-center justify-center bg-background px-5 pb-10 pt-24 md:px-8 md:py-12">
+      <Card className="w-full max-w-2xl">
+        <CardContent className="p-0">
+          <div className="border-b border-border p-6 md:p-8">
+            <div className="mb-5 flex flex-wrap items-center justify-between gap-2">
               <Badge
-                className={`${getDifficultyColor(currentQuestion.difficulty)} text-xs font-medium`}
+                className={cn(
+                  getDifficultyColor(currentQuestion.difficulty),
+                  "capitalize",
+                )}
               >
-                {currentQuestion.difficulty.toUpperCase()}
+                {currentQuestion.difficulty}
               </Badge>
-              <div className="flex justify-center gap-2">
-                <Badge
-                  variant="outline"
-                  className="bg-gray-950/20 dark:bg-white/20 text-gray-950 dark:text-white border-gray-950/30 dark:border-white/30 text-xs"
-                >
-                  {currentQuestion.tags[0]}
-                </Badge>
+              <div className="flex flex-wrap justify-end gap-1.5">
+                <Badge variant="outline">{currentQuestion.tags[0]}</Badge>
 
                 {currentQuestion.previousYearQuestion !== "" && (
-                  <Badge
-                    variant="outline"
-                    className="bg-red-800/20 text-gray-950 dark:text-white border-red-800/50 dark:border-white/30 text-xs"
-                  >
-                    {currentQuestion.previousYearQuestion}
-                  </Badge>
+                  <Badge>{currentQuestion.previousYearQuestion}</Badge>
                 )}
               </div>
             </div>
 
-            <h2 className="md:text-2xl dark:text-gray-100 text-gray-950 text-xl font-semibold leading-relaxed">
+            <h2 className="text-xl font-bold leading-relaxed tracking-tight text-foreground md:text-2xl">
               {currentQuestion.question}
             </h2>
           </div>
 
-          {/* Answer Options */}
-          <div className="p-6 space-y-3">
+          <div className="space-y-2.5 p-6 md:p-8">
             {currentQuestion.options.map((option, index) => {
               const isSelected = selectedAnswer === option.name;
               const isCorrect = option.isCorrect;
 
-              let buttonClass =
-                "w-full text-left rounded-xl transition-all duration-300 transform rounded-full";
-
-              if (isAnswered) {
-                if (isCorrect) {
-                  buttonClass +=
-                    " bg-green-500 border-green-400 text-green-800 shadow-green-100";
-                } else if (isSelected && !isCorrect) {
-                  buttonClass +=
-                    " bg-red-500 border-red-400 text-red-800 shadow-red-100";
-                } else {
-                  buttonClass += " bg-gray-50 border-gray-200 text-gray-600";
-                }
-              } else if (isSelected) {
-                buttonClass +=
-                  " bg-purple-500 border-purple-400 text-purple-800 shadow-purple-100";
-              } else {
-                buttonClass +=
-                  "dark:bg-black bg-white border-gray-200 text-gray-700 hover:border-purple-300 hover:bg-purple-50";
-              }
-
               return (
-                <div className="rounded-full overflow-hidden">
-                  <button
-                    key={`${option.name}-${index}`}
-                    onClick={() =>
-                      !isAnswered && handleAnswerSelect(option.name)
-                    }
-                    disabled={isAnswered}
-                    className={buttonClass}
-                  >
-                    <div className="flex p-4 bg-gray-400/40 dark:bg-black/60 items-center justify-between md:text-lg">
-                      <div className="flex items-center space-x-3">
-                        <div className="min-w-6 min-h-6 md:min-w-8 md:min-h-8 rounded-full bg-indigo-600 text-gray-100 flex items-center justify-center text-sm font-bold">
-                          {String.fromCharCode(65 + index)}
-                        </div>
-                        <span className="font-medium text-gray-950 dark:text-white">
-                          {option.name}
-                        </span>
+                <button
+                  key={`${option.name}-${index}`}
+                  onClick={() => !isAnswered && handleAnswerSelect(option.name)}
+                  disabled={isAnswered}
+                  className={cn(
+                    "w-full rounded-lg border text-left transition-colors duration-200",
+                    !isAnswered &&
+                      "border-border bg-card hover:border-primary/50 hover:bg-accent/60",
+                    isAnswered &&
+                      isCorrect &&
+                      "border-success/40 bg-success/10",
+                    isAnswered &&
+                      isSelected &&
+                      !isCorrect &&
+                      "border-destructive/40 bg-destructive/10",
+                    isAnswered &&
+                      !isCorrect &&
+                      !isSelected &&
+                      "border-border bg-background opacity-70",
+                  )}
+                >
+                  <div className="flex items-center justify-between p-3.5 md:p-4">
+                    <div className="flex items-center gap-3">
+                      <div
+                        className={cn(
+                          "flex h-7 w-7 items-center justify-center rounded-full border text-xs font-bold md:h-8 md:w-8",
+                          isAnswered && isCorrect
+                            ? "border-success bg-success text-success-foreground"
+                            : isAnswered && isSelected && !isCorrect
+                              ? "border-destructive bg-destructive text-destructive-foreground"
+                              : "border-border bg-secondary text-secondary-foreground",
+                        )}
+                      >
+                        {String.fromCharCode(65 + index)}
                       </div>
-
-                      {isAnswered && isCorrect && (
-                        <CheckCircle className="w-5 h-5 text-green-200 animate-pulse" />
-                      )}
-                      {isAnswered && isSelected && !isCorrect && (
-                        <XCircle className="w-5 h-5 text-red-200 animate-pulse" />
-                      )}
+                      <span className="text-sm font-medium text-foreground md:text-base">
+                        {option.name}
+                      </span>
                     </div>
-                  </button>
-                </div>
+
+                    {isAnswered && isCorrect && (
+                      <CheckCircle className="h-5 w-5 text-success" />
+                    )}
+                    {isAnswered && isSelected && !isCorrect && (
+                      <XCircle className="h-5 w-5 text-destructive" />
+                    )}
+                  </div>
+                </button>
               );
             })}
+
             <div
-              className={`w-full justify-end ${isAnswered ? "flex" : "invisible"}`}
+              className={cn(
+                "flex w-full justify-end pt-2",
+                isAnswered ? "flex" : "invisible",
+              )}
             >
               <ShowExplanation explanation={currentQuestion.explanation} />
             </div>
           </div>
         </CardContent>
       </Card>
-    </>
+    </div>
   );
 }

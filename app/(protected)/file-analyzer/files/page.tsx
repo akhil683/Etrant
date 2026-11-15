@@ -16,8 +16,8 @@ export default async function AnalyzerFilePage({
 
   if (!session?.user?.id) {
     return (
-      <section className="text-white max-w-5xl py-24 space-y-6 w-full">
-        <h2 className="text-2xl dark:text-gray-100 text-gray-950">
+      <section className="w-full max-w-5xl space-y-6 px-5 pb-16 pt-24 md:px-8 md:pt-12">
+        <h2 className="text-2xl font-bold text-foreground">
           Please sign in to view your files
         </h2>
       </section>
@@ -34,8 +34,8 @@ export default async function AnalyzerFilePage({
 
     if (!selectedFile) {
       return (
-        <section className="text-white max-w-5xl py-24 space-y-6 w-full">
-          <h2 className="text-2xl dark:text-gray-100 text-gray-950">
+        <section className="w-full max-w-5xl space-y-6 px-5 pb-16 pt-24 md:px-8 md:pt-12">
+          <h2 className="text-2xl font-bold text-foreground">
             File not found
           </h2>
         </section>
@@ -60,16 +60,17 @@ export default async function AnalyzerFilePage({
   }
 
   return (
-    <section className="text-white max-w-5xl py-24 space-y-6 w-full">
-      <h2 className="text-2xl dark:text-gray-100 text-gray-950">
-        Your File History
-      </h2>
-      <div className="flex flex-col items-center w-full gap-6">
+    <section className="page-shell max-w-5xl space-y-6">
+      <div className="page-header">
+        <p className="eyebrow">Saved analyses</p>
+        <h2 className="page-title">Your file history</h2>
+      </div>
+      <div className="flex w-full flex-col items-center gap-6">
         {userFiles.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 px-6 text-center">
             <div className="mb-4">
               <svg
-                className="w-16 h-16 mx-auto text-gray-400 dark:text-gray-600"
+                className="mx-auto h-16 w-16 text-muted-foreground"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -83,17 +84,17 @@ export default async function AnalyzerFilePage({
                 />
               </svg>
             </div>
-            <h3 className="text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">
-              No Files Yet
+            <h3 className="mb-2 text-xl font-semibold text-foreground">
+              No files yet
             </h3>
-            <p className="text-gray-500 dark:text-gray-400 mb-6 max-w-md">
+            <p className="mb-6 max-w-md text-sm text-muted-foreground">
               You haven't uploaded any files for analysis yet. Upload a PDF to generate MCQs and start practicing!
             </p>
             <Link
               href="/file-analyzer"
-              className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg font-medium transition-colors duration-200"
+              className="rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
             >
-              Upload Your First File
+              Upload your first file
             </Link>
           </div>
         ) : (
@@ -101,7 +102,7 @@ export default async function AnalyzerFilePage({
             <Link
               href={`?fileId=${file.id}`}
               key={file.id}
-              className="p-4 dark:text-gray-100 hover:bg-gray-800 duration-200 text-gray-950 w-full rounded-xl border border-gray-300 dark:border-gray-700"
+              className="w-full rounded-xl border border-border bg-card p-4 text-foreground shadow-soft transition-all duration-200 hover:border-primary/40 hover:shadow-lift"
             >
               {file.fileName.split(".")[0]}
             </Link>

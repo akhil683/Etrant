@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { submitFeedback } from "@/actions/user-feedback";
 import { z } from "zod";
-import { Loader2 } from "lucide-react";
+import { Loader2, MessageSquare, CheckCircle2 } from "lucide-react";
 
 const feedbackSchema = z.object({
   feedback: z.string().min(5, "Feedback must be at least 5 characters"),
@@ -41,33 +41,41 @@ export default function FeedbackForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-gray-300 dark:bg-gray-900 border border-gray-400 dark:border-gray-700 text-white p-4 md:p-6 rounded-2xl shadow-md w-full max-w-xl md:min-w-xl"
+      className="surface w-full max-w-xl p-6 md:p-8"
     >
-      <h2 className="text-xl font-semibold text-gray-950 dark:text-gray-100 mb-4">
-        We value your feedback
-      </h2>
+      <div className="mb-2 flex items-center gap-2">
+        <MessageSquare className="h-5 w-5 text-primary" />
+        <h2 className="text-2xl font-bold tracking-tight">
+          We value your feedback
+        </h2>
+      </div>
+      <p className="mb-5 text-sm text-muted-foreground">
+        Tell us what is working and what is not. It directly shapes what we
+        build next.
+      </p>
 
       <textarea
         value={feedback}
         onChange={(e) => setFeedback(e.target.value)}
         placeholder="Write your feedback..."
-        className="w-full p-3 rounded-lg border border-gray-400 dark:border-gray-700 bg-gray-100 dark:bg-gray-800 text-gray-950 dark:text-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
-        rows={4}
+        className="w-full rounded-lg border border-input bg-background p-3 text-sm text-foreground transition-colors placeholder:text-muted-foreground focus-visible:border-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20"
+        rows={5}
       />
 
-      {error && <p className="text-red-500 mt-2 text-sm">{error}</p>}
+      {error && <p className="mt-2 text-sm font-medium text-destructive">{error}</p>}
       {success && (
-        <p className="text-green-500 mt-2 text-sm">
-          Thank you for your feedback!
+        <p className="mt-3 flex items-center gap-2 rounded-lg bg-success/10 px-3 py-2 text-sm font-medium text-success">
+          <CheckCircle2 className="h-4 w-4" />
+          Thank you for your feedback.
         </p>
       )}
 
       <button
         type="submit"
         disabled={loading}
-        className="mt-4 w-full flex justify-center items-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
+        className="mt-5 flex w-full items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
       >
-        {loading ? <Loader2 className="animate-spin" /> : "Submit Feedback"}
+        {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : "Submit feedback"}
       </button>
     </form>
   );

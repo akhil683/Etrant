@@ -9,7 +9,6 @@ import {
   Users,
   Loader2,
   Info,
-  Smile,
 } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -25,7 +24,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useGroupMessages } from "@/hooks/use-group-messages";
-import { format, isSameDay, formatDistanceToNow } from "date-fns";
+import { format, isSameDay } from "date-fns";
 import type { ExamGroup, GroupMember } from "@/types/groups";
 import { toast } from "sonner";
 import { cn } from "@/lib/utils";
@@ -115,77 +114,45 @@ export default function GroupChatPage() {
       .slice(0, 2);
   };
 
-  // Generate a consistent color for a username
-  const getUserColor = (name: string) => {
-    const colors = [
-      "text-red-500",
-      "text-orange-500",
-      "text-amber-500",
-      "text-green-500",
-      "text-emerald-500",
-      "text-teal-500",
-      "text-cyan-500",
-      "text-blue-500",
-      "text-indigo-500",
-      "text-violet-500",
-      "text-purple-500",
-      "text-fuchsia-500",
-      "text-pink-500",
-      "text-rose-500",
-    ];
-    let hash = 0;
-    for (let i = 0; i < name.length; i++) {
-      hash = name.charCodeAt(i) + ((hash << 5) - hash);
-    }
-    return colors[Math.abs(hash) % colors.length];
-  };
-
   if (isLoading) {
     return (
-      <div className="flex-1 flex h-full bg-gray-100 dark:bg-gray-800/50 justify-center items-center overflow-hidden">
-        <Loader2 className="animate-spin w-full " />
+      <div className="flex h-full flex-1 items-center justify-center overflow-hidden bg-background">
+        <Loader2 className="w-full animate-spin" />
       </div>
-    )
+    );
   }
-
 
   if (!group) {
     return (
-      <div className="flex-1 flex flex-col items-center justify-center h-full">
-        <h2 className="text-2xl font-bold mb-4">Group not found</h2>
+      <div className="flex h-full flex-1 flex-col items-center justify-center">
+        <h2 className="mb-4 text-2xl font-bold">Group not found</h2>
         <Link href="/groups">
-          <Button>Back to Groups</Button>
+          <Button>Back to groups</Button>
         </Link>
       </div>
     );
   }
 
   return (
-    <div className="flex-1 flex h-full overflow-hidden">
-
-
-      {/* Right Side - Chat Area */}
-      <div className="flex-1 flex flex-col bg-[#efeae2] dark:bg-[#0b141a] relative">
-        {/* Chat Background Pattern Overlay */}
-        <div className="absolute inset-0 opacity-[0.06] pointer-events-none bg-[url('https://user-images.githubusercontent.com/15075759/28719144-86dc0f70-73b1-11e7-911d-60d70fcded21.png')]"></div>
-
+    <div className="flex h-full flex-1 overflow-hidden bg-background">
+      {/* Chat Area */}
+      <div className="relative flex flex-1 flex-col">
         {/* Chat Header */}
-        <div className="bg-gray-50 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-4 py-2 flex items-center justify-between z-10 shadow-sm">
-
+        <div className="z-10 flex items-center justify-between border-b border-border bg-card px-4 py-2.5">
           <div className="flex items-center gap-3">
             <Link href="/groups" className="md:hidden">
-              <ArrowLeft className="w-5 h-5 text-gray-600 dark:text-gray-300" />
+              <ArrowLeft className="h-5 w-5 text-muted-foreground" />
             </Link>
-            <Avatar className="w-10 h-10 cursor-pointer border border-gray-200 dark:border-gray-700">
-              <AvatarFallback className="bg-indigo-100 text-indigo-600 dark:bg-indigo-900 dark:text-indigo-300 font-semibold">
+            <Avatar className="h-10 w-10 cursor-pointer border border-border">
+              <AvatarFallback className="bg-primary/10 font-semibold text-primary">
                 {getInitials(group.name)}
               </AvatarFallback>
             </Avatar>
             <div className="cursor-pointer">
-              <h1 className="font-semibold text-gray-900 dark:text-gray-100 text-sm md:text-base">
+              <h1 className="text-sm font-semibold text-foreground md:text-base">
                 {group.name}
               </h1>
-              <p className="text-xs text-gray-500 dark:text-gray-400 truncate max-w-[200px] md:max-w-md">
+              <p className="max-w-[200px] truncate text-xs text-muted-foreground md:max-w-md">
                 {members
                   .map((m) => m.user?.name)
                   .filter(Boolean)
@@ -201,30 +168,30 @@ export default function GroupChatPage() {
                 <Button
                   variant="ghost"
                   size="icon"
-                  className="text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  className="text-muted-foreground hover:text-foreground"
                 >
-                  <Users className="w-5 h-5" />
+                  <Users className="h-5 w-5" />
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                  <DialogTitle>Group Members ({members.length})</DialogTitle>
+                  <DialogTitle>Group members ({members.length})</DialogTitle>
                 </DialogHeader>
-                <ScrollArea className="h-[300px] mt-4 pr-4">
+                <ScrollArea className="mt-4 h-[300px] pr-4">
                   <div className="space-y-4">
                     {members.map((member) => (
                       <div
                         key={member.userId}
                         className="flex items-center gap-3"
                       >
-                        <Avatar className="w-10 h-10">
+                        <Avatar className="h-10 w-10">
                           <AvatarImage src={member.user?.image || undefined} />
                           <AvatarFallback>
                             {getInitials(member.user?.name || null)}
                           </AvatarFallback>
                         </Avatar>
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium text-sm text-gray-900 dark:text-gray-100 truncate">
+                        <div className="min-w-0 flex-1">
+                          <p className="truncate text-sm font-medium text-foreground">
                             {member.user?.name || "Unknown"}
                           </p>
                           <div className="flex items-center gap-2">
@@ -234,8 +201,8 @@ export default function GroupChatPage() {
                               </Badge>
                             )}
                             {member.isOnline && (
-                              <span className="flex items-center gap-1 text-xs text-green-600">
-                                <span className="w-2 h-2 bg-green-600 rounded-full"></span>
+                              <span className="flex items-center gap-1 text-xs text-success">
+                                <span className="h-2 w-2 rounded-full bg-success"></span>
                                 Online
                               </span>
                             )}
@@ -251,18 +218,16 @@ export default function GroupChatPage() {
         </div>
 
         {/* Messages Area */}
-        <ScrollArea className="flex-1 p-2 md:p-4 z-10">
-          <div className="space-y-1 max-w-5xl mx-auto pb-4">
+        <ScrollArea className="z-10 flex-1 bg-secondary/40 p-2 md:p-4">
+          <div className="mx-auto max-w-5xl space-y-1 pb-4">
             {isLoading && messages.length === 0 ? (
               <CircleLoader />
             ) : messages.length === 0 ? (
-              <div className="text-center py-12 bg-white/50 dark:bg-gray-800/50 rounded-lg backdrop-blur-sm mx-auto max-w-md mt-10 shadow-sm">
-                <Info className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600 dark:text-gray-300 font-medium">
-                  No messages yet
-                </p>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                  Send a message to start the conversation!
+              <div className="mx-auto mt-10 max-w-md rounded-lg border border-border bg-card p-8 text-center">
+                <Info className="mx-auto mb-4 h-10 w-10 text-muted-foreground" />
+                <p className="font-medium text-foreground">No messages yet</p>
+                <p className="mt-1 text-sm text-muted-foreground">
+                  Send a message to start the conversation.
                 </p>
               </div>
             ) : (
@@ -280,8 +245,8 @@ export default function GroupChatPage() {
                 return (
                   <div key={message.id}>
                     {showDateSeparator && (
-                      <div className="flex justify-center my-4">
-                        <span className="bg-gray-200 dark:bg-gray-800 text-gray-600 dark:text-gray-300 text-xs px-3 py-1 rounded-full shadow-sm">
+                      <div className="my-4 flex justify-center">
+                        <span className="rounded-full border border-border bg-background px-3 py-1 text-xs text-muted-foreground">
                           {format(new Date(message.createdAt), "MMMM d, yyyy")}
                         </span>
                       </div>
@@ -289,7 +254,7 @@ export default function GroupChatPage() {
 
                     <div
                       className={cn(
-                        "flex w-full mb-1",
+                        "mb-1 flex w-full",
                         isMe ? "justify-end" : "justify-start",
                       )}
                     >
@@ -299,11 +264,10 @@ export default function GroupChatPage() {
                           isMe ? "flex-row-reverse" : "flex-row",
                         )}
                       >
-                        {/* Avatar only for others and if it's the first message of a sequence */}
                         {!isMe && (
-                          <div className="w-8 mr-2 flex-shrink-0 flex flex-col justify-end">
+                          <div className="mr-2 flex w-8 flex-shrink-0 flex-col justify-end">
                             {!isSameUser ? (
-                              <Avatar className="w-8 h-8">
+                              <Avatar className="h-8 w-8">
                                 <AvatarImage
                                   src={message.user?.image || undefined}
                                 />
@@ -319,21 +283,15 @@ export default function GroupChatPage() {
 
                         <div
                           className={cn(
-                            "relative px-3 py-1.5 shadow-sm text-sm",
+                            "relative rounded-lg px-3 py-2 text-sm shadow-sm",
                             isMe
-                              ? "bg-[#d9fdd3] dark:bg-[#005c4b] text-gray-900 dark:text-gray-100 rounded-2xl rounded-tr-none"
-                              : "bg-white dark:bg-[#202c33] text-gray-900 dark:text-gray-100 rounded-2xl rounded-tl-none",
+                              ? "bg-primary text-primary-foreground"
+                              : "border border-border bg-card text-foreground",
                             !isMe && !isSameUser && "mt-1",
                           )}
                         >
-                          {/* Sender Name - Always show for others if not same user sequence */}
                           {!isMe && !isSameUser && (
-                            <p
-                              className={cn(
-                                "text-xs font-bold mb-1",
-                                getUserColor(message.user?.name || "Unknown"),
-                              )}
-                            >
+                            <p className="mb-1 text-xs font-semibold text-primary">
                               {message.user?.name || "Unknown"}
                             </p>
                           )}
@@ -344,8 +302,7 @@ export default function GroupChatPage() {
 
                           <div
                             className={cn(
-                              "text-[10px] mt-1 flex items-center gap-1 opacity-60 select-none",
-                              isMe ? "justify-end" : "justify-end",
+                              "mt-1 flex items-center justify-end gap-1 text-[10px] opacity-60",
                             )}
                           >
                             {format(new Date(message.createdAt), "HH:mm")}
@@ -362,35 +319,29 @@ export default function GroupChatPage() {
         </ScrollArea>
 
         {/* Message Input */}
-        <div className="bg-gray-50 dark:bg-gray-800 p-2 md:p-3 z-10">
+        <div className="z-10 border-t border-border bg-card p-2 md:p-3">
           <form
             onSubmit={handleSendMessage}
-            className="max-w-5xl mx-auto flex items-end gap-2"
+            className="mx-auto flex max-w-5xl items-end gap-2"
           >
-            <div className="flex-1 bg-white dark:bg-gray-700 rounded-2xl flex items-center border border-gray-200 dark:border-gray-600 px-4 shadow-sm">
+            <div className="flex flex-1 items-center rounded-xl border border-border bg-background px-3 focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20">
               <Input
                 placeholder="Type a message..."
                 value={messageInput}
                 onChange={(e) => setMessageInput(e.target.value)}
-                className="border-0 focus-visible:ring-0 p-0 bg-transparent max-h-32 text-base"
+                className="max-h-32 border-0 bg-transparent p-0 text-base focus-visible:ring-0"
                 maxLength={5000}
               />
             </div>
             <Button
               type="submit"
               disabled={!messageInput.trim()}
-              className={cn(
-                "rounded-full w-10 h-10 p-0 flex-shrink-0 transition-all",
-                messageInput.trim()
-                  ? "bg-indigo-600 hover:bg-indigo-700 text-white"
-                  : "bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500",
-              )}
+              className="h-10 w-10 flex-shrink-0 rounded-full p-0"
             >
-              <Send className="w-5 h-5 ml-0.5" />
+              <Send className="ml-0.5 h-5 w-5" />
             </Button>
           </form>
         </div>
-
       </div>
     </div>
   );

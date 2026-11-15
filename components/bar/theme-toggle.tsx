@@ -1,19 +1,18 @@
 import { Switch } from "../ui/switch";
 import { useTheme } from "../providers/ThemeProvider";
+import { Moon, Sun } from "lucide-react";
 
 export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
+  const isDark = theme === "dark";
+
   return (
-    <div className="w-full flex justify-between md:justify-center lg:justify-between">
-      <span className="md:hidden lg:flex text-sm text-gray-950 dark:text-gray-100">
-        Dark Mode
+    <div className="flex items-center justify-between rounded-lg border border-border bg-background px-3 py-2">
+      <span className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
+        {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+        Dark mode
       </span>
-      <Switch
-        checked={theme === "dark"}
-        onCheckedChange={toggleTheme}
-        // disabled
-        aria-readonly
-      />
+      <Switch checked={isDark} onCheckedChange={toggleTheme} aria-readonly />
     </div>
   );
 }

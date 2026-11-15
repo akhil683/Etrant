@@ -1,12 +1,11 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Newsreader } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from "next-auth/react";
 import { PostHogProvider } from "@/components/providers/PostHogProvider";
 import { siteConfig } from "@/lib/config/site";
 import { UserProvider } from "@/components/providers/UserProvider";
-import Head from "next/head";
 import Script from "next/script";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
@@ -14,9 +13,18 @@ import { QueryProvider } from "@/components/providers/QueryProvider";
 
 const inter = Inter({
   subsets: ["latin"],
-  display: 'swap', // Optimize font loading
+  display: "swap",
   preload: true,
-  variable: '--font-inter',
+  variable: "--font-inter",
+});
+
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  variable: "--font-newsreader",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -60,7 +68,23 @@ export const metadata: Metadata = {
   },
   icons: siteConfig.icons,
   manifest: "/site.webmanifest",
+  verification: {
+    google: "EwF6VPOPDKObEf3SzaXf1GkyPmCdDiofW9MqDonM03w",
+  },
 };
+
+const themeInitScript = `
+(function() {
+  try {
+    var saved = localStorage.getItem("theme");
+    var theme = saved === "dark" ? "dark" : "light";
+    document.documentElement.classList.toggle("dark", theme === "dark");
+    document.documentElement.style.colorScheme = theme;
+  } catch (e) {
+    document.documentElement.classList.remove("dark");
+  }
+})();
+`;
 
 export default function RootLayout({
   children,
@@ -68,31 +92,30 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className="dark">
-      <Head>
-        <meta
-          name="google-site-verification"
-          content="EwF6VPOPDKObEf3SzaXf1GkyPmCdDiofW9MqDonM03w"
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${inter.variable} ${newsreader.variable}`}
+    >
+      <body className={`${inter.className} overflow-x-hidden`}>
+        <Script
+          id="theme-init"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: themeInitScript }}
         />
-      </Head>
-      <PostHogProvider>
-        <SessionProvider>
-          <UserProvider>
-            <QueryProvider>
-              <ThemeProvider>
-                <body className={`${inter.className} overflow-x-hidden`}>
+        <PostHogProvider>
+          <SessionProvider>
+            <UserProvider>
+              <QueryProvider>
+                <ThemeProvider>
                   {children}
-                  <Script
-                    src="https://checkout.razorpay.com/v1/checkout.js"
-                    strategy="afterInteractive"
-                  />
                   <Toaster />
-                </body>
-              </ThemeProvider>
-            </QueryProvider>
-          </UserProvider>
-        </SessionProvider>
-      </PostHogProvider>
+                </ThemeProvider>
+              </QueryProvider>
+            </UserProvider>
+          </SessionProvider>
+        </PostHogProvider>
+      </body>
     </html>
   );
 }

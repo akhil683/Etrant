@@ -48,18 +48,17 @@ export default function WaitlistForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className=" text-white rounded-2xl w-full max-w-md"
+      className="w-full max-w-md"
     >
       <Input
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Join our waitlist"
-        className="w-full p-3 rounded-lg border border-gray-700 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-indigo-600"
       />
 
-      {error && <p className="text-red-500 mt-2 text-sm">{error}</p>}
+      {error && <p className="mt-2 text-sm text-destructive">{error}</p>}
       {success && (
-        <p className="text-green-500 mt-2 text-sm">
+        <p className="mt-2 text-sm text-success">
           Thank you for joining our waitlist!
         </p>
       )}
@@ -67,7 +66,7 @@ export default function WaitlistForm() {
       <button
         type="submit"
         disabled={loading}
-        className="mt-4 w-full flex justify-center items-center bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
+        className="mt-4 flex w-full items-center justify-center rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
       >
         {loading ? <Loader2 className="animate-spin" /> : "Join Waitlist"}
       </button>

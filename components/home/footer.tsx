@@ -7,124 +7,106 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-950 text-white py-16">
-      <div className="container mx-auto px-6">
-        <div className="grid md:grid-cols-4 gap-8 mb-12">
-          {/* Brand */}
+    <footer className="border-t border-border bg-card py-14 md:py-16">
+      <div className="container mx-auto">
+        <div className="mb-12 grid gap-10 md:grid-cols-4">
           <div className="md:col-span-2">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="md:w-12 md:h-12 w-8 h-8 rounded-lg flex items-center justify-center">
+            <Link href="/" className="mb-5 flex items-center gap-2.5">
+              <div className="flex h-9 w-9 items-center justify-center overflow-hidden rounded-lg bg-primary/10 ring-1 ring-primary/20">
                 <Image
-                  className="w-full h-full"
+                  className="h-full w-full object-cover"
                   src={Logo}
                   width={500}
                   height={500}
-                  alt="Etrant Logo"
+                  alt="Etrant logo"
                 />
               </div>
-              <span className="md:text-3xl text-2xl font-black">Etrant</span>
-            </div>
-            <p className="text-gray-400 md:text-lg mb-6 max-w-md">
-              Transforming education through bite-sized, Instagram-style
-              learning experiences. Making knowledge accessible, engaging, and
-              fun for every student.
+              <span className="font-display text-2xl font-bold tracking-tight">
+                Etrant
+              </span>
+            </Link>
+            <p className="mb-6 max-w-md text-sm leading-relaxed text-muted-foreground">
+              Daily current affairs, practice questions and study groups for
+              UPSC and defence aspirants. Built as a short, repeatable study
+              loop.
             </p>
-            <div className="flex gap-4">
+            <div className="flex gap-2.5">
               <a
                 href="#"
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-purple-600 transition-colors"
+                aria-label="Twitter"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
-                <Twitter className="h-5 w-5" />
+                <Twitter className="h-4 w-4" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
+                aria-label="Instagram"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
-                <Instagram className="h-5 w-5" />
+                <Instagram className="h-4 w-4" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-red-600 transition-colors"
+                aria-label="YouTube"
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-border bg-background text-muted-foreground transition-colors hover:border-primary/40 hover:text-primary"
               >
-                <Youtube className="h-5 w-5" />
+                <Youtube className="h-4 w-4" />
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h4 className="text-xl font-bold mb-6">Quick Links</h4>
-            <ul className="space-y-3">
-              <li>
-                <a
-                  href="/"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Features
-                </a>
-              </li>
-              <li>
-                <Link
-                  href="/how-it-works"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  How It Works
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/pricing"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Pricing
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href="/"
-                  className="text-gray-400 hover:text-white transition-colors"
-                >
-                  Success Stories
-                </Link>
-              </li>
+            <h3 className="mb-5 text-sm font-bold text-foreground">Explore</h3>
+            <ul className="space-y-3 text-sm">
+              {[
+                { href: "/", label: "Features" },
+                { href: "/how-it-works", label: "How it works" },
+                { href: "/pricing", label: "Pricing" },
+                { href: "/auth", label: "Sign in" },
+              ].map((link) => (
+                <li key={link.label}>
+                  <Link
+                    href={link.href}
+                    className="text-muted-foreground transition-colors hover:text-primary"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
-            <h4 className="text-xl font-bold mb-6">Get in Touch</h4>
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 text-gray-400">
-                <Mail className="h-5 w-5" />
+            <h3 className="mb-5 text-sm font-bold text-foreground">Contact</h3>
+            <div className="space-y-3 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2.5">
+                <Mail className="h-4 w-4 shrink-0 text-primary" />
                 <span>hello@akkhil.dev</span>
               </div>
-              <div className="flex items-center gap-3 text-gray-400">
-                <MapPin className="h-5 w-5" />
+              <div className="flex items-center gap-2.5">
+                <MapPin className="h-4 w-4 shrink-0 text-primary" />
                 <span>Mandi, Himachal, India</span>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
-          <p className="text-gray-400 mb-4 md:mb-0 max-md:text-sm max-md:text-center">
-            © 2024 Etrant. All rights reserved. Scroll. Learn. Test. Repeat.
+        <div className="flex flex-col items-center justify-between gap-4 border-t border-border pt-7 md:flex-row">
+          <p className="text-center text-xs text-muted-foreground md:text-left">
+            &copy; 2024 Etrant. All rights reserved.
           </p>
-          <div className="flex gap-6 text-sm text-gray-400 max-md:hidden">
+          <div className="flex gap-6 text-xs text-muted-foreground">
             <Link
               href="/privacy-policy"
-              className="hover:text-white transition-colors"
+              className="transition-colors hover:text-primary"
             >
-              Privacy Policy
+              Privacy
             </Link>
             <Link
               href="/terms-and-conditions"
-              className="hover:text-white transition-colors"
+              className="transition-colors hover:text-primary"
             >
-              Terms of Service
-            </Link>
-            <Link href="/" className="hover:text-white transition-colors">
-              Support
+              Terms
             </Link>
           </div>
         </div>

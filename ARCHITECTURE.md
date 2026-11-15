@@ -27,7 +27,7 @@ This application is a modern, full-stack web platform built with **Next.js 15**,
 
 ### Real-time & External Services
 -   **Pusher:** Real-time WebSocket functionality (Group Chat, Typing Indicators).
--   **Razorpay:** Payment processing.
+-   **Dodo Payments:** Payment processing.
 -   **AI Integration:** Vercel AI SDK & Google GenAI for generating content.
 -   **PostHog:** Analytics.
 

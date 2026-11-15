@@ -70,7 +70,7 @@ Swipe through AI-curated Etrant summaries designed for quick comprehension and r
 ### 🏦 **Subscription System**
 
 - Monthly subscription plans for premium access
-- Razorpay payment gateway integration
+- Dodo Payments checkout with webhook-confirmed subscription activation
 - Unlock advanced reels, analytics, and features
 - Secure, fast, and seamless checkout experience
 - Automatic payment verification and subscription activation
@@ -215,6 +215,16 @@ flowchart TD
    # Analytics
    NEXT_PUBLIC_POSTHOG_KEY="your_posthog_key"
    NEXT_PUBLIC_POSTHOG_HOST="posthog_host"
+
+   # Dodo Payments
+   DODO_PAYMENTS_API_KEY="your_dodo_api_key"
+   DODO_PAYMENTS_WEBHOOK_KEY="whsec_your_webhook_signing_secret"
+   DODO_PAYMENTS_ENVIRONMENT="test_mode"
+
+   DODO_PRODUCT_ID_PRO="pdt_your_pro_product_id"
+   DODO_PRODUCT_ID_MAX="pdt_your_max_product_id"
+   DODO_PRODUCT_ID_PRO_STUDENT="pdt_your_student_pro_product_id"
+   DODO_PRODUCT_ID_MAX_STUDENT="pdt_your_student_max_product_id"
    ```
 
 3. **Database Setup**
@@ -222,9 +232,44 @@ flowchart TD
    ```bash
    pnpm drizzle-kit generate
    pnpm drizzle-kit push
+   pnpm db:migrate-dodo
    ```
 
-4. **Start Development Server**
+4. **Dodo Payments Setup**
+
+   Create four recurring subscription products in the Dodo dashboard and copy their product IDs into the environment variables above:
+   - Pro (regular)
+   - Max (regular)
+   - Pro (student)
+   - Max (student)
+
+   Set each product's **subscription period longer than its payment frequency** (for example, a 20-year subscription period with monthly billing). If the period equals the frequency, Dodo expires the subscription after one charge instead of renewing it.
+
+   Add a webhook endpoint pointing to:
+
+   ```text
+   https://your-domain.com/api/webhook/dodo
+   ```
+
+   Subscribe it to these events:
+
+   ```text
+   subscription.active
+   subscription.updated
+   subscription.renewed
+   subscription.plan_changed
+   subscription.past_due
+   subscription.on_hold
+   subscription.paused
+   subscription.unpaused
+   subscription.cancelled
+   subscription.expired
+   subscription.failed
+   ```
+
+   Copy the endpoint signing secret into `DODO_PAYMENTS_WEBHOOK_KEY`. The webhook is the source of truth for access; the success page only polls our own database.
+
+5. **Start Development Server**
    ```bash
    pnpm dev
    ```

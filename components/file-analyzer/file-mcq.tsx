@@ -50,16 +50,16 @@ export default function FileMCQ({
     setScore(0);
   };
   return (
-    <Card className="border-none">
+    <Card className="border-border bg-card">
       <CardHeader>
         <div className="flex max-md:flex-col md:items-center md:justify-between">
-          <CardTitle className="flex text-lg md:text-xl items-center gap-2 text-gray-900 dark:text-gray-100">
-            <BookOpen className="h-5 w-5 text-green-600 dark:text-green-400" />
+          <CardTitle className="flex items-center gap-2 text-lg font-semibold text-foreground md:text-xl">
+            <BookOpen className="h-5 w-5 text-primary" />
             {file}
           </CardTitle>
           <div className="flex gap-2">
             {showResults && (
-              <Badge className="bg-green-500/20 text-green-600 dark:text-green-400 border-green-500/30">
+              <Badge variant="success">
                 Score: {score}/{questions.length}
               </Badge>
             )}
@@ -68,9 +68,8 @@ export default function FileMCQ({
                 <Button
                   onClick={showQuizResults}
                   size="sm"
-                  className="text-gray-100 bg-blue-600 hover:bg-blue-700"
                 >
-                  Show Results
+                  Show results
                 </Button>
               )}
             {showResults && (
@@ -78,15 +77,14 @@ export default function FileMCQ({
                 onClick={resetQuiz}
                 size="sm"
                 variant="outline"
-                className="border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-700 bg-transparent"
               >
-                <RotateCcw className="h-4 w-4 mr-1" />
+                <RotateCcw className="mr-1 h-4 w-4" />
                 Retry
               </Button>
             )}
           </div>
         </div>
-        <CardDescription className="text-gray-700 dark:text-gray-400">
+        <CardDescription className="text-muted-foreground">
           Test your understanding with AI-generated questions
         </CardDescription>
       </CardHeader>

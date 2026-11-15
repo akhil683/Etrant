@@ -10,7 +10,7 @@ import Footer from "@/components/home/footer";
 export default function LandingPage() {
   return (
     <ErrorBoundary>
-      <main className="bg-gray-950 overflow-x-hidden">
+      <main className="overflow-x-hidden bg-background">
         <Navbar />
         <HeroSection />
     

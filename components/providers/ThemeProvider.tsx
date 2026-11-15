@@ -17,19 +17,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme") as Theme | null;
-    const prefersDark = window.matchMedia(
-      "(prefers-color-scheme: dark)",
-    ).matches;
-
-    const initialTheme = savedTheme || (prefersDark ? "dark" : "light");
+    // Reading Room defaults to light; only an explicit saved choice overrides it.
+    const initialTheme = savedTheme === "dark" ? "dark" : "light";
     setThemeState(initialTheme);
     document.documentElement.classList.toggle("dark", initialTheme === "dark");
+    document.documentElement.style.colorScheme = initialTheme;
   }, []);
 
   const setTheme = (newTheme: Theme) => {
     setThemeState(newTheme);
     localStorage.setItem("theme", newTheme);
     document.documentElement.classList.toggle("dark", newTheme === "dark");
+    document.documentElement.style.colorScheme = newTheme;
   };
 
   const toggleTheme = () => {

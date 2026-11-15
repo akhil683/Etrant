@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import {
   Smartphone,
   Brain,
@@ -13,115 +10,70 @@ import {
 const features = [
   {
     icon: Smartphone,
-    title: "Instagram-Style Learning",
+    title: "Knowledge reels",
     description:
-      "Swipe through bite-sized knowledge reels that make complex topics digestible and fun.",
-    color: "bg-gradient-to-br from-blue-500 to-indigo-600",
-    delay: 0,
+      "Swipe through bite-sized summaries that make dense topics easier to hold on to.",
   },
   {
     icon: Brain,
-    title: "Smart Quiz Engine",
+    title: "Practice questions",
     description:
-      "AI-powered quizzes tailored to JEE, NEET, UPSC, and other competitive exams.",
-    color: "bg-gradient-to-br from-purple-500 to-violet-600",
-    delay: 0.1,
+      "AI questions built around your exam, with explanations you can learn from.",
   },
   {
     icon: Newspaper,
-    title: "Daily Current Affairs",
+    title: "Daily current affairs",
     description:
-      "Automated UPSC-focused news digest delivered fresh every morning at your fingertips.",
-    color: "bg-gradient-to-br from-emerald-500 to-green-600",
-    delay: 0.2,
+      "A filtered digest every morning, focused on what is exam-relevant rather than everything published.",
   },
   {
     icon: Map,
-    title: "Visual Knowledge Maps",
+    title: "Visual knowledge maps",
     description:
-      "Interactive mind maps that show your learning journey and topic connections.",
-    color: "bg-gradient-to-br from-orange-500 to-red-600",
-    delay: 0.3,
+      "See how topics connect, so revision becomes a map instead of a pile of notes.",
   },
   {
     icon: Youtube,
-    title: "Multi-Source Content",
+    title: "Multi-source content",
     description:
-      "Research papers, YouTube videos, and blogs converted into snackable learning reels.",
-    color: "bg-gradient-to-br from-pink-500 to-rose-600",
-    delay: 0.4,
+      "Articles, papers and transcripts turned into short, readable learning units.",
   },
   {
     icon: Gamepad2,
-    title: "Gamified Experience",
+    title: "Progress that sticks",
     description:
-      "Earn XP, maintain streaks, compete on leaderboards, and unlock achievement badges.",
-    color: "bg-gradient-to-br from-cyan-500 to-teal-600",
-    delay: 0.5,
+      "Streaks, points and leaderboards that encourage consistency without turning study into a game.",
   },
 ];
 
 export default function FeaturesGrid() {
   return (
-    <section className="py-20 bg-gray-950">
-      {" "}
-      {/* Changed background */}
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
-            {" "}
-            {/* Changed text color */}
-            Why should you use
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              {" "}
-              Etrant
-            </span>{" "}
-            {/* Adjusted gradient for dark theme */}
+    <section className="border-y border-border bg-background py-20 md:py-28">
+      <div className="container mx-auto">
+        <div className="mb-12 max-w-2xl md:mb-16">
+          <p className="eyebrow">Everything in one place</p>
+          <h2 className="mb-4 text-3xl font-bold leading-tight tracking-tight md:text-5xl">
+            Built for the way you actually revise.
           </h2>
-          <p className="md:text-xl text-gray-300 max-w-3xl mx-auto">
-            {" "}
-            {/* Changed text color */}
-            We've reimagined learning for the TikTok generation. Every feature
-            is designed to make studying as addictive as social media.
+          <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
+            Not another feed to scroll through. Every feature is aimed at
+            retaining what you read and turning it into marks.
           </p>
-        </motion.div>
+        </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, index) => (
-            <motion.div
-              key={feature.title}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: feature.delay }}
-              viewport={{ once: true }}
-              className="group"
-            >
-              <div className="bg-gray-900 rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-2 border border-gray-800">
-                {" "}
-                {/* Changed card background and border */}
-                <div
-                  className={`md:w-16 md:h-16 w-12 h-12 rounded-2xl ${feature.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}
-                >
-                  <feature.icon className="md:h-8 md:w-8 h-6 w-6 text-white" />
-                </div>
-                <h3 className="md:text-2xl text-xl font-bold text-white mb-4">
-                  {" "}
-                  {/* Changed text color */}
-                  {feature.title}
-                </h3>
-                <p className="text-gray-300 leading-relaxed">
-                  {" "}
-                  {/* Changed text color */}
-                  {feature.description}
-                </p>
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {features.map((feature) => (
+            <div key={feature.title} className="surface surface-hover group p-6">
+              <div className="icon-tile mb-5 transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
+                <feature.icon className="h-5 w-5" />
               </div>
-            </motion.div>
+              <h3 className="mb-2 text-lg font-bold tracking-tight">
+                {feature.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {feature.description}
+              </p>
+            </div>
           ))}
         </div>
       </div>

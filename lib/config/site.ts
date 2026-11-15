@@ -37,7 +37,7 @@ export const siteConfig = {
     },
   ],
   creator: "Etrant Team",
-  themeColor: "#6366f1",
+  themeColor: "#2563EB",
 };
 
 export type SiteConfig = typeof siteConfig;

@@ -1,98 +1,63 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { Download, ShuffleIcon as Swipe, Target, Trophy } from "lucide-react";
 
 const steps = [
   {
     icon: Download,
-    title: "Sign Up to Etrant",
+    title: "Create your profile",
     description:
-      "Get the app and create your personalized learning profile in under 30 seconds.",
-    color: "from-blue-500 to-indigo-500",
+      "Sign in with Google and pick your exam in under a minute. No forms to fill.",
   },
   {
     icon: Swipe,
-    title: "Swipe Through Reels",
+    title: "Read the daily digest",
     description:
-      "Browse AI-curated knowledge reels tailored to your exam and interests.",
-    color: "from-emerald-500 to-green-500",
+      "Work through a short, filtered set of current affairs and topic reels.",
   },
   {
     icon: Target,
-    title: "Take Quick Quizzes",
+    title: "Test what stuck",
     description:
-      "Test your knowledge with instant quizzes and get immediate feedback.",
-    color: "from-orange-500 to-red-500",
+      "Answer practice questions and read the explanation while it is still fresh.",
   },
   {
     icon: Trophy,
-    title: "Track Your Progress",
+    title: "Keep the streak",
     description:
-      "Watch your knowledge grow with streaks, points, and achievement badges.",
-    color: "from-purple-500 to-violet-500",
+      "Track points and consistency, and compare progress with your study group.",
   },
 ];
 
 export default function ProcessFlow() {
   return (
-    <section className="py-20 bg-gray-900">
-      <div className="container mx-auto px-6">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-5xl font-black text-white mb-6">
-            Get Started in <br className="md:hidden" />
-            <span className="bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-              {" "}
-              4 Simple Steps
-            </span>
+    <section className="border-b border-border bg-secondary/50 py-20 md:py-28">
+      <div className="container mx-auto">
+        <div className="mb-12 max-w-2xl md:mb-16">
+          <p className="eyebrow">How it works</p>
+          <h2 className="mb-4 text-3xl font-bold leading-tight tracking-tight md:text-5xl">
+            From sign-up to mock-ready in four steps.
           </h2>
-        </motion.div>
-
-        <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-4 gap-8">
-            {steps.map((step, index) => (
-              <motion.div
-                key={step.title}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: index * 0.2 }}
-                viewport={{ once: true }}
-                className="relative"
-              >
-                <div className="text-center">
-                  <div
-                    className={`w-16 h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center mx-auto mb-6 shadow-lg`}
-                  >
-                    <step.icon className="md:h-10 h-8 w-8 md:w-10 text-white" />
-                  </div>
-                  <div className="max-md:hidden absolute -top-2 -right-2 w-8 h-8 bg-gray-700 text-white rounded-full flex items-center justify-center text-sm font-bold">
-                    {index + 1}
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3">
-                    {step.title}
-                  </h3>
-                  <p className="text-gray-300">{step.description}</p>
-                </div>
-
-                {index < steps.length - 1 && (
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    transition={{ duration: 0.8, delay: index * 0.2 + 0.4 }}
-                    viewport={{ once: true }}
-                    className="hidden lg:block absolute top-10 -right-4 w-8 h-0.5 bg-gray-700"
-                  />
-                )}
-              </motion.div>
-            ))}
-          </div>
+          <p className="text-base leading-relaxed text-muted-foreground md:text-lg">
+            A daily loop that is short enough to keep, and structured enough to
+            build recall.
+          </p>
         </div>
+
+        <ol className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+          {steps.map((step, index) => (
+            <li key={step.title} className="surface relative p-6">
+              <span className="mb-5 flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-sm font-bold text-primary-foreground shadow-sm">
+                {index + 1}
+              </span>
+              <step.icon className="mb-4 h-5 w-5 text-primary" />
+              <h3 className="mb-2 text-lg font-bold tracking-tight">
+                {step.title}
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground">
+                {step.description}
+              </p>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );

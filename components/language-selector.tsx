@@ -82,7 +82,7 @@ export function LanguageSelector() {
               <FormLabel></FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger className="bg-gray-200 border border-gray-400 dark:border-gray-800 text-gray-950 dark:text-gray-100 dark:bg-gray-900">
+                  <SelectTrigger className="bg-background text-foreground">
                     <SelectValue
                       placeholder={
                         `${user?.language} (Language)` || "Select a language"
@@ -104,7 +104,6 @@ export function LanguageSelector() {
           )}
         />
         <Button
-          className="bg-indigo-600 text-gray-100 hover:bg-indigo-700"
           disabled={loading}
           type="submit"
         >

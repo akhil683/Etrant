@@ -5,6 +5,11 @@ import { authMetadata } from "@/lib/config/site";
 
 export const metadata: Metadata = authMetadata;
 
-export default async function SignUpPage() {
-  return <AuthLayout />;
+export default async function SignUpPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ callbackUrl?: string }>;
+}) {
+  const { callbackUrl } = await searchParams;
+  return <AuthLayout callbackUrl={callbackUrl} />;
 }

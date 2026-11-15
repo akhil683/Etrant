@@ -1,6 +1,7 @@
-import { Badge, Brain, CheckCircle } from "lucide-react";
+import { Brain, CheckCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button } from "../ui/button";
+import { Badge } from "../ui/badge";
 import { useState } from "react";
 import { toast } from "../ui/use-toast";
 import { getDifficultyColor } from "@/lib/utils";
@@ -27,13 +28,7 @@ export default function FileAnalysis({ analysisResult }: FileAnalysisProps) {
     setIsGeneratingMCQ(true);
 
     try {
-      // Simulate API call to Gemini AI for MCQ generation
       await new Promise((resolve) => setTimeout(resolve, 2500));
-
-      // toast({
-      //   title: "Questions generated!",
-      // description: `${mockQuestions.length} MCQ questions have been created based on your file.`,
-      // });
     } catch (error) {
       toast({
         title: "Generation failed",
@@ -46,53 +41,42 @@ export default function FileAnalysis({ analysisResult }: FileAnalysisProps) {
     }
   };
   return (
-    <Card className="bg-indigo-200/30 dark:bg-gray-800 border-indigo-200 dark:border-gray-700">
+    <Card className="border-border bg-card">
       <CardHeader>
-        <CardTitle className="flex text-lg md:text-xl items-center gap-2 text-gray-950 dark:text-white">
-          <Brain className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
-          AI Analysis Results
+        <CardTitle className="flex items-center gap-2 text-lg font-semibold text-foreground md:text-xl">
+          <Brain className="h-5 w-5 text-primary" />
+          AI analysis results
         </CardTitle>
       </CardHeader>
       <CardContent className="space-y-6">
         {/* Summary */}
         <div>
-          <h3 className="font-semibold mb-2 text-gray-950 dark:text-white">
-            Summary
-          </h3>
-          <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-            {analysisResult?.summary}
-          </p>
+          <h3 className="mb-2 font-semibold text-foreground">Summary</h3>
+          <p className="reading-prose text-base">{analysisResult?.summary}</p>
         </div>
 
         {/* Key Points */}
         <div>
-          <h3 className="font-semibold mb-2 text-gray-950 dark:text-white">
-            Key Points
-          </h3>
+          <h3 className="mb-2 font-semibold text-foreground">Key points</h3>
           <ul className="space-y-2">
             {analysisResult?.keyPoints.map((point, index) => (
               <li key={index} className="flex items-start gap-2">
-                <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400 mt-0.5 flex-shrink-0" />
-                <span className="text-gray-700 dark:text-gray-300">
-                  {point}
-                </span>
+                <CheckCircle className="mt-0.5 h-4 w-4 flex-shrink-0 text-primary" />
+                <span className="text-sm text-muted-foreground">{point}</span>
               </li>
             ))}
           </ul>
         </div>
 
         {/* Topics and Stats */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid gap-6 md:grid-cols-2">
           <div>
-            <h3 className="font-semibold mb-2 text-gray-700 dark:text-white">
-              Topics Covered
+            <h3 className="mb-2 font-semibold text-foreground">
+              Topics covered
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {analysisResult?.topics?.map((topic, index) => (
-                <Badge
-                  key={index}
-                  className="bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 border-indigo-500/30"
-                >
+                <Badge key={index} variant="secondary">
                   {topic}
                 </Badge>
               ))}
@@ -100,8 +84,8 @@ export default function FileAnalysis({ analysisResult }: FileAnalysisProps) {
           </div>
           <div className="space-y-2">
             <div className="flex justify-between">
-              <span className="text-gray-700 dark:text-gray-400">
-                Difficulty Level:
+              <span className="text-sm text-muted-foreground">
+                Difficulty level
               </span>
               <Badge
                 className={getDifficultyColor(
@@ -112,10 +96,8 @@ export default function FileAnalysis({ analysisResult }: FileAnalysisProps) {
               </Badge>
             </div>
             <div className="flex justify-between">
-              <span className="text-gray-700 dark:text-gray-400">
-                Word Count:
-              </span>
-              <span className="font-medium text-gray-950 dark:text-white">
+              <span className="text-sm text-muted-foreground">Word count</span>
+              <span className="tabular font-medium text-foreground">
                 {analysisResult?.wordCount?.toLocaleString()}
               </span>
             </div>
@@ -123,21 +105,21 @@ export default function FileAnalysis({ analysisResult }: FileAnalysisProps) {
         </div>
 
         {/* Generate MCQ Button */}
-        <div className="pt-4 border-t border-gray-300 dark:border-gray-700">
+        <div className="border-t border-border pt-4">
           <Button
             onClick={generateMCQQuestions}
             disabled={isGeneratingMCQ}
-            className="w-full bg-indigo-600 hover:bg-indigo-700"
+            className="w-full"
           >
             {isGeneratingMCQ ? (
               <>
-                <Brain className="h-4 w-4 mr-2 animate-spin" />
-                Generating Questions...
+                <Brain className="mr-2 h-4 w-4 animate-spin" />
+                Generating questions...
               </>
             ) : (
               <>
-                <Brain className="h-4 w-4 mr-2" />
-                Generate MCQ Questions
+                <Brain className="mr-2 h-4 w-4" />
+                Generate MCQ questions
               </>
             )}
           </Button>

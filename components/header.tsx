@@ -10,9 +10,12 @@ import { sidebarLinks } from "@/data/data";
 import { signOut } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
 import ThemeToggle from "./bar/theme-toggle";
+import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export default function Header() {
   const { user } = useUserStore();
+  const pathname = usePathname();
   const [loading, setLoading] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -37,143 +40,122 @@ export default function Header() {
     };
   }, [isMobileMenuOpen]);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const closeMobileMenu = () => {
+  useEffect(() => {
     setIsMobileMenuOpen(false);
-  };
+  }, [pathname]);
 
   return (
     <>
-      <div className="md:hidden fixed w-full top-0 z-40 backdrop-blur-sm border-b border-gray-300/50 dark:border-gray-900">
-        <div className="flex items-center justify-between p-4 max-w-7xl mx-auto">
-          <h1 className="md:text-lg font-semibold text-white">
-            <Link href="/" className="flex items-center gap-2">
-              <div className="md:w-9 md:h-9 w-8 h-8 rounded-lg flex items-center justify-center">
-                <Image src={Logo} className="w-full h-full" alt="Etrant Logo" />
-              </div>
-              <span className="md:text-2xl text-xl font-black text-gray-950 dark:text-white">
-                Etrant
-              </span>
-            </Link>
-          </h1>
-          <div className="flex items-center space-x-4">
-            {user?.points && (
-              <div className="flex items-center space-x-2 bg-yellow-600 dark:bg-yellow-600/20 px-3 py-1 rounded-full">
-                <Trophy className="md:w-4 md:h-4 w-3 h-3 text-yellow-200 dark:text-yellow-400" />
-                <span className="md:text-sm text-xs font-medium text-yellow-200 dark:text-yellow-400">
-                  {user?.points || 0}
-                </span>
-              </div>
-            )}
-
-            <div className="container mx-auto flex items-center justify-between">
-              {/* Mobile Menu Button */}
-              <Button
-                variant="ghost"
-                size="icon"
-                className="lg:hidden text-gray-950 dark:text-white dark:hover:bg-gray-800"
-                onClick={toggleMobileMenu}
-                aria-label="Toggle mobile menu"
-              >
-                <Menu className="h-6 w-6" />
-              </Button>
+      <div className="fixed top-0 z-40 w-full border-b border-border bg-card/90 backdrop-blur-md md:hidden">
+        <div className="flex items-center justify-between px-4 py-2.5">
+          <Link href="/" className="flex items-center gap-2">
+            <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg bg-primary/10 ring-1 ring-primary/20">
+              <Image src={Logo} className="h-full w-full object-cover" alt="Etrant logo" />
             </div>
+            <span className="font-display text-lg font-bold tracking-tight text-foreground">
+              Etrant
+            </span>
+          </Link>
+
+          <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5 rounded-full bg-primary/10 px-2.5 py-1">
+              <Trophy className="h-3 w-3 text-primary" />
+              <span className="tabular text-xs font-semibold text-primary">
+                {(user?.points || 0).toLocaleString()}
+              </span>
+            </div>
+
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-9 w-9"
+              onClick={() => setIsMobileMenuOpen(true)}
+              aria-label="Open menu"
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
           </div>
         </div>
       </div>
 
       {isMobileMenuOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 dark:bg-opacity-70 z-[999] lg:hidden"
-          onClick={closeMobileMenu}
+          className="fixed inset-0 z-[998] bg-slate-950/40 backdrop-blur-[2px] md:hidden"
+          onClick={() => setIsMobileMenuOpen(false)}
         />
       )}
 
       {/* Mobile Menu Sidebar */}
       <div
-        className={`fixed top-0 bottom-0 right-0 h-full w-72 bg-gray-100 dark:bg-gray-900 border-l border-gray-300 dark:border-gray-800 z-[999] transform transition-transform duration-300 ease-in-out lg:hidden ${
+        className={`fixed bottom-0 right-0 top-0 z-[999] h-full w-72 transform border-l border-border bg-card transition-transform duration-300 ease-out md:hidden ${
           isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {/* Mobile Menu Header */}
-        <div className="flex items-center justify-between p-6 pb-4  border-b border-gray-300 dark:border-gray-800">
+        <div className="flex items-center justify-between border-b border-border px-5 py-4">
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 flex items-center justify-center">
-              <Image src={Logo} alt="Etrant's Logo" className="h-full w-full" />
+            <div className="flex h-8 w-8 items-center justify-center overflow-hidden rounded-lg bg-primary/10 ring-1 ring-primary/20">
+              <Image src={Logo} alt="Etrant logo" className="h-full w-full" />
             </div>
-            <span className="text-xl font-black text-gray-950 dark:text-white">
+            <span className="font-display text-lg font-bold tracking-tight">
               Etrant
             </span>
           </div>
           <Button
             variant="ghost"
             size="icon"
-            className="text-gray-950 dark:text-white hover:bg-gray-300 dark:hover:bg-gray-800"
-            onClick={closeMobileMenu}
+            className="h-9 w-9"
+            onClick={() => setIsMobileMenuOpen(false)}
             aria-label="Close mobile menu"
           >
-            <X className="h-6 w-6" />
+            <X className="h-5 w-5" />
           </Button>
         </div>
 
-        {/* Mobile Menu Content */}
-        <div className="flex flex-col p-4 space-y-2">
-          {sidebarLinks.map((link) => (
-            <Link key={link.link} href={link.link} onClick={closeMobileMenu}>
-              <Button
-                variant="ghost"
-                className="w-full justify-start text-gray-950 dark:text-gray-300 hover:text-white hover:bg-gray-800 px-4 py-3 rounded-lg font-medium text-left"
-              >
-                <link.icon />
-                {link.name}
-              </Button>
-            </Link>
-          ))}
+        <div className="flex flex-col gap-1 overflow-y-auto p-4">
+          {sidebarLinks.map((link) => {
+            const isActive = pathname === link.link;
+            return (
+              <Link key={link.link} href={link.link} onClick={() => setIsMobileMenuOpen(false)}>
+                <div
+                  className={cn(
+                    "flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors",
+                    isActive
+                      ? "bg-primary text-primary-foreground"
+                      : "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                  )}
+                >
+                  <link.icon className="h-4 w-4" />
+                  {link.name}
+                </div>
+              </Link>
+            );
+          })}
         </div>
 
-        <div className="absolute bottom-0 left-0 right-0 p-6 border-t border-gray-300 dark:border-gray-800">
-          <div className="flex flex-col gap-2">
+        <div className="absolute bottom-0 left-0 right-0 border-t border-border bg-card p-4">
+          <div className="flex flex-col gap-3">
             <ThemeToggle />
             <Link
               href="/user/profile"
-              onClick={closeMobileMenu}
+              onClick={() => setIsMobileMenuOpen(false)}
               className="cursor-pointer"
             >
-              <div className="flex gap-4 px-3 py-2 rounded-lg items-center duration-200 hover:bg-gray-300 dark:hover:bg-gray-700">
-                {user?.image ? (
-                  <Button
-                    variant="ghost"
-                    className="relative min-h-8 min-w-8 rounded-full"
-                  >
-                    {user?.subscriptionActive === true && (
-                      <p className="bg-yellow-700 text-[8px] px-1 py-0 rounded-full absolute z-30 top-0 right-2">
-                        {user?.plan}
-                      </p>
-                    )}
-                    <Avatar
-                      className={`w-8 h-8 rounded-full overflow-hidden border-2 ${user?.subscriptionActive === true ? "border-yellow-600" : "border-transparent"}`}
-                    >
-                      <AvatarImage
-                        src={user?.image || ""}
-                        alt={user?.name || ""}
-                        width={100}
-                        height={100}
-                        className="w-8 h-8"
-                      />
-                      <AvatarFallback>
-                        {user?.name?.charAt(0) || "U"}
-                      </AvatarFallback>
-                    </Avatar>
-                  </Button>
-                ) : (
-                  <div className="w-8 h-8 rounded-full bg-gray-600" />
-                )}
-                <p className="dark:font-semibold leading-4 dark:text-white flex flex-col text-gray-950">
+              <div className="flex items-center gap-3 rounded-lg border border-border bg-background px-3 py-2.5">
+                <Avatar className="relative h-8 w-8 overflow-hidden rounded-full border border-border">
+                  <AvatarImage
+                    src={user?.image || ""}
+                    alt={user?.name || ""}
+                    width={100}
+                    height={100}
+                    className="h-8 w-8"
+                  />
+                  <AvatarFallback className="bg-primary/10 text-xs font-semibold text-primary">
+                    {user?.name?.charAt(0) || "U"}
+                  </AvatarFallback>
+                </Avatar>
+                <p className="flex flex-col text-sm leading-tight text-foreground">
                   Account
-                  <span className="text-xs dark:text-gray-400 text-gray-700">
+                  <span className="text-xs text-muted-foreground">
                     {user?.name}
                   </span>
                 </p>
@@ -182,14 +164,15 @@ export default function Header() {
             <Button
               onClick={handleSignOut}
               disabled={loading}
-              className="w-full flex bg-indigo-500 items-center gap-2 cursor-pointer text-gray-100 hover:bg-indigo-600 duration-200"
+              variant="outline"
+              className="w-full justify-center gap-2"
             >
               {loading ? (
                 <Loader2 className="animate-spin" />
               ) : (
                 <>
                   <LogOut />
-                  <span>{loading ? "Signing out..." : "Sign Out"}</span>
+                  <span>Sign out</span>
                 </>
               )}
             </Button>

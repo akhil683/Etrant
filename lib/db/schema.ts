@@ -10,6 +10,7 @@ import {
   jsonb,
   real,
   varchar,
+  index,
 } from "drizzle-orm/pg-core";
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
@@ -48,12 +49,18 @@ export const payments = pgTable("payments", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  userId: text("user_id"),
-  // Razorpay payment ID (unique identifier for each payment)
-  razorpayPaymentId: varchar("razorpay_payment_id", { length: 255 })
-    .unique()
-    .notNull(),
-  method: varchar("method", { length: 50 }), // 'card', 'upi', 'netbanking', etc.
+  userId: text("user_id").notNull(),
+  provider: varchar("provider", { length: 32 }).default("dodo").notNull(),
+  checkoutSessionId: varchar("checkout_session_id", { length: 255 }).unique(),
+  providerCustomerId: varchar("provider_customer_id", { length: 255 }),
+  providerSubscriptionId: varchar("provider_subscription_id", {
+    length: 255,
+  }).unique(),
+  plan: varchar("plan", { length: 50 }),
+  status: varchar("status", { length: 50 }),
+  amount: integer("amount"),
+  currency: varchar("currency", { length: 10 }),
+  method: varchar("method", { length: 50 }),
   webhookConfirmed: boolean("webhook_confirmed").default(false),
   createdAt: timestamp("created_at").defaultNow(),
   updatedAt: timestamp("updated_at").defaultNow(),
@@ -133,6 +140,81 @@ export const dailyDigest = pgTable("daily_digest", {
   topic: text("topic"), // store comma-separated tags OR normalize into another table
   date: text("date").notNull(),
 });
+
+// -------------------- DAILY QUESTIONS --------------------
+// Generated once per night from that day's digest. The mobile app reads these
+// by date range. They are never generated on demand from the app.
+export const questions = pgTable(
+  "questions",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    digestDate: date("digest_date").notNull(),
+    position: integer("position").notNull(),
+    questionKey: text("question_key").notNull().unique(),
+    question: text("question").notNull(),
+    difficulty: text("difficulty").notNull(),
+    category: text("category").notNull(),
+    tags: text("tags").array(),
+    context: text("context"),
+    estimatedTime: integer("estimated_time"),
+    options: jsonb("options").notNull(),
+    correctAnswer: integer("correct_answer").notNull(),
+    explanation: text("explanation").notNull(),
+    metadata: jsonb("metadata"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (t) => [
+    index("questions_digest_date_idx").on(t.digestDate),
+  ],
+);
+
+// -------------------- MOBILE REFRESH TOKENS --------------------
+export const mobileRefreshTokens = pgTable(
+  "mobile_refresh_tokens",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    tokenHash: text("token_hash").notNull().unique(),
+    deviceId: text("device_id").notNull(),
+    platform: varchar("platform", { length: 16 }).notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    revokedAt: timestamp("revoked_at", { withTimezone: true }),
+    lastUsedAt: timestamp("last_used_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .defaultNow()
+      .notNull(),
+  },
+  (t) => [index("mobile_refresh_tokens_user_idx").on(t.userId)],
+);
+
+// -------------------- QUIZ ATTEMPTS --------------------
+export const quizAttempts = pgTable(
+  "quiz_attempts",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    userId: text("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    questionId: text("question_id")
+      .notNull()
+      .references(() => questions.id, { onDelete: "cascade" }),
+    selectedIndex: integer("selected_index").notNull(),
+    correctIndex: integer("correct_index").notNull(),
+    isCorrect: boolean("is_correct").notNull(),
+    pointsAwarded: integer("points_awarded").notNull(),
+    idempotencyKey: text("idempotency_key").notNull().unique(),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
+  },
+  (t) => [index("quiz_attempts_user_idx").on(t.userId, t.createdAt)],
+);
 
 // -------------------- DAILY POINTS --------------------
 export const dailyPoints = pgTable("daily_points", {

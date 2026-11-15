@@ -44,13 +44,13 @@ export function UserMenu() {
   };
 
   if (status === "loading") {
-    return <div className="w-8 h-8 bg-gray-600 rounded-full animate-pulse" />;
+    return <div className="h-8 w-8 animate-pulse rounded-full bg-muted" />;
   }
   if (!session) {
     return (
       <div className="flex items-center space-x-2">
         <Link href="/auth">
-          <Button size="sm" className="bg-blue-600 hover:bg-blue-700">
+          <Button size="sm">
             Sign In
           </Button>
         </Link>
@@ -63,12 +63,12 @@ export function UserMenu() {
         <DropdownMenuTrigger asChild>
           <Button variant="ghost" className="relative h-8 w-8 rounded-full">
             {user?.subscriptionActive === true && (
-              <p className="bg-yellow-700 text-[8px] px-1 py-0 rounded-full absolute z-30 top-0 -right-2">
+              <span className="absolute -right-2 -top-1 z-30 rounded-full bg-primary px-1.5 py-0.5 text-[8px] font-bold uppercase text-primary-foreground">
                 {user?.plan}
-              </p>
+              </span>
             )}
             <Avatar
-              className={`w-8 h-8 border-2 ${user?.subscriptionActive === true ? "border-yellow-600" : "border-transparent"}`}
+              className={`h-8 w-8 border-2 ${user?.subscriptionActive === true ? "border-primary" : "border-transparent"}`}
             >
               <AvatarImage
                 src={session?.user?.image || ""}
@@ -82,7 +82,7 @@ export function UserMenu() {
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent
-          className="w-56 bg-gray-300 dark:bg-gray-800 border-gray-400 dark:border-gray-700 text-gray-950 dark:text-white"
+          className="w-56 border-border bg-popover text-popover-foreground"
           align="end"
           forceMount
         >
@@ -95,26 +95,26 @@ export function UserMenu() {
                 <p className="font-medium">{session?.user?.name}</p>
               )}
               {session?.user?.email && (
-                <p className="w-[200px] truncate text-sm text-gray-700 dark:text-gray-400">
+                <p className="w-[200px] truncate text-sm text-muted-foreground">
                   {session?.user?.email}
                 </p>
               )}
             </Link>
           </div>
-          <DropdownMenuSeparator className="bg-gray-700" />
+          <DropdownMenuSeparator className="bg-border" />
           <div className="p-2">
             <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-700 dark:text-gray-400">Streak:</span>
-              <span className="font-semibold text-orange-600 dark:text-orange-400">
+              <span className="text-muted-foreground">Streak:</span>
+              <span className="font-semibold text-primary">
                 {user?.streak || 0}
               </span>
             </div>
 
             <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-700 dark:text-gray-400">
+              <span className="text-muted-foreground">
                 Interest:
               </span>
-              <span className="font-semibold text-orange-600 dark:text-orange-400">
+              <span className="font-semibold text-primary">
                 {!user
                   ? "none"
                   : user?.interest === null
@@ -123,24 +123,24 @@ export function UserMenu() {
               </span>
             </div>
           </div>
-          <DropdownMenuSeparator className="bg-gray-700" />
+          <DropdownMenuSeparator className="bg-border" />
           <DropdownMenuItem
             onClick={aiQuestionHandler}
-            className="hover:bg-gray-700 cursor-pointer"
+            className="hover:bg-secondary cursor-pointer"
           >
             <BookDown className=" h-4 w-4" />
             <span>AI Questions</span>
           </DropdownMenuItem>
-          <DropdownMenuSeparator className="bg-gray-700" />
-          <DropdownMenuItem asChild className="hover:bg-gray-700">
+          <DropdownMenuSeparator className="bg-border" />
+          <DropdownMenuItem asChild className="hover:bg-secondary">
             <Link href="/articles" className="flex items-center cursor-pointer">
               <AlarmClockCheck className="mr-2 h-4 w-4" />
               <span>Article Reel</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuSeparator className="bg-gray-700" />
+          <DropdownMenuSeparator className="bg-border" />
 
-          <DropdownMenuItem asChild className="hover:bg-gray-700">
+          <DropdownMenuItem asChild className="hover:bg-secondary">
             <Link
               href="/daily-digest"
               className="flex items-center cursor-pointer"
@@ -149,8 +149,8 @@ export function UserMenu() {
               <span>Daily Digest</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuSeparator className="bg-gray-700" />
-          <DropdownMenuItem asChild className="hover:bg-gray-700">
+          <DropdownMenuSeparator className="bg-border" />
+          <DropdownMenuItem asChild className="hover:bg-secondary">
             <Link
               href="/leaderboard"
               className="flex items-center cursor-pointer"
@@ -159,8 +159,8 @@ export function UserMenu() {
               <span>Leaderboard</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuSeparator className="bg-gray-700" />
-          <DropdownMenuItem asChild className="hover:bg-gray-700">
+          <DropdownMenuSeparator className="bg-border" />
+          <DropdownMenuItem asChild className="hover:bg-secondary">
             <Link
               href="/subscription"
               className="cursor-pointer flex items-center"
@@ -169,9 +169,9 @@ export function UserMenu() {
               <span>Subscription</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuSeparator className="bg-gray-700" />
+          <DropdownMenuSeparator className="bg-border" />
 
-          <DropdownMenuItem asChild className="hover:bg-gray-700">
+          <DropdownMenuItem asChild className="hover:bg-secondary">
             <Link
               href="/user-feedback"
               className="cursor-pointer flex items-center"
@@ -180,11 +180,11 @@ export function UserMenu() {
               <span>Feedback</span>
             </Link>
           </DropdownMenuItem>
-          <DropdownMenuSeparator className="bg-gray-700" />
+          <DropdownMenuSeparator className="bg-border" />
           <DropdownMenuItem
             onClick={handleSignOut}
             disabled={loading}
-            className="hover:bg-gray-700 cursor-pointer"
+            className="hover:bg-secondary cursor-pointer"
           >
             <LogOut className="mr-2 h-4 w-4" />
             <span>{loading ? "Signing out..." : "Sign out"}</span>

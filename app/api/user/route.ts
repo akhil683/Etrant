@@ -4,6 +4,7 @@ import { users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { IUser } from "@/types";
 import { auth } from "@/auth";
+import { requireUser } from "@/lib/auth/request-user";
 import { rateLimit, rateLimitConfigs } from "@/lib/rate-limit";
 import { createErrorResponse } from "@/lib/validation";
 
@@ -11,12 +12,13 @@ const apiRateLimit = rateLimit(rateLimitConfigs.api);
 
 export async function GET(request: NextRequest) {
   try {
-    const session = await auth();
-    if (!session?.user?.id) {
-      return createErrorResponse("Unauthorized", 401);
-    }
+    const authResult = await requireUser(request);
+    if ("response" in authResult) return authResult.response;
 
-    const userResult = await db.select().from(users).where(eq(users.id, session.user.id));
+    const userResult = await db
+      .select()
+      .from(users)
+      .where(eq(users.id, authResult.user.id));
     const user = userResult[0];
 
     if (!user) {

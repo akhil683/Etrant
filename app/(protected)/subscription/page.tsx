@@ -1,47 +1,62 @@
 import { faqs } from "@/data/data";
 import PricingCard from "@/components/pricing-card";
+import { auth } from "@/auth";
 
-export default async function SubscriptionPage() {
+export default async function SubscriptionPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ from?: string }>;
+}) {
+  const { from } = await searchParams;
+  const fromApp = from === "app";
+  const session = fromApp ? await auth() : null;
+
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-950 text-white py-12 max-md:pt-24 px-4">
-      <div className="container mx-auto max-w-7xl">
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h1 className="text-3xl md:text-6xl dark:text-gray-100 text-gray-950 font-black mb-6">
-            Simple{" "}
-            <span className="bg-gradient-to-r dark:from-blue-400 from-blue-600 dark:to-purple-400 to-purple-600 bg-clip-text text-transparent">
-              Pricing
-            </span>
-          </h1>
-          <p className="md:text-xl text-gray-700 dark:text-gray-400 max-w-2xl mx-auto mb-4 md:mb-8">
-            Choose the perfect plan for your learning journey. Start free and
-            upgrade anytime.
+    <div className="mx-auto w-full max-w-6xl px-5 pb-16 pt-24 md:px-8 md:pt-12">
+      <div className="page-header">
+        <p className="eyebrow">Plans</p>
+        <h1 className="page-title md:text-5xl">Simple pricing</h1>
+        <p className="page-description">
+          Start free and upgrade when you need more. Every paid plan is built
+          around daily practice and exam-relevant content.
+        </p>
+      </div>
+
+      {fromApp && (
+        <div className="mx-auto mb-8 max-w-5xl rounded-xl border border-primary/25 bg-primary/5 p-5">
+          <p className="text-sm font-semibold text-foreground">
+            Subscribing from the Etrant app?
           </p>
+          <p className="mt-1 max-w-3xl text-sm leading-relaxed text-muted-foreground">
+            Use the same Google account you use in the app. After payment,
+            return to the app. Your plan will appear automatically when you
+            refresh or reopen the app.
+          </p>
+          {session?.user?.email && (
+            <p className="mt-2 text-xs font-medium text-foreground">
+              Signed in as {session.user.email}
+            </p>
+          )}
         </div>
+      )}
 
-        {/* Pricing Cards */}
-        <PricingCard />
+      <PricingCard fromApp={fromApp} />
 
-        {/* FAQ Section */}
-        <div className="my-20 max-w-3xl mx-auto">
-          <h2 className="text-xl md:text-3xl font-bold text-center text-gray-950 dark:text-white mb-12">
-            Frequently Asked Questions
-          </h2>
-          <div className="space-y-6">
-            {faqs.map((faq, idx) => (
-              <div
-                key={idx}
-                className="bg-gray-300/70 dark:bg-gray-900/30 border border-gray-400 dark:border-gray-800 rounded-lg p-6"
-              >
-                <h3 className="md:text-lg font-semibold text-gray-950 dark:text-white mb-2">
-                  {faq.question}
-                </h3>
-                <p className="max-md:text-sm text-gray-700 dark:text-gray-400">
-                  {faq.answer}
-                </p>
-              </div>
-            ))}
-          </div>
+      <div className="mx-auto my-20 max-w-3xl">
+        <h2 className="mb-10 text-2xl font-bold tracking-tight md:text-3xl">
+          Frequently asked questions
+        </h2>
+        <div className="surface divide-y divide-border overflow-hidden">
+          {faqs.map((faq, idx) => (
+            <div key={idx} className="px-6 py-6">
+              <h3 className="mb-2 text-lg font-bold text-foreground">
+                {faq.question}
+              </h3>
+              <p className="text-sm leading-relaxed text-muted-foreground md:text-base">
+                {faq.answer}
+              </p>
+            </div>
+          ))}
         </div>
       </div>
     </div>

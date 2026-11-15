@@ -49,17 +49,17 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
 function DefaultErrorFallback({ error, resetError }: { error?: Error; resetError: () => void }) {
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4">
-      <Card className="w-full max-w-md bg-red-900/20 border-red-500/30 text-white">
+    <div className="flex min-h-screen items-center justify-center bg-background p-4">
+      <Card className="w-full max-w-md border-border bg-card">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2 text-red-400">
+          <CardTitle className="flex items-center space-x-2 text-destructive">
             <AlertTriangle className="w-5 h-5" />
             <span>Something went wrong</span>
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <p className="text-gray-300 mb-4">{error?.message || "An unexpected error occurred"}</p>
-          <Button onClick={resetError} className="w-full bg-red-600 hover:bg-red-700">
+          <p className="mb-4 text-sm text-muted-foreground">{error?.message || "An unexpected error occurred"}</p>
+          <Button onClick={resetError} className="w-full">
             <RefreshCw className="w-4 h-4 mr-2" />
             Try Again
           </Button>

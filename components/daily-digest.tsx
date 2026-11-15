@@ -1,5 +1,7 @@
 import { getDailyDigest } from "@/lib/db/get-daily-digest";
 import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 export default async function DailyDigests() {
   const articles = await getDailyDigest();
@@ -7,61 +9,50 @@ export default async function DailyDigests() {
   if (!Array.isArray(articles)) {
     console.error("Failed to fetch daily digest:", articles);
     return (
-      <div className="h-full w-full mt-48 flex justify-center items-center">
-        <p className="text-gray-700 dark:text-gray-400 text-2xl">
-          Failed to load news.
-        </p>
+      <div className="flex h-full w-full items-center justify-center py-24">
+        <p className="text-lg text-muted-foreground">Failed to load news.</p>
       </div>
     );
   }
 
   if (articles.length < 1) {
     return (
-      <div className="h-full w-full mt-48 flex justify-center items-center">
-        <p className="text-gray-700 dark:text-gray-400 text-2xl">
-          No Latest News.
-        </p>
+      <div className="flex h-full w-full items-center justify-center py-24">
+        <p className="text-lg text-muted-foreground">No latest news.</p>
       </div>
     );
   }
 
   return (
-    <>
+    <div className="flex flex-col gap-4">
       {articles?.map((article) => (
-        <Link href={`/daily-digest/${article.id}`} key={article?.title} prefetch>
-          <div className="bg-gray-300 dark:bg-gray-900 p-4 rounded-xl border border-gray-400 dark:border-gray-700 hover:border-gray-500 duration-500">
-            <div className="border-b border-gray-400 dark:border-gray-700">
-              <h2 className="text-lg md:text-xl text-gray-950 dark:text-gray-100">
-                {article?.title}
-              </h2>
-              <div className="flex items-center flex-wrap gap-2 my-4">
-                {article?.topic?.split(",")?.map((topic: any) => {
-                  const colors = [
-                    "bg-green-700",
-                    "bg-orange-700",
-                    "bg-indigo-700",
-                    "bg-yellow-700",
-                    "bg-blue-700",
-                  ];
-                  const randomColor =
-                    colors[Math.floor(Math.random() * colors.length)];
-                  return (
-                    <span
-                      key={topic}
-                      className={`${randomColor} px-4 py-1 text-[10px] md:text-sm rounded-full`}
-                    >
-                      {topic}
-                    </span>
-                  );
-                })}
-              </div>
+        <Link
+          href={`/daily-digest/${article.id}`}
+          key={article?.title}
+          prefetch
+          className="group block"
+        >
+          <article className="surface surface-hover p-5 md:p-6">
+            <div className="mb-3 flex flex-wrap items-center gap-1.5">
+              {article?.topic?.split(",")?.map((topic: string) => (
+                <Badge key={topic} variant="secondary">
+                  {topic}
+                </Badge>
+              ))}
             </div>
-            <p className="mt-4 text-gray-700 dark:text-gray-300">
-              {article?.summary.slice(0, 300)}...
+            <h2 className="text-xl font-bold leading-snug tracking-tight text-foreground md:text-2xl">
+              {article?.title}
+            </h2>
+            <p className="mt-2.5 max-w-3xl text-sm leading-relaxed text-muted-foreground md:text-base">
+              {article?.summary.slice(0, 240)}...
             </p>
-          </div>
+            <p className="mt-4 flex items-center gap-1 text-sm font-semibold text-primary">
+              Read the digest
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </p>
+          </article>
         </Link>
       ))}
-    </>
+    </div>
   );
 }

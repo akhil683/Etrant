@@ -98,14 +98,14 @@ export function Leaderboard() {
   const getRankIcon = (rank: number) => {
     switch (rank) {
       case 1:
-        return <Trophy className="w-6 h-6 text-yellow-400" />;
+        return <Trophy className="w-6 h-6 text-primary" />;
       case 2:
-        return <Medal className="w-6 h-6 text-gray-400" />;
+        return <Medal className="w-6 h-6 text-muted-foreground" />;
       case 3:
-        return <Award className="w-6 h-6 text-amber-600" />;
+        return <Award className="w-6 h-6 text-primary" />;
       default:
         return (
-          <span className="w-6 h-6 flex items-center justify-center text-sm font-bold text-gray-400">
+          <span className="w-6 h-6 flex items-center justify-center text-sm font-bold text-muted-foreground">
             #{rank}
           </span>
         );
@@ -121,15 +121,15 @@ export function Leaderboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 text-white">
+    <div className="min-h-screen bg-background text-foreground">
       {/* Header */}
-      <div className="sticky top-0 z-10 bg-black/20 backdrop-blur-sm border-b border-white/10">
+      <div className="sticky top-0 z-10 border-b border-border bg-background/90 backdrop-blur-sm">
         <div className="flex items-center justify-between p-4">
           <Link href={"/"}>
             <Button
               variant="ghost"
               size="sm"
-              className="text-white hover:bg-white/10"
+              className="text-foreground hover:bg-secondary"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back
@@ -142,7 +142,7 @@ export function Leaderboard() {
 
       <div className="p-4 max-w-2xl mx-auto">
         {/* User Stats Card */}
-        <Card className="mb-6 bg-white/10 border-white/20 text-white">
+        <Card className="mb-6 bg-card border-border text-foreground">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
               <User className="w-5 h-5" />
@@ -156,31 +156,31 @@ export function Leaderboard() {
                   type="text"
                   value={userName}
                   onChange={(e) => handleNameChange(e.target.value)}
-                  className="bg-transparent border-b border-white/30 text-lg font-semibold focus:outline-none focus:border-white/60"
+                  className="border-b border-border bg-transparent text-lg font-semibold focus:border-primary focus:outline-none"
                   placeholder="Enter your name"
                 />
-                <p className="text-sm text-gray-300 mt-1">
+                <p className="text-sm text-muted-foreground mt-1">
                   Rank: #{userRank > 0 ? userRank : "Unranked"}
                 </p>
               </div>
               <div className="text-right">
                 <div className="flex items-center space-x-2">
-                  <Trophy className="w-5 h-5 text-yellow-400" />
-                  <span className="text-2xl font-bold text-yellow-400">
+                  <Trophy className="w-5 h-5 text-primary" />
+                  <span className="text-2xl font-bold text-primary">
                     {userPoints}
                   </span>
                 </div>
-                <p className="text-sm text-gray-300">points</p>
+                <p className="text-sm text-muted-foreground">points</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Leaderboard */}
-        <Card className="bg-white/10 border-white/20 text-white">
+        <Card className="bg-card border-border text-foreground">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2">
-              <Trophy className="w-5 h-5 text-yellow-400" />
+              <Trophy className="w-5 h-5 text-primary" />
               <span>Top Players</span>
             </CardTitle>
           </CardHeader>
@@ -191,8 +191,8 @@ export function Leaderboard() {
                   key={entry.id}
                   className={`flex items-center justify-between p-3 rounded-lg transition-all ${
                     entry.name === userName
-                      ? "bg-blue-600/30 border border-blue-400/50"
-                      : "bg-white/5 hover:bg-white/10"
+                      ? "border border-primary/40 bg-primary/10"
+                      : "bg-secondary/40 hover:bg-secondary"
                   }`}
                 >
                   <div className="flex items-center space-x-3">
@@ -200,13 +200,13 @@ export function Leaderboard() {
                     <div>
                       <p className="font-semibold">{entry.name}</p>
                       {entry.name === userName && (
-                        <p className="text-xs text-blue-300">You</p>
+                        <p className="text-xs text-primary">You</p>
                       )}
                     </div>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-yellow-400">{entry.points}</p>
-                    <p className="text-xs text-gray-400">points</p>
+                    <p className="font-bold text-primary">{entry.points}</p>
+                    <p className="text-xs text-muted-foreground">points</p>
                   </div>
                 </div>
               ))}
@@ -215,9 +215,9 @@ export function Leaderboard() {
         </Card>
 
         {/* Instructions */}
-        <div className="mt-6 p-4 bg-white/5 rounded-lg">
+        <div className="mt-6 rounded-lg bg-secondary/40 p-4">
           <h3 className="font-semibold mb-2">How to earn points:</h3>
-          <ul className="text-sm text-gray-300 space-y-1">
+          <ul className="text-sm text-muted-foreground space-y-1">
             <li>• Answer quiz questions correctly after every 5 articles</li>
             <li>• Each correct answer gives you 10 points</li>
             <li>• Quick answers earn bonus points</li>

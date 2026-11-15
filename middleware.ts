@@ -28,6 +28,7 @@ const protectedRoutes = [
 const excludedPaths = [
   "/_next",
   "/api/auth",
+  "/api/webhook",
   "/favicon.ico",
   "/static",
   "/ingest",
@@ -48,12 +49,12 @@ export default async function middleware(req: NextRequest) {
   response.headers.set(
     'Content-Security-Policy',
     "default-src 'self'; " +
-    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://checkout.razorpay.com https://us.i.posthog.com; " +
+    "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://us.i.posthog.com; " +
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
     "font-src 'self' https://fonts.gstatic.com; " +
     "img-src 'self' data: https: blob:; " +
     "connect-src 'self' https://us.i.posthog.com https://us-assets.i.posthog.com; " +
-    "frame-src https://checkout.razorpay.com;"
+    "frame-src 'self';"
   );
 
   const session = await auth();
@@ -65,7 +66,12 @@ export default async function middleware(req: NextRequest) {
 
   // Guests should not see protected pages
   if (!session && isProtectedRoute(pathname)) {
-    return NextResponse.redirect(new URL("/auth", req.url));
+    const authUrl = new URL("/auth", req.url);
+    authUrl.searchParams.set(
+      "callbackUrl",
+      `${pathname}${req.nextUrl.search}`,
+    );
+    return NextResponse.redirect(authUrl);
   }
 
   return response;

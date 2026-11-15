@@ -1,4 +1,4 @@
-import { getDifficultyColor } from "@/lib/utils";
+import { getDifficultyColor, cn } from "@/lib/utils";
 import { Badge } from "../ui/badge";
 import { CheckCircle, XCircle } from "lucide-react";
 import { QuestionData } from "@/types";
@@ -19,20 +19,16 @@ export default function McqQuestion({
   handleAnswerSelect,
 }: McqQuestionProps) {
   return (
-    <div className="border border-gray-700 rounded-lg p-4 space-y-4 bg-gray-200 dark:bg-gray-800/50">
-      {/* Question Header */}
-      <div className="flex flex-col md:flex-row items-start justify-between gap-4">
-        <h3 className="font-medium md:text-lg leading-relaxed text-gray-950 dark:text-white">
+    <div className="space-y-4 rounded-xl border border-border bg-background p-4">
+      <div className="flex flex-col items-start justify-between gap-3 md:flex-row">
+        <h3 className="text-base font-medium leading-relaxed text-foreground md:text-lg">
           {questionIndex + 1}. {question.question}
         </h3>
-        <Badge
-          className={`border border-gray-700 ${getDifficultyColor(question.difficulty)} bg-gray-300 dark:bg-gray-400 text-gray-800 border-gray-700`}
-        >
+        <Badge className={cn(getDifficultyColor(question.difficulty), "capitalize")}>
           {question.difficulty}
         </Badge>
       </div>
 
-      {/* Options */}
       <div className="space-y-2">
         {question.options.map((option, optionIndex) => {
           const isSelected = userAnswers[question.question] === optionIndex;
@@ -45,38 +41,41 @@ export default function McqQuestion({
               key={optionIndex}
               onClick={() => handleAnswerSelect(question.question, optionIndex)}
               disabled={showResults}
-              className={`w-full text-left p-3 rounded-full border transition-all ${
+              className={cn(
+                "w-full rounded-lg border p-3 text-left transition-colors",
                 isSelected && !showResults
-                  ? "border-blue-500 bg-blue-500/10"
+                  ? "border-primary bg-primary/10"
                   : shouldHighlight
-                    ? "border-green-500 bg-green-500/10"
+                    ? "border-success/40 bg-success/10"
                     : isWrong
-                      ? "border-red-500 bg-red-500/10"
-                      : "border-gray-400 dark:border-gray-700 dark:hover:border-gray-700 dark:hover:bg-gray-700/50 hover:bg-gray-300"
-              } ${showResults ? "cursor-default" : "cursor-pointer"}`}
+                      ? "border-destructive/40 bg-destructive/10"
+                      : "border-border bg-card hover:border-primary/50 hover:bg-accent/60",
+                showResults ? "cursor-default" : "cursor-pointer",
+              )}
             >
               <div className="flex items-center gap-3">
                 <span
-                  className={`w-6 h-6 rounded-full border-2 flex items-center justify-center text-sm font-medium ${
+                  className={cn(
+                    "flex h-6 w-6 items-center justify-center rounded-full border text-xs font-bold",
                     shouldHighlight
-                      ? "border-green-500 bg-green-500 text-white"
+                      ? "border-success bg-success text-success-foreground"
                       : isWrong
-                        ? "border-red-500 bg-red-500 text-white"
+                        ? "border-destructive bg-destructive text-destructive-foreground"
                         : isSelected
-                          ? "border-blue-500 bg-blue-500 text-white"
-                          : "border-indigo-500 bg-indigo-700 text-gray-100"
-                  }`}
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border bg-secondary text-secondary-foreground",
+                  )}
                 >
                   {String.fromCharCode(65 + optionIndex)}
                 </span>
-                <span className="flex-1 max-md:text-sm text-gray-700 dark:text-gray-300">
+                <span className="flex-1 text-sm text-muted-foreground">
                   {option.name}
                 </span>
                 {showResults && shouldHighlight && (
-                  <CheckCircle className="h-5 w-5 text-green-400" />
+                  <CheckCircle className="h-4 w-4 text-success" />
                 )}
                 {showResults && isWrong && (
-                  <XCircle className="h-5 w-5 text-red-400" />
+                  <XCircle className="h-4 w-4 text-destructive" />
                 )}
               </div>
             </button>
@@ -84,10 +83,9 @@ export default function McqQuestion({
         })}
       </div>
 
-      {/* Explanation */}
       {showResults && (
-        <div className="mt-4 p-3 rounded-lg border-l-4 border-indigo-500 bg-indigo-500/10">
-          <p className="text-sm dark:text-indigo-300 text-indigo-900">
+        <div className="mt-4 rounded-lg border-l-2 border-primary bg-primary/5 p-3">
+          <p className="text-sm leading-relaxed text-foreground/80">
             <strong>Explanation:</strong> {question.explanation}
           </p>
         </div>

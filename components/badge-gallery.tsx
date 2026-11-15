@@ -8,73 +8,57 @@ const badges = [
   {
     id: "points-1k",
     icon: Trophy,
-    title: "Novice Learner",
+    title: "Novice learner",
     description: "Earned 1,000 total points.",
-    color: "text-yellow-400",
-    gradient: "from-yellow-500 to-orange-500",
-    unlocked: true, // Placeholder: true for unlocked, false for locked
+    unlocked: true,
   },
   {
     id: "points-5k",
     icon: Trophy,
-    title: "Skilled Scholar",
+    title: "Skilled scholar",
     description: "Earned 5,000 total points.",
-    color: "text-yellow-400",
-    gradient: "from-yellow-500 to-orange-500",
     unlocked: true,
   },
   {
     id: "points-10k",
     icon: Trophy,
-    title: "Master Mind",
+    title: "Master mind",
     description: "Earned 10,000 total points.",
-    color: "text-yellow-400",
-    gradient: "from-yellow-500 to-orange-500",
     unlocked: true,
   },
   {
     id: "streak-7",
     icon: Flame,
-    title: "7-Day Streak",
+    title: "7-day streak",
     description: "Maintained a learning streak for 7 consecutive days.",
-    color: "text-orange-400",
-    gradient: "from-orange-500 to-red-500",
     unlocked: true,
   },
   {
     id: "streak-30",
     icon: Flame,
-    title: "Month-Long Learner",
+    title: "Month-long learner",
     description: "Maintained a learning streak for 30 consecutive days.",
-    color: "text-orange-400",
-    gradient: "from-orange-500 to-red-500",
     unlocked: false,
   },
   {
     id: "quiz-master",
     icon: CheckCircle,
-    title: "Quiz Whiz",
+    title: "Quiz whiz",
     description: "Answered 100 questions correctly in quizzes.",
-    color: "text-emerald-400",
-    gradient: "from-emerald-500 to-green-500",
     unlocked: true,
   },
   {
     id: "topic-expert",
     icon: BookOpen,
-    title: "Topic Expert",
+    title: "Topic expert",
     description: "Completed all reels in a specific subject category.",
-    color: "text-blue-400",
-    gradient: "from-blue-500 to-cyan-500",
     unlocked: false,
   },
   {
     id: "early-bird",
     icon: Zap,
-    title: "Early Bird",
+    title: "Early bird",
     description: "Completed your first learning session before 8 AM.",
-    color: "text-purple-400",
-    gradient: "from-purple-500 to-indigo-500",
     unlocked: true,
   },
 ];
@@ -85,17 +69,17 @@ export default function BadgeGallery() {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.1,
+        staggerChildren: 0.08,
       },
     },
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
+    hidden: { opacity: 0, y: 8 },
     visible: {
       opacity: 1,
-      scale: 1,
-      transition: { duration: 0.6, ease: "easeOut" },
+      y: 0,
+      transition: { duration: 0.4 },
     },
   };
 
@@ -106,33 +90,43 @@ export default function BadgeGallery() {
           initial="hidden"
           animate="visible"
           variants={containerVariants}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+          className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         >
           {badges.map((badge) => (
             <motion.div key={badge.id} variants={itemVariants}>
               <Card
-                className={`h-full ${badge.unlocked ? "bg-gray-900/50 border-gray-800 hover:border-blue-700" : "bg-gray-900/30 border-gray-800 opacity-60 grayscale"} transition-all duration-300`}
+                className={`h-full ${
+                  badge.unlocked
+                    ? "border-border bg-card"
+                    : "border-border bg-card opacity-55"
+                }`}
               >
-                <CardContent className="p-6 flex flex-col items-center text-center">
+                <CardContent className="flex flex-col items-center p-6 text-center">
                   <div
-                    className={`w-16 h-16 rounded-full flex items-center justify-center mb-4 ${badge.unlocked ? badge.gradient : "bg-gray-700"}`}
+                    className={`mb-4 flex h-14 w-14 items-center justify-center rounded-full border ${
+                      badge.unlocked
+                        ? "border-primary/25 bg-primary/10"
+                        : "border-border bg-secondary"
+                    }`}
                   >
                     <badge.icon
-                      className={`h-8 w-8 ${badge.unlocked ? "text-white" : "text-gray-400"}`}
+                      className={`h-6 w-6 ${
+                        badge.unlocked ? "text-primary" : "text-muted-foreground"
+                      }`}
                     />
                   </div>
                   <h3
-                    className={`text-xl font-semibold mb-2 ${badge.unlocked ? "text-white" : "text-gray-500"}`}
+                    className={`mb-2 font-display text-lg font-semibold ${
+                      badge.unlocked ? "text-foreground" : "text-muted-foreground"
+                    }`}
                   >
                     {badge.title}
                   </h3>
-                  <p
-                    className={`text-sm leading-relaxed ${badge.unlocked ? "text-gray-300" : "text-gray-600"}`}
-                  >
+                  <p className="text-sm leading-relaxed text-muted-foreground">
                     {badge.description}
                   </p>
                   {!badge.unlocked && (
-                    <div className="mt-3 text-xs text-gray-500 font-medium">
+                    <div className="mt-3 text-xs font-medium text-muted-foreground">
                       Locked
                     </div>
                   )}

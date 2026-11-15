@@ -70,10 +70,6 @@ export interface IPlan {
   popular: boolean;
 }
 
-export interface ISubscriptions {
-  plan_id: string;
-  name: string;
-}
 export interface IAnalysisResult {
   summary: string;
   keyPoints: string[];

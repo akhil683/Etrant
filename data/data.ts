@@ -167,7 +167,7 @@ export const faqs = [
 export const stepsHowItWorks = [
   {
     step: "01",
-    title: " Sign Up",
+    title: "Sign up",
     description:
       "Get started in under 30 seconds with your Google account. No complex forms or credit cards required.",
     icon: Smartphone,
@@ -180,7 +180,7 @@ export const stepsHowItWorks = [
   },
   {
     step: "02",
-    title: "Choose Your Path",
+    title: "Choose your path",
     description:
       "Select your interest (JEE, NEET, UPSC) or explore general knowledge. Our AI personalizes content just for you.",
     icon: Target,
@@ -193,7 +193,7 @@ export const stepsHowItWorks = [
   },
   {
     step: "03",
-    title: "Swipe Through Reels",
+    title: "Swipe through reels",
     description:
       "Learn like you scroll Instagram! Bite-sized knowledge reels make complex topics digestible and fun.",
     icon: BookOpen,
@@ -206,7 +206,7 @@ export const stepsHowItWorks = [
   },
   {
     step: "04",
-    title: "Test Your Knowledge",
+    title: "Test your knowledge",
     description:
       "Take instant quizzes after each reel. Get immediate feedback and track your understanding in real-time.",
     icon: Brain,
@@ -215,7 +215,7 @@ export const stepsHowItWorks = [
   },
   {
     step: "05",
-    title: "Earn & Compete",
+    title: "Earn and compete",
     description:
       "Gain points, maintain streaks, and climb leaderboards. Learning becomes as addictive as gaming!",
     icon: Trophy,

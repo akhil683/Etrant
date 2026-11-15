@@ -7,15 +7,23 @@ import { signIn } from "next-auth/react";
 import GoogleIcon from "../../public/google_icon.png";
 import { toast } from "sonner";
 
-export default function SignIn() {
+export default function SignIn({
+  callbackUrl = "/",
+}: {
+  callbackUrl?: string;
+}) {
   const [loading, setLoading] = useState(false);
+  const safeCallbackUrl =
+    callbackUrl.startsWith("/") && !callbackUrl.startsWith("//")
+      ? callbackUrl
+      : "/";
 
   const handleProviderSignIn = async (providerId: string) => {
     setLoading(true);
     try {
-      await signIn(providerId, { callbackUrl: "/" });
+      await signIn(providerId, { callbackUrl: safeCallbackUrl });
     } catch (error) {
-      toast.error("Something went wrong. Try Again.");
+      toast.error("Something went wrong. Try again.");
     } finally {
       setLoading(false);
     }
@@ -24,10 +32,11 @@ export default function SignIn() {
     <Button
       onClick={() => handleProviderSignIn("google")}
       disabled={loading}
-      className="w-full flex items-center justify-center gap-3 py-4 font-semibold bg-white hover:bg-gray-200 text-gray-900 rounded-xl shadow-lg transition-all duration-300 transform"
+      variant="outline"
+      className="h-11 w-full justify-center gap-3 bg-background py-3 text-sm font-semibold"
     >
       {loading ? (
-        <Loader2 className="w-6 h-6 animate-spin" />
+        <Loader2 className="h-5 w-5 animate-spin" />
       ) : (
         <>
           <Image

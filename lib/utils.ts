@@ -13,14 +13,14 @@ export function getTodayDate() {
   return `${dd}-${mm}-${yyyy}`;
 }
 export function getDifficultyColor(difficulty: string) {
-  switch (difficulty) {
-    case "Easy":
-      return "bg-green-500/20 text-green-400 border-green-500/30";
-    case "Medium":
-      return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
-    case "Hard":
-      return "bg-red-500/20 text-red-400 border-red-500/30";
+  switch (difficulty?.toLowerCase()) {
+    case "easy":
+      return "bg-success/10 text-success border-success/25";
+    case "medium":
+      return "bg-primary/10 text-primary border-primary/25";
+    case "hard":
+      return "bg-destructive/10 text-destructive border-destructive/25";
     default:
-      return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+      return "bg-secondary text-muted-foreground border-border";
   }
 }

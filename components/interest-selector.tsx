@@ -57,46 +57,54 @@ export function InterestSelector() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-100 dark:bg-gray-950">
-      <div className="max-w-4xl w-full">
-        <div className="text-center mb-8">
-          <h1 className="md:text-4xl text-2xl font-bold text-gray-950 dark:text-white mb-4">
-            What interests you?
+    <div className="flex min-h-screen items-center justify-center px-5 pb-16 pt-24 md:pt-12">
+      <div className="w-full max-w-3xl">
+        <div className="mb-8 border-b border-border pb-6">
+          <p className="eyebrow">Personalise</p>
+          <h1 className="page-title">
+            What are you preparing for?
           </h1>
-          <p className="text-gray-700 dark:text-gray-300 md:text-lg">
-            Select your interests to get personalized question discoveries
+          <p className="page-description">
+            Pick one exam so your digest and questions stay relevant.
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-          {INTERESTS.map((interest) => (
-            <Card
-              key={interest.id}
-              className={`md:px-4 md:py-3 p-2 cursor-pointer transition-all duration-200 hover:scale-105 ${
-                selectedInterests === interest.id
-                  ? "bg-indigo-600 text-white border-2 border-white"
-                  : "bg-gray-700 dark:bg-white/10 text-white border-2 border-white/20 hover:bg-gray-800 dark:hover:bg-white/20"
-              }`}
-              onClick={() => toggleInterest(interest.id)}
-            >
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3">
-                  <span className="md:text-xl text-lg">{interest.emoji}</span>
-                  <span className="font-medium text-sm">{interest.label}</span>
+        <div className="mb-8 grid grid-cols-2 gap-3 md:grid-cols-3">
+          {INTERESTS.map((interest) => {
+            const isSelected = selectedInterests === interest.id;
+            return (
+              <Card
+                key={interest.id}
+                className={`cursor-pointer p-3 transition-colors duration-150 md:px-4 md:py-3.5 ${
+                  isSelected
+                    ? "border-primary bg-primary/10"
+                    : "border-border bg-card hover:border-primary/40"
+                }`}
+                onClick={() => toggleInterest(interest.id)}
+              >
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2.5">
+                    <span className="text-lg md:text-xl">{interest.emoji}</span>
+                    <span
+                      className={`text-sm font-medium ${
+                        isSelected ? "text-foreground" : "text-muted-foreground"
+                      }`}
+                    >
+                      {interest.label}
+                    </span>
+                  </div>
+                  {isSelected && <Check className="h-4 w-4 text-primary" />}
                 </div>
-                {selectedInterests === interest.id && (
-                  <Check className="w-5 h-5" />
-                )}
-              </div>
-            </Card>
-          ))}
+              </Card>
+            );
+          })}
         </div>
 
-        <div className="text-center">
+        <div>
           <Button
             onClick={handleContinue}
             disabled={loading}
-            className="bg-indigo-500 text-white hover:bg-indigo-700 px-8 py-3 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+            className="h-11 px-7 text-base font-semibold"
           >
             {loading && <Loader2 className="h-4 w-4 animate-spin" />}
             Continue
